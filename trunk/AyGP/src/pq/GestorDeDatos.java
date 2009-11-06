@@ -1,12 +1,11 @@
 package pq;
 
 import java.io.*;
-
 import javax.swing.JOptionPane;
 
 public class GestorDeDatos {
 
-	private Datos dat;
+	public Datos dat;
 
 	public GestorDeDatos() {
 
@@ -77,26 +76,26 @@ public class GestorDeDatos {
 	public boolean agregar_elemento(TElemento e) {
 
 		switch (e.getTipo()) {
-		case TElemento.EMPLEADO:
-			dat.getLista_empleados().add(e);
+		case EMPLEADO:
+			dat.getLista_empleados().add((TEmpleado)e);
 			break;
-		case TElemento.PEDIDO:
-			dat.getLista_pedidos().add(e);
+		case PEDIDO:
+			dat.getLista_pedidos().add((TPedido)e);
 			break;
-		case TElemento.EVENTO:
-			dat.getLista_eventos().add(e);
+		case EVENTO:
+			dat.getLista_eventos().add((TEvento)e);
 			break;
-		case TElemento.GASTO:
-			dat.getLista_gastos().add(e);
+		case GASTO:
+			dat.getLista_gastos().add((TGasto)e);
 			break;
-		case TElemento.CLIENTE:
-			dat.getLista_clientes().add(e);
+		case CLIENTE:
+			dat.getLista_clientes().add((TCliente)e);
 			break;
-		case TElemento.VEHICULO:
-			dat.getLista_vehiculos().add(e);
+		case VEHICULO:
+			dat.getLista_vehiculos().add((TVehiculo)e);
 			break;
-		case TElemento.EQUIPO:
-			dat.getLista_equipos().add(e);
+		case EQUIPO:
+			dat.getLista_equipos().add((TEquipo)e);
 			break;
 		}
 		return true;
@@ -105,25 +104,25 @@ public class GestorDeDatos {
 	public boolean quitar_elemento(TElemento e) {
 
 		switch (e.getTipo()) {
-		case TElemento.EMPLEADO:
+		case EMPLEADO:
 			dat.getLista_empleados().remove(e);
 			break;
-		case TElemento.PEDIDO:
+		case PEDIDO:
 			dat.getLista_pedidos().remove(e);
 			break;
-		case TElemento.EVENTO:
+		case EVENTO:
 			dat.getLista_eventos().remove(e);
 			break;
-		case TElemento.GASTO:
+		case GASTO:
 			dat.getLista_gastos().remove(e);
 			break;
-		case TElemento.CLIENTE:
+		case CLIENTE:
 			dat.getLista_clientes().remove(e);
 			break;
-		case TElemento.VEHICULO:
+		case VEHICULO:
 			dat.getLista_vehiculos().remove(e);
 			break;
-		case TElemento.EQUIPO:
+		case EQUIPO:
 			dat.getLista_equipos().remove(e);
 			break;
 		}

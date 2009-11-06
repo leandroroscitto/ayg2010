@@ -23,14 +23,14 @@ public class TPedido extends TElemento{
 	private Date hora_ini;
 	private Date hora_fin;
 	
-	private ArrayList empleados; //TEmpleado
-	private ArrayList gastos; //TGasto
+	private ArrayList<TEmpleado> empleados; //TEmpleado
+	private ArrayList<TGasto> gastos; //TGasto
 	private TCliente cliente;
-	private ArrayList vehiculos; //TVehiculo
-	private ArrayList equipos; //TEquipo
+	private ArrayList<TVehiculo> vehiculos; //TVehiculo
+	private ArrayList<TEquipo> equipos; //TEquipo
 
 	private TPedido(){
-		super(TElemento.PEDIDO);		
+		super(TElementotipo.PEDIDO);		
 	}
 
 	public String getOrigen() {
@@ -73,15 +73,19 @@ public class TPedido extends TElemento{
 		this.hora_fin = hora_fin;
 	}
 
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
 	public int getId_pedido() {
 		return id_pedido;
 	}
 
-	public ArrayList getEmpleados() {
+	public ArrayList<TEmpleado> getEmpleados() {
 		return empleados;
 	}
 
-	public ArrayList getGastos() {
+	public ArrayList<TGasto> getGastos() {
 		return gastos;
 	}
 
@@ -89,12 +93,11 @@ public class TPedido extends TElemento{
 		return cliente;
 	}
 
-	public ArrayList getVehiculos() {
+	public ArrayList<TVehiculo> getVehiculos() {
 		return vehiculos;
 	}
 
-	public ArrayList getEquipos() {
+	public ArrayList<TEquipo> getEquipos() {
 		return equipos;
 	}
-
 }

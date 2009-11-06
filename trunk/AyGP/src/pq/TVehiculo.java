@@ -23,7 +23,7 @@ public class TVehiculo extends TElemento{
 	private tipo_estado_vehiculo estado;
 
 public TVehiculo(String pat,String mar,String mod,Color col,long kil,tipo_estado_vehiculo est){
-	super(TElemento.VEHICULO);
+	super(TElementotipo.VEHICULO);
 	patente=pat;
 	marca=mar;
 	modelo=mod;

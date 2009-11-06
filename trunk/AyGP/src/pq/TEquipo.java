@@ -19,7 +19,7 @@ public class TEquipo extends TElemento {
 
 	public TEquipo(int id, String nom, tipo_categoria_equipo tip,
 			tipo_estado_equipo est) {
-		super(TElemento.EQUIPO);
+		super(TElementotipo.EQUIPO);
 		id_equipo = id;
 		nombre = nom;
 		tipo_equipo = tip;
