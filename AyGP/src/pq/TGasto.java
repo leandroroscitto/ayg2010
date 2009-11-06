@@ -11,7 +11,7 @@ public class TGasto extends TElemento{
 	private float monto;
 	
 	public TGasto(int id, String des, float m){
-		super(TElemento.GASTO);
+		super(TElementotipo.GASTO);
 		
 		id_gasto = id;
 		descripcion = des;

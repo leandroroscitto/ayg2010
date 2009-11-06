@@ -19,7 +19,7 @@ public class TCliente extends TElemento{
 	
 	
 	public TCliente(String nom, String dir, String tel, String d, String c){
-		super(TEmpleado.CLIENTE);		
+		super(TElementotipo.CLIENTE);		
 		nombre = nom;
 		direccion = dir;
 		telefono = tel;

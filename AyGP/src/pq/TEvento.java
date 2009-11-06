@@ -12,7 +12,7 @@ public class TEvento extends TElemento {
 	private Date fecha;
 	
 	public TEvento(int id, String des, Date d){
-		super(TElemento.EVENTO);
+		super(TElementotipo.EVENTO);
 		
 		id_evento = id;
 		descripcion = des;
