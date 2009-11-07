@@ -1,36 +1,31 @@
-package pq;
+package modelo;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-enum tipo_estado_pedido{
-	EN_ESPERA,
-	DESPACHADO,
-	ENTREGADO,
-	DEMORADO,
-	CANCELADO
-}
+import datos.TElemento;
+import enumerados.EEstadoPedido;
+import enumerados.ETipoElemento;
 
-public class TPedido extends TElemento{
-	
+public class TPedido extends TElemento {
+
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	private int id_pedido;
 	private String origen;
 	private String destino;
-	private tipo_estado_pedido estado;
+	private EEstadoPedido estado;
 	private Date hora_ini;
 	private Date hora_fin;
-	
-	private ArrayList<TEmpleado> empleados; //TEmpleado
-	private ArrayList<TGasto> gastos; //TGasto
-	private TCliente cliente;
-	private ArrayList<TVehiculo> vehiculos; //TVehiculo
-	private ArrayList<TEquipo> equipos; //TEquipo
 
-	private TPedido(){
-		super(TElementotipo.PEDIDO);		
+	private ArrayList<TEmpleado> empleados; // TEmpleado
+	private ArrayList<TGasto> gastos; // TGasto
+	private TCliente cliente;
+	private ArrayList<TVehiculo> vehiculos; // TVehiculo
+	private ArrayList<TEquipo> equipos; // TEquipo
+
+	private TPedido() {
+		super(ETipoElemento.PEDIDO);
 	}
 
 	public String getOrigen() {
@@ -49,11 +44,11 @@ public class TPedido extends TElemento{
 		this.destino = destino;
 	}
 
-	public tipo_estado_pedido getEstado() {
+	public EEstadoPedido getEstado() {
 		return estado;
 	}
 
-	public void setEstado(tipo_estado_pedido estado) {
+	public void setEstado(EEstadoPedido estado) {
 		this.estado = estado;
 	}
 

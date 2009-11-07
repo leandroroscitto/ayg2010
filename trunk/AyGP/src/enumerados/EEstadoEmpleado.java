@@ -1,0 +1,5 @@
+package enumerados;
+
+public enum EEstadoEmpleado {
+	DISPONIBLE, LICENCIA_ENFERMEDAD, LICENCIA_VACACIONES, TRABAJANDO, NO_DISPONIBLE
+}

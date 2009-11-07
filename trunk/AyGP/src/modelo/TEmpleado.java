@@ -1,14 +1,12 @@
-package pq;
+package modelo;
 
 import java.util.ArrayList;
 
-enum tipo_categoria_empleado {
-	CHOFER, PEON, MOTOCICLISTA, CICLISTA, ADMINISTRATIVO, OPERADOR
-}
-
-enum tipo_estado_empleado {
-	DISPONIBLE, LICENCIA_ENFERMEDAD, LICENCIA_VACACIONES, TRABAJANDO, NO_DISPONIBLE
-}
+import datos.TElemento;
+import enumerados.ECategoriaEmpleado;
+import enumerados.EDia;
+import enumerados.EEstadoEmpleado;
+import enumerados.ETipoElemento;
 
 public class TEmpleado extends TElemento {
 
@@ -19,12 +17,12 @@ public class TEmpleado extends TElemento {
 	private String direccion;
 	private String telefono;
 	private THorario horario;
-	private tipo_categoria_empleado categoria;
-	private tipo_estado_empleado estado;
+	private ECategoriaEmpleado categoria;
+	private EEstadoEmpleado estado;
 
 	public TEmpleado(int leg, String nom, String dir, String tel,
-			tipo_categoria_empleado cat, tipo_estado_empleado est) {
-		super(TElementotipo.EMPLEADO);
+			ECategoriaEmpleado cat, EEstadoEmpleado est) {
+		super(ETipoElemento.EMPLEADO);
 		legajo = leg;
 		nombre = nom;
 		direccion = dir;
@@ -66,31 +64,31 @@ public class TEmpleado extends TElemento {
 		this.telefono = telefono;
 	}
 
-	public ArrayList<String> getRangosHorarios(TDia Dia) {
+	public ArrayList<String> getRangosHorarios(EDia Dia) {
 		return horario.get_rangos_dia(Dia);
 	}
 
-	public void asignar_horario(TDia Dia, int HI, int HF) {
+	public void asignar_horario(EDia Dia, int HI, int HF) {
 		horario.agregar_rango_horario(Dia, HI, HF);
 	}
 
-	public void eliminar_horario(TDia Dia, int HI, int HF) {
+	public void eliminar_horario(EDia Dia, int HI, int HF) {
 		horario.quitar_rango_horario(Dia, HI, HF);
 	}
 
-	public tipo_categoria_empleado getCategoria() {
+	public ECategoriaEmpleado getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(tipo_categoria_empleado categoria) {
+	public void setCategoria(ECategoriaEmpleado categoria) {
 		this.categoria = categoria;
 	}
 
-	public tipo_estado_empleado getEstado() {
+	public EEstadoEmpleado getEstado() {
 		return estado;
 	}
 
-	public void setEstado(tipo_estado_empleado estado) {
+	public void setEstado(EEstadoEmpleado estado) {
 		this.estado = estado;
 	}
 

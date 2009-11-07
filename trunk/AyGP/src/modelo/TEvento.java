@@ -1,22 +1,24 @@
-package pq;
+package modelo;
 
 import java.util.Date;
 
+import datos.TElemento;
+import enumerados.ETipoElemento;
+
 public class TEvento extends TElemento {
-	
+
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	private int id_evento;
 	private String descripcion;
 	private Date fecha;
-	
-	public TEvento(int id, String des, Date d){
-		super(TElementotipo.EVENTO);
-		
+
+	public TEvento(int id, String des, Date d) {
+		super(ETipoElemento.EVENTO);
+
 		id_evento = id;
 		descripcion = des;
-		fecha = d;		
+		fecha = d;
 	}
 
 	public int getId_evento() {
@@ -46,7 +48,5 @@ public class TEvento extends TElemento {
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}
-	
-	
 
 }

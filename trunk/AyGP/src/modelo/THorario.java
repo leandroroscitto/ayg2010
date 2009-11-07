@@ -1,12 +1,10 @@
-package pq;
+package modelo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-enum TDia {
-	LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO, DOMINGO
-}
+import enumerados.EDia;
 
 public class THorario implements Serializable{
 	
@@ -39,31 +37,31 @@ public class THorario implements Serializable{
 		}
 	}
 
-	private Hashtable<TDia, ArrayList<TRangoHorario>> Asignacion;
+	private Hashtable<EDia, ArrayList<TRangoHorario>> Asignacion;
 
 	public THorario() {
-		Asignacion = new Hashtable<TDia, ArrayList<TRangoHorario>>();
+		Asignacion = new Hashtable<EDia, ArrayList<TRangoHorario>>();
 		
-		Asignacion.put(TDia.LUNES, new ArrayList<TRangoHorario>());
-		Asignacion.put(TDia.MARTES, new ArrayList<TRangoHorario>());
-		Asignacion.put(TDia.MIERCOLES, new ArrayList<TRangoHorario>());
-		Asignacion.put(TDia.JUEVES, new ArrayList<TRangoHorario>());
-		Asignacion.put(TDia.VIERNES, new ArrayList<TRangoHorario>());
-		Asignacion.put(TDia.SABADO, new ArrayList<TRangoHorario>());
-		Asignacion.put(TDia.DOMINGO, new ArrayList<TRangoHorario>());
+		Asignacion.put(EDia.LUNES, new ArrayList<TRangoHorario>());
+		Asignacion.put(EDia.MARTES, new ArrayList<TRangoHorario>());
+		Asignacion.put(EDia.MIERCOLES, new ArrayList<TRangoHorario>());
+		Asignacion.put(EDia.JUEVES, new ArrayList<TRangoHorario>());
+		Asignacion.put(EDia.VIERNES, new ArrayList<TRangoHorario>());
+		Asignacion.put(EDia.SABADO, new ArrayList<TRangoHorario>());
+		Asignacion.put(EDia.DOMINGO, new ArrayList<TRangoHorario>());
 	}
 
 	public boolean rangos_validos(int HI1, int HF1, int HI2, int HF2) {
 		return !((HI1 > HI2 && HI1 < HF2) || (HI2 > HI1 && HI2 < HF1));
 	}
 
-	public void agregar_rango_horario(TDia Dia, int HI, int HF) {
+	public void agregar_rango_horario(EDia Dia, int HI, int HF) {
 		TRangoHorario rango = new TRangoHorario(HI, HF);
 
 		Asignacion.get(Dia).add(rango);
 	}
 
-	public void quitar_rango_horario(TDia Dia, int HI, int HF) {
+	public void quitar_rango_horario(EDia Dia, int HI, int HF) {
 		ArrayList<TRangoHorario> lista = Asignacion.get(Dia);
 
 		int i = 0;
@@ -80,7 +78,7 @@ public class THorario implements Serializable{
 		lista.remove(i--);
 	}
 
-	public ArrayList<String> get_rangos_dia(TDia Dia) {
+	public ArrayList<String> get_rangos_dia(EDia Dia) {
 		ArrayList<TRangoHorario> lista = Asignacion.get(Dia);
 		ArrayList<String> listaS = new ArrayList<String>();
 
@@ -100,7 +98,7 @@ public class THorario implements Serializable{
 		return listaS;
 	}
 
-	public boolean trabaja_en_rango(TDia Dia, int HI, int HF) {
+	public boolean trabaja_en_rango(EDia Dia, int HI, int HF) {
 		ArrayList<TRangoHorario> lista = Asignacion.get(Dia);
 
 		int i = 0;

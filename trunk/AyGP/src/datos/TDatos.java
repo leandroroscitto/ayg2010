@@ -1,9 +1,17 @@
-package pq;
+package datos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Datos implements Serializable{
+import modelo.TCliente;
+import modelo.TEmpleado;
+import modelo.TEquipo;
+import modelo.TEvento;
+import modelo.TGasto;
+import modelo.TPedido;
+import modelo.TVehiculo;
+
+public class TDatos implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,7 +29,7 @@ public class Datos implements Serializable{
 
 	private ArrayList<TEquipo> lista_equipos;
 
-	public Datos() {
+	public TDatos() {
 		lista_empleados = new ArrayList<TEmpleado>();
 		lista_pedidos = new ArrayList<TPedido>();
 		lista_eventos = new ArrayList<TEvento>();
