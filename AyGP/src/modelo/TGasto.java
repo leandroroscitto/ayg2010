@@ -1,21 +1,22 @@
-package pq;
+package modelo;
 
+import datos.TElemento;
+import enumerados.ETipoElemento;
 
-public class TGasto extends TElemento{
-	
+public class TGasto extends TElemento {
+
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	private int id_gasto;
 	private String descripcion;
 	private float monto;
-	
-	public TGasto(int id, String des, float m){
-		super(TElementotipo.GASTO);
-		
+
+	public TGasto(int id, String des, float m) {
+		super(ETipoElemento.GASTO);
+
 		id_gasto = id;
 		descripcion = des;
-		monto = m;		
+		monto = m;
 	}
 
 	public int getId_gasto() {
@@ -44,8 +45,6 @@ public class TGasto extends TElemento{
 
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
-	}	
-	
-	
+	}
 
 }

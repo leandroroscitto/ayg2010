@@ -1,13 +1,15 @@
-package pq;
+package datos;
 
 import java.io.*;
 import javax.swing.JOptionPane;
 
-public class GestorDeDatos {
+import modelo.*;
 
-	public Datos dat;
+public class TGestorDeDatos {
 
-	public GestorDeDatos() {
+	public TDatos dat;
+
+	public TGestorDeDatos() {
 
 	}
 
@@ -35,7 +37,7 @@ public class GestorDeDatos {
 		try {
 			file = new File("Datos.dat");
 			obj = new ObjectInputStream(new FileInputStream(file));
-			dat = (Datos) obj.readObject();
+			dat = (TDatos) obj.readObject();
 			obj.close();
 		} catch (FileNotFoundException e) {
 			return crear_estado();
@@ -70,7 +72,7 @@ public class GestorDeDatos {
 	}
 
 	private void InicializarDatos() {
-		dat = new Datos();
+		dat = new TDatos();
 	}
 
 	public boolean agregar_elemento(TElemento e) {

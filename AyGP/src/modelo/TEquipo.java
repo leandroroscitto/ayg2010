@@ -1,12 +1,9 @@
-package pq;
+package modelo;
 
-enum tipo_categoria_equipo {
-	HANDY, RADIO, CELULAR, CASCO
-}
-
-enum tipo_estado_equipo {
-	DISPONIBLE, EN_REPARACION, FUERA_DE_SERVICIO, TRABAJANDO, NO_DISPONIBLE
-}
+import datos.TElemento;
+import enumerados.ECategoriaEquipo;
+import enumerados.EEstadoEquipo;
+import enumerados.ETipoElemento;
 
 public class TEquipo extends TElemento {
 
@@ -14,12 +11,11 @@ public class TEquipo extends TElemento {
 
 	private int id_equipo;
 	private String nombre;
-	private tipo_categoria_equipo tipo_equipo;
-	private tipo_estado_equipo estado;
+	private ECategoriaEquipo tipo_equipo;
+	private EEstadoEquipo estado;
 
-	public TEquipo(int id, String nom, tipo_categoria_equipo tip,
-			tipo_estado_equipo est) {
-		super(TElementotipo.EQUIPO);
+	public TEquipo(int id, String nom, ECategoriaEquipo tip, EEstadoEquipo est) {
+		super(ETipoElemento.EQUIPO);
 		id_equipo = id;
 		nombre = nom;
 		tipo_equipo = tip;
@@ -42,26 +38,24 @@ public class TEquipo extends TElemento {
 		this.nombre = nombre;
 	}
 
-	public tipo_categoria_equipo getTipo_equipo() {
+	public ECategoriaEquipo getTipo_equipo() {
 		return this.tipo_equipo;
 	}
 
-	public void setTipo(tipo_categoria_equipo tipo) {
+	public void setTipo(ECategoriaEquipo tipo) {
 		this.tipo_equipo = tipo;
 	}
 
-	public tipo_estado_equipo getEstado() {
+	public EEstadoEquipo getEstado() {
 		return estado;
 	}
 
-	public void setEstado(tipo_estado_equipo estado) {
+	public void setEstado(EEstadoEquipo estado) {
 		this.estado = estado;
 	}
 
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}
-	
-	
 
 }
