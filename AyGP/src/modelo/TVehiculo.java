@@ -27,6 +27,17 @@ public class TVehiculo extends TElemento {
 		kilometraje = kil;
 		estado = est;
 	}
+	
+	//Determina si el estado del equipo permite su planificación en un pedido.
+	//TRABAJANDO se considera porque la planificación puede ser a futuro.
+	public boolean estado_disp() {
+		if ((estado == EEstadoVehiculo.DISPONIBLE)
+				|| (estado == EEstadoVehiculo.TRABAJANDO)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	public String getPatente() {
 		return patente;

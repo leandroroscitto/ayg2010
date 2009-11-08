@@ -7,7 +7,7 @@ import modelo.*;
 
 public class TGestorDeDatos {
 
-	public TDatos dat;
+	private TDatos dat;
 
 	public TGestorDeDatos() {
 
@@ -129,6 +129,10 @@ public class TGestorDeDatos {
 			break;
 		}
 		return true;
+	}
+	
+	public TDatos getDatos(){
+		return dat;
 	}
 
 } // class
