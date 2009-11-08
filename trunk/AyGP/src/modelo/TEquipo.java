@@ -21,6 +21,16 @@ public class TEquipo extends TElemento {
 		tipo_equipo = tip;
 		estado = est;
 	}
+	
+	//Determina si el estado del equipo permite su planificación en un pedido.
+	//TRABAJANDO se considera porque la planificación puede ser a futuro.
+	public boolean estado_disp(){
+		if ((estado==EEstadoEquipo.DISPONIBLE) || (estado==EEstadoEquipo.TRABAJANDO)){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 	public int getId_equipo() {
 		return id_equipo;

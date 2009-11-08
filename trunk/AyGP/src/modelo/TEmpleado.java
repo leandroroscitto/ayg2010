@@ -31,6 +31,17 @@ public class TEmpleado extends TElemento {
 		categoria = cat;
 		estado = est;
 	}
+	
+	//Determina si el estado del equipo permite su planificación en un pedido.
+	//TRABAJANDO se considera porque la planificación puede ser a futuro.
+	public boolean estado_disp() {
+		if ((estado == EEstadoEmpleado.DISPONIBLE)
+				|| (estado == EEstadoEmpleado.TRABAJANDO)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	public int getLegajo() {
 		return legajo;
@@ -74,6 +85,10 @@ public class TEmpleado extends TElemento {
 
 	public void eliminar_horario(EDia Dia, int HI, int HF) {
 		horario.quitar_rango_horario(Dia, HI, HF);
+	}
+	
+	public boolean trabaja_en_rango(EDia Dia, int HI, int HF){
+		return horario.trabaja_en_rango(Dia, HI, HF);
 	}
 
 	public ECategoriaEmpleado getCategoria() {

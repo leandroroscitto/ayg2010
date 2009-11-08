@@ -1,7 +1,7 @@
 package modelo;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 
 import datos.TElemento;
 import enumerados.EEstadoPedido;
@@ -15,19 +15,49 @@ public class TPedido extends TElemento {
 	private String origen;
 	private String destino;
 	private EEstadoPedido estado;
-	private Date hora_ini;
-	private Date hora_fin;
+	private Calendar ini;
+	private Calendar fin;
 
-	private ArrayList<TEmpleado> empleados; // TEmpleado
-	private ArrayList<TGasto> gastos; // TGasto
+	private ArrayList<TEmpleado> empleados;
+	private ArrayList<TGasto> gastos;
 	private TCliente cliente;
-	private ArrayList<TVehiculo> vehiculos; // TVehiculo
-	private ArrayList<TEquipo> equipos; // TEquipo
+	private ArrayList<TVehiculo> vehiculos;
+	private ArrayList<TEquipo> equipos;
 
-	private TPedido() {
+	public TPedido() {
 		super(ETipoElemento.PEDIDO);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList getLista_Tipo(ETipoElemento T){
+		switch (T){
+		case EMPLEADO:
+			return getEmpleados();
+		case VEHICULO:
+			return getVehiculos();
+		case EQUIPO:
+			return getEquipos();
+		case GASTO:
+			return getGastos();
+		}
+		return null;
+	}
 
+	public boolean superpone_IF(Calendar Ini, Calendar Fin) {
+		Calendar iniP, finP;
+
+		iniP = get_ini();
+		finP = get_fin();
+		if (Ini.after(iniP) && Ini.before(finP)) {
+			return false;
+		}
+		if (Fin.after(iniP) && Fin.before(finP)) {
+			return false;
+		}
+
+		return true;
+	}
+	
 	public String getOrigen() {
 		return origen;
 	}
@@ -52,20 +82,20 @@ public class TPedido extends TElemento {
 		this.estado = estado;
 	}
 
-	public Date getHora_ini() {
-		return hora_ini;
+	public Calendar get_ini() {
+		return ini;
 	}
 
-	public void setHora_ini(Date hora_ini) {
-		this.hora_ini = hora_ini;
+	public void set_ini(Calendar Ini) {
+		this.ini = Ini;
 	}
 
-	public Date getHora_fin() {
-		return hora_fin;
+	public Calendar get_fin() {
+		return fin;
 	}
 
-	public void setHora_fin(Date hora_fin) {
-		this.hora_fin = hora_fin;
+	public void set_fin(Calendar Fin) {
+		this.fin = Fin;
 	}
 
 	public static long getSerialVersionUID() {
