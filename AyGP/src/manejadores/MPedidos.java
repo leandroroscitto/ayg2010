@@ -94,57 +94,58 @@ public class MPedidos {
 	public boolean consultarDispEmpleados(TEmpleado Em, Calendar Ini,
 			Calendar Fin) {
 		assert (Ini.before(Fin) || Ini.equals(Fin));
-		
+
 		ArrayList<TPedido> pedidosEm;
 
 		if (Em.estado_disp()) {
 			// Verifica que el empleado trabaje en ese rango horario
-			EDia DiaWIni=EDia.to_EDia(Ini.get(Calendar.DAY_OF_WEEK));
-			EDia DiaWFin=EDia.to_EDia(Fin.get(Calendar.DAY_OF_WEEK));
-			
-			//NOSE: PARA EVITAR PROBLEMAS NO PUEDE HABER PEDIDOS ENTRE DOS AÑOS
-			int DiaYIni=Ini.get(Calendar.DAY_OF_YEAR);
-			int DiaYFin=Fin.get(Calendar.DAY_OF_YEAR);
-			
-			//PARA CALCULAR HI Y HF
+			EDia DiaWIni = EDia.to_EDia(Ini.get(Calendar.DAY_OF_WEEK));
+			EDia DiaWFin = EDia.to_EDia(Fin.get(Calendar.DAY_OF_WEEK));
+
+			// NOSE: PARA EVITAR PROBLEMAS NO PUEDE HABER PEDIDOS ENTRE DOS AÑOS
+			int DiaYIni = Ini.get(Calendar.DAY_OF_YEAR);
+			int DiaYFin = Fin.get(Calendar.DAY_OF_YEAR);
+
+			// PARA CALCULAR HI Y HF
 			int HoraI = Ini.get(Calendar.HOUR_OF_DAY);
 			int HoraF = Fin.get(Calendar.HOUR_OF_DAY);
 			int MinI = Ini.get(Calendar.MINUTE);
 			int MinF = Fin.get(Calendar.MINUTE);
-			
-			//Transforma a hora 0000-2359
-			int HI = HoraI*100+MinI;
-			int HF = HoraF*100+MinF;
-			
-			boolean trabaja=true;
-			
-			//REVISAR: ES EL CASO DE QUE EL TRABAJO INVOLUCRE DIAS COMPLETOS (?)
-			if (DiaYIni<DiaYFin){
-				int difDia=DiaYFin-DiaYIni;
-				int i=0;
-				
-				//TRABAJA DESDE LA HORA DE INICIO HASTA EL FINAL DEL DIA
-				trabaja=Em.trabaja_en_rango(DiaWIni, HI, 2359);
-				
-				//DIAS COMPLETOS
-				EDia Dia=DiaWIni;
-				while ((i<difDia) || (trabaja)){
+
+			// Transforma a hora 0000-2359
+			int HI = HoraI * 100 + MinI;
+			int HF = HoraF * 100 + MinF;
+
+			boolean trabaja = true;
+
+			// REVISAR: ES EL CASO DE QUE EL TRABAJO INVOLUCRE DIAS COMPLETOS
+			// (?)
+			if (DiaYIni < DiaYFin) {
+				int difDia = DiaYFin - DiaYIni;
+				int i = 0;
+
+				// TRABAJA DESDE LA HORA DE INICIO HASTA EL FINAL DEL DIA
+				trabaja = Em.trabaja_en_rango(DiaWIni, HI, 2359);
+
+				// DIAS COMPLETOS
+				EDia Dia = DiaWIni;
+				while ((i < difDia) || (trabaja)) {
 					Dia = Dia.proximo();
-					trabaja=Em.trabaja_en_rango(Dia, 0000, 2359);
+					trabaja = Em.trabaja_en_rango(Dia, 0000, 2359);
 				}
-				
-				//ULTIMO DIA
-				if (trabaja){
-					trabaja=Em.trabaja_en_rango(DiaWFin, 0000, HF);
+
+				// ULTIMO DIA
+				if (trabaja) {
+					trabaja = Em.trabaja_en_rango(DiaWFin, 0000, HF);
 				}
-			}else{
-				//EL CASO DE QUE EL TRABAJO ES EN EL MISMO DIA
-				trabaja=Em.trabaja_en_rango(DiaWFin, HI, HF);
+			} else {
+				// EL CASO DE QUE EL TRABAJO ES EN EL MISMO DIA
+				trabaja = Em.trabaja_en_rango(DiaWFin, HI, HF);
 			}
-			
-			//UNA VEZ QUE SABE QUE PUEDE TRABAJAR EN EL RANGO
-			//VERIFICA QUE NO ESTE ASIGNADO A UN PEDIDO SUPERPUESTO
-			if (trabaja){
+
+			// UNA VEZ QUE SABE QUE PUEDE TRABAJAR EN EL RANGO
+			// VERIFICA QUE NO ESTE ASIGNADO A UN PEDIDO SUPERPUESTO
+			if (trabaja) {
 				pedidosEm = pedidos_de_elemento(Em);
 
 				return superpone_pedidos_IF(pedidosEm, Ini, Fin);
