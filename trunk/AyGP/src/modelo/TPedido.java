@@ -24,13 +24,24 @@ public class TPedido extends TElemento {
 	private ArrayList<TVehiculo> vehiculos;
 	private ArrayList<TEquipo> equipos;
 
-	public TPedido() {
+	public TPedido(int id, String O, String D, EEstadoPedido E, Calendar I,
+			Calendar F, TCliente C) {
 		super(ETipoElemento.PEDIDO);
+		
+		assert (I.before(F) || I.equals(F));
+		
+		id_pedido=id;
+		origen=O;
+		destino=D;
+		estado=E;
+		ini=I;
+		fin=F;
+		cliente=C;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public ArrayList getLista_Tipo(ETipoElemento T){
-		switch (T){
+	public ArrayList getLista_Tipo(ETipoElemento T) {
+		switch (T) {
 		case EMPLEADO:
 			return getEmpleados();
 		case VEHICULO:
@@ -57,7 +68,7 @@ public class TPedido extends TElemento {
 
 		return true;
 	}
-	
+
 	public String getOrigen() {
 		return origen;
 	}
@@ -87,6 +98,7 @@ public class TPedido extends TElemento {
 	}
 
 	public void set_ini(Calendar Ini) {
+		assert (Ini.before(fin) || Ini.equals(fin));
 		this.ini = Ini;
 	}
 
@@ -95,13 +107,10 @@ public class TPedido extends TElemento {
 	}
 
 	public void set_fin(Calendar Fin) {
+		assert (ini.before(Fin) || ini.equals(Fin));
 		this.fin = Fin;
 	}
-
-	public static long getSerialVersionUID() {
-		return serialVersionUID;
-	}
-
+	
 	public int getId_pedido() {
 		return id_pedido;
 	}
