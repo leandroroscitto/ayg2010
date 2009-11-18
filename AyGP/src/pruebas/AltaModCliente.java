@@ -17,6 +17,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import formateadores.FormateadorCuitCuil;
+import formateadores.FormateadorTel;
+import formateadores.TTelefono;
+
 
 
 /**
@@ -40,10 +44,11 @@ public class AltaModCliente  {
 		TFDireccion = new JTextField();
 		LTelefono = new JLabel();
 		FTTelefeno = new JFormattedTextField(new FormateadorTel());
-		FTTelefeno.setValue(new TTelefono("#"));
+		FTTelefeno.setValue("");
 		LDNI = new JLabel();
-		FTDNI = new JFormattedTextField();
-		FTDNI.setValue(new Long(11111111));
+		FTDNI = new JFormattedTextField(new FormateadorCuitCuil());		
+		FTDNI.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
+		FTDNI.setValue("##-####-##");
 		LCUIT = new JLabel();
 		CBCUIT = new JComboBox();
 		CBoxCUIT = new JCheckBox();

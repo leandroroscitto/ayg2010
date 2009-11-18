@@ -1,4 +1,4 @@
-package pruebas;
+package formateadores;
 
 import javax.xml.bind.ParseConversionEvent;
 
@@ -7,22 +7,31 @@ public class TTelefono {
 	private String valor = "";
 
 	// Elimina todo lo que no sea dígitos
-	public TTelefono(String cadena) {
+	public TTelefono(String cadena, String cadenaOriginal) {
 		int longitud = cadena.length();
 		char[] cdn = new char[longitud];
 
 		int i;
 		int d = 0;
 		char C;
+		boolean error = false;
+
 		for (i = 0; i < longitud; i++) {
 			C = cadena.charAt(i);
 			if (es_digito(C) || es_simbolo(C)) {
 				cdn[d] = cadena.charAt(i);
 				d++;
+			} else {
+				error = true;
+				break;
 			}
 		}
-		
-		valor = new String(cdn,0,d);
+
+		if (error) {
+			valor = cadenaOriginal;
+		} else {
+			valor = new String(cdn, 0, d);
+		}
 	}
 
 	public boolean es_digito(char C) {
@@ -67,9 +76,8 @@ public class TTelefono {
 		}
 	}
 
-    //Devuelve la cadena 
-    public String toString()
-    {
-        return valor;
-    }
+	// Devuelve la cadena
+	public String toString() {
+		return valor;
+	}
 }

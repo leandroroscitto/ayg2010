@@ -35,7 +35,7 @@ import enumerados.EEstadoEmpleado;
 public class Prot_empleado {
 
 	private void JB_OKActionPerformed(ActionEvent e) {
-		TEmpleado empleado = new TEmpleado(Integer.parseInt(textField1.getText()), textField2.getText(), textField3.getText(), textField4.getText(),
+		TEmpleado empleado = new TEmpleado(Integer.parseInt(textField1.getText()),"3276777", textField2.getText(), textField3.getText(), textField4.getText(),
 				ECategoriaEmpleado.valueOf((String)comboBox2.getSelectedItem()), EEstadoEmpleado.valueOf((String)comboBox1.getSelectedItem()));
 		prueba.g.agregar_elemento(empleado);
 	}

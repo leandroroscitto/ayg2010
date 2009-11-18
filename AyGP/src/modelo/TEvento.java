@@ -9,18 +9,29 @@ public class TEvento extends TElemento {
 
 	private static final long serialVersionUID = 1L;
 
+	private String nombre;
 	private int id_evento;
 	private String descripcion;
 	private Calendar fecha;
 
-	public TEvento(int id, String des, Calendar d) {
+	public TEvento(int id, String nom, String des, Calendar d) {
 		super(ETipoElemento.EVENTO);
-
+		
+		nombre = nom;
 		id_evento = id;
 		descripcion = des;
 		fecha = d;
 	}
 
+	
+	public String get_nombre(){
+		return nombre;
+	}
+	
+	public void set_nombre(String n){
+		nombre = n;
+	}
+	
 	public int getId_evento() {
 		return id_evento;
 	}

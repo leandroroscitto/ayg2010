@@ -5,6 +5,7 @@ import java.awt.Color;
 import datos.TElemento;
 import enumerados.EEstadoVehiculo;
 import enumerados.ETipoElemento;
+import enumerados.ETipoVehiculo;
 
 public class TVehiculo extends TElemento {
 
@@ -16,6 +17,7 @@ public class TVehiculo extends TElemento {
 	private Color color;
 	private long kilometraje;
 	private EEstadoVehiculo estado;
+	private ETipoVehiculo tvehiculo;
 
 	public TVehiculo(String pat, String mar, String mod, Color col, long kil,
 			EEstadoVehiculo est) {
@@ -85,6 +87,14 @@ public class TVehiculo extends TElemento {
 
 	public void setEstado(EEstadoVehiculo estado) {
 		this.estado = estado;
+	}
+	
+	public ETipoVehiculo getTipoVehiculo(){
+		return tvehiculo;
+	}
+	
+	public void setTipoVehiculo(ETipoVehiculo t){
+		tvehiculo = t;
 	}
 
 }
