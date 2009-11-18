@@ -13,6 +13,7 @@ public class TEmpleado extends TElemento {
 	private static final long serialVersionUID = 1L;
 
 	private int legajo;
+	private String dni;
 	private String nombre;
 	private String direccion;
 	private String telefono;
@@ -20,10 +21,11 @@ public class TEmpleado extends TElemento {
 	private ECategoriaEmpleado categoria;
 	private EEstadoEmpleado estado;
 
-	public TEmpleado(int leg, String nom, String dir, String tel,
+	public TEmpleado(int leg, String dnis, String nom, String dir, String tel,
 			ECategoriaEmpleado cat, EEstadoEmpleado est) {
 		super(ETipoElemento.EMPLEADO);
 		legajo = leg;
+		dni = dnis;
 		nombre = nom;
 		direccion = dir;
 		telefono = tel;
@@ -31,9 +33,9 @@ public class TEmpleado extends TElemento {
 		categoria = cat;
 		estado = est;
 	}
-	
-	//Determina si el estado del equipo permite su planificación en un pedido.
-	//TRABAJANDO se considera porque la planificación puede ser a futuro.
+
+	// Determina si el estado del equipo permite su planificación en un pedido.
+	// TRABAJANDO se considera porque la planificación puede ser a futuro.
 	public boolean estado_disp() {
 		if ((estado == EEstadoEmpleado.DISPONIBLE)
 				|| (estado == EEstadoEmpleado.TRABAJANDO)) {
@@ -41,6 +43,14 @@ public class TEmpleado extends TElemento {
 		} else {
 			return false;
 		}
+	}
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
 
 	public int getLegajo() {
@@ -86,8 +96,8 @@ public class TEmpleado extends TElemento {
 	public void eliminar_horario(EDia Dia, int HI, int HF) {
 		horario.quitar_rango_horario(Dia, HI, HF);
 	}
-	
-	public boolean trabaja_en_rango(EDia Dia, int HI, int HF){
+
+	public boolean trabaja_en_rango(EDia Dia, int HI, int HF) {
 		return horario.trabaja_en_rango(Dia, HI, HF);
 	}
 

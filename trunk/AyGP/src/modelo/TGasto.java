@@ -7,6 +7,8 @@ public class TGasto extends TElemento {
 
 	private static final long serialVersionUID = 1L;
 
+	
+	private String nombre;
 	private int id_gasto;
 	private String descripcion;
 	private float monto;
@@ -17,6 +19,14 @@ public class TGasto extends TElemento {
 		id_gasto = id;
 		descripcion = des;
 		monto = m;
+	}
+	
+	public String get_nombre(){
+		return nombre;
+	}
+	
+	public void set_nombre(String n){
+		nombre = n;
 	}
 
 	public int getId_gasto() {
