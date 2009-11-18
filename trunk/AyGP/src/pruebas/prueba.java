@@ -41,6 +41,8 @@ public class prueba {
 			Ests[cat.ordinal()]=cat.toString();
 		}
 		
+		AltaModCliente VAltaCliente = new AltaModCliente();
+		
 		@SuppressWarnings("unused")
 		Prot_empleado Ventana= new Prot_empleado(Cats, Ests);
 		//Ventana.notify();
