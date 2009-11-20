@@ -35,15 +35,22 @@ import enumerados.EEstadoEmpleado;
 public class Prot_empleado {
 
 	private void JB_OKActionPerformed(ActionEvent e) {
-		TEmpleado empleado = new TEmpleado(Integer.parseInt(textField1.getText()),"3276777", textField2.getText(), textField3.getText(), textField4.getText(),
-				ECategoriaEmpleado.valueOf((String)comboBox2.getSelectedItem()), EEstadoEmpleado.valueOf((String)comboBox1.getSelectedItem()));
-		prueba.g.agregar_elemento(empleado);
+		TEmpleado empleado = new TEmpleado(Integer.parseInt(textField1
+				.getText()), "3276777", textField2.getText(), textField3
+				.getText(), textField4.getText(), ECategoriaEmpleado
+				.valueOf((String) comboBox2.getSelectedItem()), EEstadoEmpleado
+				.valueOf((String) comboBox1.getSelectedItem()),1);
+		try {
+			prueba.g.agregar_elemento(empleado);
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
 
 	private void JB_KOMouseClicked(MouseEvent e) {
 		// TODO add your code here
 	}
-	
+
 	private void JDialog_EmpleadoWindowClosing(WindowEvent e) {
 		System.out.println("Salgo");
 	}
@@ -72,14 +79,13 @@ public class Prot_empleado {
 		textField4 = new JTextField();
 		label5 = new JLabel();
 
-		ComboBoxModel comboMod2 = new DefaultComboBoxModel(new String[]{});
+		ComboBoxModel comboMod2 = new DefaultComboBoxModel(new String[] {});
 		comboBox2 = new JComboBox(comboMod2);
-		
+
 		comboBox2.removeAllItems();
-		for (String item: (String[])Cats){
+		for (String item : (String[]) Cats) {
 			comboBox2.addItem(item);
 		}
-		
 
 		// INICIALZAR
 		label6 = new JLabel();
@@ -106,7 +112,7 @@ public class Prot_empleado {
 			JDialog_Empleado.addWindowListener(new WindowAdapter() {
 				@Override
 				public void windowClosing(WindowEvent e) {
-					super.windowClosing(e);					
+					super.windowClosing(e);
 					JDialog_EmpleadoWindowClosing(e);
 				}
 			});

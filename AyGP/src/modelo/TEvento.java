@@ -56,8 +56,8 @@ public class TEvento extends TElemento {
 		this.fecha = fecha;
 	}
 
-	public static long getSerialVersionUID() {
-		return serialVersionUID;
+	public int getEID(){
+		return id_evento;
 	}
 
 }

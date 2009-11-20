@@ -1,10 +1,7 @@
 package control;
 
-import java.awt.Component;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Locale;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -12,9 +9,9 @@ import javax.swing.table.DefaultTableModel;
 import modelo.TEmpleado;
 import modelo.TEquipo;
 import modelo.TEvento;
-import datos.TGestorDeDatos;
-import sun.util.resources.LocaleNames_es;
+import modelo.TVehiculo;
 import ventanas.VentanaPAdministrador;
+import datos.TGestorDeDatos;
 
 public class cadministrador {
 	private VentanaPAdministrador ventana;
@@ -25,8 +22,6 @@ public class cadministrador {
 		GDatos = GD;
 
 		ventana = new VentanaPAdministrador();
-		// ventana.initComponents();
-		System.out.println("C");
 		actualizartablas();
 
 	}
@@ -35,8 +30,10 @@ public class cadministrador {
 		actualizartempleados();
 		actualizartequipos();
 		actualizarteventos();
+		actualizartvehiculos();
 	}
 
+	@SuppressWarnings("serial")
 	public void actualizartempleados() {
 		ArrayList<TEmpleado> lista_empleados = GDatos.getDatos()
 				.getLista_empleados();
@@ -65,10 +62,11 @@ public class cadministrador {
 			String estados = E.getEstado().toString();
 			String categorias = E.getCategoria().toString();
 			TM.addRow(new String[] { legajos, dnis, nombres, direccions,
-					telefonos, estados, categorias });
+					telefonos, categorias, estados });
 		}
 	}
 
+	@SuppressWarnings("serial")
 	public void actualizartequipos() {
 		ArrayList<TEquipo> lista_equipos = GDatos.getDatos().getLista_equipos();
 		JTable equipos = ventana.getTEquipos();
@@ -95,6 +93,7 @@ public class cadministrador {
 		}
 	}
 
+	@SuppressWarnings("serial")
 	public void actualizarteventos() {
 		ArrayList<TEvento> lista_eventos = GDatos.getDatos().getLista_eventos();
 		JTable eventos = ventana.getTEventos();
@@ -116,18 +115,49 @@ public class cadministrador {
 			String nombres = E.get_nombre();
 			Calendar fecha = E.getFecha();
 
-			String months[] = { "Diciembre", "Enero", "Febrero", "Marzo", "Abril", "Mayo",
-					"Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre" };
+			String months[] = { "Diciembre", "Enero", "Febrero", "Marzo",
+					"Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
+					"Octubre", "Noviembre" };
 
 			String Dia = String.valueOf(fecha.get(Calendar.DATE));
-			System.out.print(fecha.get(Calendar.DATE));
 			String Mes = months[fecha.get(Calendar.MONTH)];
-			System.out.print(fecha.get(Calendar.MONTH));
 			String Anio = String.valueOf(fecha.get(Calendar.YEAR));
-			System.out.print(fecha.get(Calendar.YEAR));
-			TM
-					.addRow(new String[] { id, nombres,
-							Dia + " de " + Mes + " del " + Anio });
+			TM.addRow(new String[] { id, nombres,
+					Dia + " de " + Mes + " del " + Anio });
+		}
+	}
+
+	@SuppressWarnings("serial")
+	public void actualizartvehiculos() {
+		ArrayList<TVehiculo> lista_vehiculos = GDatos.getDatos()
+				.getLista_vehiculos();
+		JTable vehiculos = ventana.getTVehiculos();
+
+		vehiculos.removeAll();
+
+		DefaultTableModel TM = new DefaultTableModel(new String[] { "Patente",
+				"Color", "Estado", "Tipo", "Kilometraje", "Marca", "Modelo" },
+				0) {
+			boolean[] columnEditable = new boolean[] { false, false, false,
+					false, false, false };
+
+			@Override
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
+				return columnEditable[columnIndex];
+			}
+		};
+		vehiculos.setModel(TM);
+		for (TVehiculo V : lista_vehiculos) {
+			String Patente = V.getPatente();
+			String Color = V.getColor();
+			String Estado = V.getEstado().toString();
+			String Tipo = V.getTipoVehiculo().toString();
+			String Kilometraje = String.valueOf(V.getKilometraje());
+			String Marca = V.getMarca();
+			String Modelo = V.getModelo();
+
+			TM.addRow(new String[] { Patente, Color, Estado, Tipo, Kilometraje,
+					Marca, Modelo });
 		}
 	}
 }

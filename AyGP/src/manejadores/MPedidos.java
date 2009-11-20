@@ -31,19 +31,6 @@ public class MPedidos {
 		return true;
 	}
 
-	// SI FUNCIONA LA GENERAL ESTA SE ELIMINA
-	@SuppressWarnings("unused")
-	private ArrayList<TPedido> pedidos_de_equipo(TEquipo E) {
-		ArrayList<TPedido> lista = new ArrayList<TPedido>();
-
-		for (TPedido pedido : lpedidos) {
-			if (pedido.getEquipos().contains(E)) {
-				lista.add(pedido);
-			}
-		}
-		return lista;
-	}
-
 	// MAS GENERAL PARA OBTENER LA LISTA DE PEDIDOS
 	private ArrayList<TPedido> pedidos_de_elemento(TElemento E) {
 		ArrayList<TPedido> lista = new ArrayList<TPedido>();

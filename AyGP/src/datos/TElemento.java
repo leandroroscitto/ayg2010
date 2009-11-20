@@ -1,9 +1,10 @@
 package datos;
 
 import java.io.Serializable;
+
 import enumerados.ETipoElemento;
 
-public class TElemento implements Serializable {
+public abstract class TElemento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -17,4 +18,5 @@ public class TElemento implements Serializable {
 		return tipo;
 	}
 
+	public abstract int getEID();
 }

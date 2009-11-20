@@ -1,9 +1,24 @@
 package datos;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
-import modelo.*;
+import modelo.TCliente;
+import modelo.TEmpleado;
+import modelo.TEquipo;
+import modelo.TEvento;
+import modelo.TGasto;
+import modelo.TPedido;
+import modelo.TVehiculo;
+import enumerados.ETipoElemento;
 
 public class TGestorDeDatos {
 
@@ -75,32 +90,85 @@ public class TGestorDeDatos {
 		dat = new TDatos();
 	}
 
-	public boolean agregar_elemento(TElemento e) {
-
-		switch (e.getTipo()) {
+	@SuppressWarnings("unchecked")
+	public TElemento buscar_elemento(int ID, ETipoElemento T) {
+		ArrayList Lista=null;
+		
+		switch (T) {
 		case EMPLEADO:
-			dat.getLista_empleados().add((TEmpleado)e);
+			Lista=dat.getLista_empleados();
 			break;
 		case PEDIDO:
-			dat.getLista_pedidos().add((TPedido)e);
+			Lista=dat.getLista_pedidos();
 			break;
 		case EVENTO:
-			dat.getLista_eventos().add((TEvento)e);
+			Lista=dat.getLista_eventos();
 			break;
 		case GASTO:
-			dat.getLista_gastos().add((TGasto)e);
+			Lista=dat.getLista_gastos();
 			break;
 		case CLIENTE:
-			dat.getLista_clientes().add((TCliente)e);
+			Lista=dat.getLista_clientes();
 			break;
 		case VEHICULO:
-			dat.getLista_vehiculos().add((TVehiculo)e);
+			Lista=dat.getLista_vehiculos();
 			break;
 		case EQUIPO:
-			dat.getLista_equipos().add((TEquipo)e);
+			Lista=dat.getLista_equipos();
 			break;
 		}
-		return true;
+		
+		int i=0;
+		boolean encontro=false;
+		int tam=Lista.size();
+		TElemento E;
+		while ((i<tam) && (!encontro)){
+			E=((TElemento)Lista.get(i));
+			encontro=(E.getEID()==ID);
+			i++;
+		}
+		
+		if (!encontro){
+			return null;
+		}else{
+			return ((TElemento)Lista.get(i-1));
+		}
+	}
+
+	public void agregar_elemento(TElemento e) throws Exception {
+
+		// Si ya existe un elemento con ese id,
+		// no se puede agregar el nuevo elemento
+		// No puede haber elementos con id repetido
+		TElemento E = buscar_elemento(e.getEID(), e.getTipo());
+		if (E != null) {
+			throw (new Exception("Ya existe el elemento ingresado del tipo " + e.getTipo().toString()));
+		} else {
+
+			switch (e.getTipo()) {
+			case EMPLEADO:
+				dat.getLista_empleados().add((TEmpleado) e);
+				break;
+			case PEDIDO:
+				dat.getLista_pedidos().add((TPedido) e);
+				break;
+			case EVENTO:
+				dat.getLista_eventos().add((TEvento) e);
+				break;
+			case GASTO:
+				dat.getLista_gastos().add((TGasto) e);
+				break;
+			case CLIENTE:
+				dat.getLista_clientes().add((TCliente) e);
+				break;
+			case VEHICULO:
+				dat.getLista_vehiculos().add((TVehiculo) e);
+				break;
+			case EQUIPO:
+				dat.getLista_equipos().add((TEquipo) e);
+				break;
+			}
+		}
 	}
 
 	public boolean quitar_elemento(TElemento e) {
@@ -130,8 +198,8 @@ public class TGestorDeDatos {
 		}
 		return true;
 	}
-	
-	public TDatos getDatos(){
+
+	public TDatos getDatos() {
 		return dat;
 	}
 

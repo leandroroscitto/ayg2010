@@ -64,8 +64,8 @@ public class TEquipo extends TElemento {
 		this.estado = estado;
 	}
 
-	public static long getSerialVersionUID() {
-		return serialVersionUID;
+	public int getEID(){
+		return id_equipo;
 	}
 
 }
