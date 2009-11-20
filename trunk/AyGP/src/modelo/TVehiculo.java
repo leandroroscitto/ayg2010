@@ -1,7 +1,5 @@
 package modelo;
 
-import java.awt.Color;
-
 import datos.TElemento;
 import enumerados.EEstadoVehiculo;
 import enumerados.ETipoElemento;
@@ -14,13 +12,14 @@ public class TVehiculo extends TElemento {
 	private String patente;
 	private String marca;
 	private String modelo;
-	private Color color;
+	private String color;
 	private long kilometraje;
 	private EEstadoVehiculo estado;
 	private ETipoVehiculo tvehiculo;
+	private int id_vehiculo;
 
-	public TVehiculo(String pat, String mar, String mod, Color col, long kil,
-			EEstadoVehiculo est) {
+	public TVehiculo(String pat, String mar, String mod, String col, long kil,
+			EEstadoVehiculo est,ETipoVehiculo tip,int id) {
 		super(ETipoElemento.VEHICULO);
 		patente = pat;
 		marca = mar;
@@ -28,6 +27,8 @@ public class TVehiculo extends TElemento {
 		color = col;
 		kilometraje = kil;
 		estado = est;
+		tvehiculo=tip;
+		id_vehiculo=id;
 	}
 	
 	//Determina si el estado del equipo permite su planificación en un pedido.
@@ -65,11 +66,11 @@ public class TVehiculo extends TElemento {
 		this.modelo = modelo;
 	}
 
-	public Color getColor() {
+	public String getColor() {
 		return color;
 	}
 
-	public void setColor(Color color) {
+	public void setColor(String color) {
 		this.color = color;
 	}
 
@@ -95,6 +96,11 @@ public class TVehiculo extends TElemento {
 	
 	public void setTipoVehiculo(ETipoVehiculo t){
 		tvehiculo = t;
+	}
+
+	@Override
+	public int getEID() {
+		return id_vehiculo;
 	}
 
 }

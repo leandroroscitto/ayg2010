@@ -1,6 +1,5 @@
 package formateadores;
 
-import javax.xml.bind.ParseConversionEvent;
 
 public class TTelefono {
 	// Valor de la variable

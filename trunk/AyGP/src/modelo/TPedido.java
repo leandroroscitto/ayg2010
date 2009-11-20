@@ -19,10 +19,8 @@ public class TPedido extends TElemento {
 	private Calendar fin;
 
 	private ArrayList<TEmpleado> empleados;
-	private ArrayList<TGasto> gastos;
 	private TCliente cliente;
 	private ArrayList<TVehiculo> vehiculos;
-	private ArrayList<TEquipo> equipos;
 
 	public TPedido(int id, String O, String D, EEstadoPedido E, Calendar I,
 			Calendar F, TCliente C) {
@@ -46,10 +44,6 @@ public class TPedido extends TElemento {
 			return getEmpleados();
 		case VEHICULO:
 			return getVehiculos();
-		case EQUIPO:
-			return getEquipos();
-		case GASTO:
-			return getGastos();
 		}
 		return null;
 	}
@@ -119,10 +113,6 @@ public class TPedido extends TElemento {
 		return empleados;
 	}
 
-	public ArrayList<TGasto> getGastos() {
-		return gastos;
-	}
-
 	public TCliente getCliente() {
 		return cliente;
 	}
@@ -130,8 +120,9 @@ public class TPedido extends TElemento {
 	public ArrayList<TVehiculo> getVehiculos() {
 		return vehiculos;
 	}
-
-	public ArrayList<TEquipo> getEquipos() {
-		return equipos;
+	
+	@Override
+	public int getEID(){
+		return id_pedido;
 	}
 }

@@ -20,9 +20,10 @@ public class TEmpleado extends TElemento {
 	private THorario horario;
 	private ECategoriaEmpleado categoria;
 	private EEstadoEmpleado estado;
+	private int id_empleado;
 
 	public TEmpleado(int leg, String dnis, String nom, String dir, String tel,
-			ECategoriaEmpleado cat, EEstadoEmpleado est) {
+			ECategoriaEmpleado cat, EEstadoEmpleado est,int id) {
 		super(ETipoElemento.EMPLEADO);
 		legajo = leg;
 		dni = dnis;
@@ -32,6 +33,7 @@ public class TEmpleado extends TElemento {
 		horario = new THorario();
 		categoria = cat;
 		estado = est;
+		id_empleado=id;
 	}
 
 	// Determina si el estado del equipo permite su planificación en un pedido.
@@ -115,6 +117,11 @@ public class TEmpleado extends TElemento {
 
 	public void setEstado(EEstadoEmpleado estado) {
 		this.estado = estado;
+	}
+
+	@Override
+	public int getEID() {
+		return id_empleado;
 	}
 
 }

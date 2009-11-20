@@ -1,13 +1,25 @@
 package ventanas;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.table.*;
-/*
- * Created by JFormDesigner on Tue Nov 17 13:04:49 GYT 2009
- */
+import java.awt.CardLayout;
+import java.awt.Container;
+import java.awt.Dialog;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 
 public class VentanaPAdministrador  {
@@ -65,18 +77,7 @@ public class VentanaPAdministrador  {
 		// TODO add your code here
 	}
 
-	private void BRegistrarGActionPerformed(ActionEvent e) {
-		// TODO add your code here
-	}
-
-	private void BModificarGActionPerformed(ActionEvent e) {
-		// TODO add your code here
-	}
-
-	private void BBajaGActionPerformed(ActionEvent e) {
-		// TODO add your code here
-	}
-
+	@SuppressWarnings("serial")
 	public void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		JVentanaPAdministrador = new JFrame();
@@ -109,13 +110,6 @@ public class VentanaPAdministrador  {
 		BRegistrarEv = new JButton();
 		BModificarEv = new JButton();
 		BBajaEv = new JButton();
-		PGastos = new JPanel();
-		PLGastos = new JPanel();
-		SPTablaG = new JScrollPane();
-		TGastos = new JTable();
-		BRegistrarG = new JButton();
-		BModificarG = new JButton();
-		BBajaG = new JButton();
 
 		//======== JVentanaPAdministrador ========
 		{
@@ -470,92 +464,6 @@ public class VentanaPAdministrador  {
 						new Insets(0, 0, 0, 0), 0, 0));
 				}
 				TPAdministrador.addTab("Administraci\u00f3n de Eventos", PEventos);
-
-
-				//======== PGastos ========
-				{
-					PGastos.setLayout(new GridBagLayout());
-					((GridBagLayout)PGastos.getLayout()).columnWidths = new int[] {25, 150, 0, 150, 0, 150, 25, 0};
-					((GridBagLayout)PGastos.getLayout()).rowHeights = new int[] {238, 45, 0};
-					((GridBagLayout)PGastos.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0E-4};
-					((GridBagLayout)PGastos.getLayout()).rowWeights = new double[] {1.0, 0.0, 1.0E-4};
-
-					//======== PLGastos ========
-					{
-						PLGastos.setBorder(new TitledBorder("Lista de Pedidos"));
-						PLGastos.setLayout(new CardLayout());
-
-						//======== SPTablaG ========
-						{
-
-							//---- TGastos ----
-							TGastos.setModel(new DefaultTableModel(
-								new Object[][] {
-									{null, null, null},
-								},
-								new String[] {
-									"ID", "Nombre", "Monto"
-								}
-							) {
-								boolean[] columnEditable = new boolean[] {
-									false, false, false
-								};
-								@Override
-								public boolean isCellEditable(int rowIndex, int columnIndex) {
-									return columnEditable[columnIndex];
-								}
-							});
-							{
-								TableColumnModel cm = TGastos.getColumnModel();
-								cm.getColumn(1).setMinWidth(35);
-								cm.getColumn(2).setMinWidth(35);
-							}
-							TGastos.setAutoCreateRowSorter(true);
-							TGastos.setFillsViewportHeight(true);
-							TGastos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-							SPTablaG.setViewportView(TGastos);
-						}
-						PLGastos.add(SPTablaG, "card1");
-					}
-					PGastos.add(PLGastos, new GridBagConstraints(1, 0, 5, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-						new Insets(0, 0, 0, 0), 0, 0));
-
-					//---- BRegistrarG ----
-					BRegistrarG.setText("Registrar Gasto");
-					BRegistrarG.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							BRegistrarGActionPerformed(e);
-						}
-					});
-					PGastos.add(BRegistrarG, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
-						new Insets(0, 0, 0, 0), 0, 0));
-
-					//---- BModificarG ----
-					BModificarG.setText("Modificar informaci\u00f3n de Gasto");
-					BModificarG.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							BModificarGActionPerformed(e);
-						}
-					});
-					PGastos.add(BModificarG, new GridBagConstraints(3, 1, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
-						new Insets(0, 0, 0, 0), 0, 0));
-
-					//---- BBajaG ----
-					BBajaG.setText("Eliminar Gasto");
-					BBajaG.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							BBajaGActionPerformed(e);
-						}
-					});
-					PGastos.add(BBajaG, new GridBagConstraints(5, 1, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
-						new Insets(0, 0, 0, 0), 0, 0));
-				}
-				TPAdministrador.addTab("Administraci\u00f3n de Gastos", PGastos);
-
 			}
 			JVentanaPAdministradorContentPane.add(TPAdministrador);
 			JVentanaPAdministrador.setSize(900, 345);
@@ -595,13 +503,7 @@ public class VentanaPAdministrador  {
 	private JButton BRegistrarEv;
 	private JButton BModificarEv;
 	private JButton BBajaEv;
-	private JPanel PGastos;
-	private JPanel PLGastos;
-	private JScrollPane SPTablaG;
-	private JTable TGastos;
-	private JButton BRegistrarG;
-	private JButton BModificarG;
-	private JButton BBajaG;
+	
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 	public JTabbedPane getTPAdministrador() {
 		return TPAdministrador;
@@ -622,9 +524,4 @@ public class VentanaPAdministrador  {
 	public JTable getTEventos() {
 		return TEventos;
 	}
-
-	public JTable getTGastos() {
-		return TGastos;
-	}
-	
 }

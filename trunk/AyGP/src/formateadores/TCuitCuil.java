@@ -9,7 +9,6 @@ public class TCuitCuil {
 
 		int i;
 		int d = 0;
-		char C;
 		boolean error = false;
 
 		if (es_digito(cadena.charAt(0)) && es_digito(cadena.charAt(1))

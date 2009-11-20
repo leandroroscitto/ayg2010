@@ -1,18 +1,18 @@
 package enumerados;
 
-public enum ECategoriaEquipo {
-	HANDY, RADIO, CELULAR, CASCO;
+public enum ECategoriaPedido {
+	MENSAJERIA, REPARTO, REMISERIA, FLETES;
 	
 	public String toString(){
 		switch (ordinal()){
 		case 0:
-			return "Handy";
+			return "Mensajería";
 		case 1:
-			return "Radio";
+			return "Reparto";
 		case 2:
-			return "Celular";
+			return "Remisería";
 		case 3:
-			return "Casco";
+			return "Fletes";
 		default:
 			return "No determinado";
 		}

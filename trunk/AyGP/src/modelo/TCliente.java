@@ -13,8 +13,9 @@ public class TCliente extends TElemento {
 	private String dni;
 	private String cuil_cuit;
 	private EEstadoCliente estado;
+	private int id_cliente;
 
-	public TCliente(String nom, String dir, String tel, String d, String c) {
+	public TCliente(String nom, String dir, String tel, String d, String c,int id) {
 		super(ETipoElemento.CLIENTE);
 		nombre = nom;
 		direccion = dir;
@@ -22,6 +23,18 @@ public class TCliente extends TElemento {
 		dni = d;
 		cuil_cuit = c;
 		estado = EEstadoCliente.ACTIVO;
+		id_cliente=id;
+	}
+	
+	public TCliente(String nom, String dir, String tel, String d,int id) {
+		super(ETipoElemento.CLIENTE);
+		nombre = nom;
+		direccion = dir;
+		telefono = tel;
+		dni = d;
+		cuil_cuit = "";
+		estado = EEstadoCliente.ACTIVO;
+		id_cliente=id;
 	}
 
 	public String getNombre() {
@@ -74,6 +87,11 @@ public class TCliente extends TElemento {
 
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
+	}
+
+	@Override
+	public int getEID() {
+		return id_cliente;
 	}
 
 }
