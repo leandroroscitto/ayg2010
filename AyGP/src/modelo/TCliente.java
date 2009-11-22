@@ -13,7 +13,7 @@ public class TCliente extends TElemento {
 	private String dni;
 	private String cuil_cuit;
 	private EEstadoCliente estado;
-	//private int id_cliente;
+	private int id_cliente;
 
 	public TCliente(String nom, String dir, String tel, String d, String c,int id) {
 		super(ETipoElemento.CLIENTE);
@@ -23,7 +23,7 @@ public class TCliente extends TElemento {
 		dni = d;
 		cuil_cuit = c;
 		estado = EEstadoCliente.ACTIVO;
-		//id_cliente=id;
+		id_cliente=id;
 	}
 	
 	public TCliente(String nom, String dir, String tel, String d,int id) {
@@ -34,7 +34,7 @@ public class TCliente extends TElemento {
 		dni = d;
 		cuil_cuit = "";
 		estado = EEstadoCliente.ACTIVO;
-		//id_cliente=id;
+		id_cliente=id;
 	}
 
 	public String getNombre() {
@@ -92,6 +92,14 @@ public class TCliente extends TElemento {
 	@Override
 	public Object getEID() {
 		return dni;
+	}
+
+	public int getId_cliente() {
+		return id_cliente;
+	}
+
+	public void setId_cliente(int id_cliente) {
+		this.id_cliente = id_cliente;
 	}
 
 }

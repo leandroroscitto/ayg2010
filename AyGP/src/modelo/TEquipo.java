@@ -67,5 +67,9 @@ public class TEquipo extends TElemento {
 	public Object getEID(){
 		return id_equipo;
 	}
+	
+	public String toString(){
+		return (estado.toString()+", "+nombre+", "+tipo_equipo.toString()+", "+id_equipo);
+	}
 
 }

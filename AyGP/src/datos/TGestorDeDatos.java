@@ -185,31 +185,41 @@ public class TGestorDeDatos {
 
 			switch (e.getTipo()) {
 			case EMPLEADO:
+				((TEmpleado) e).setId_empleado(dat.resevaridEmpleados());
 				dat.getLista_empleados().add((TEmpleado) e);
 				break;
 			case PEDIDO:
+				((TPedido) e).setId_pedido(dat.resevaridPedidos());
 				dat.getLista_pedidos().add((TPedido) e);
 				break;
 			case EVENTO:
+				((TEvento) e).setId_evento(dat.resevaridEventos());
 				dat.getLista_eventos().add((TEvento) e);
 				break;
 			case GASTO:
+				((TGasto) e).setId_gasto(dat.resevaridGastos());
 				dat.getLista_gastos().add((TGasto) e);
 				break;
 			case CLIENTE:
+				((TCliente) e).setId_cliente(dat.resevaridClientes());
 				dat.getLista_clientes().add((TCliente) e);
 				break;
 			case VEHICULO:
+				((TVehiculo) e).setId_vehiculo(dat.resevaridVehiculos());
 				dat.getLista_vehiculos().add((TVehiculo) e);
 				break;
 			case EQUIPO:
+				((TEquipo) e).setId_equipo(dat.resevaridEquipos());
 				dat.getLista_equipos().add((TEquipo) e);
 				break;
 			}
 		}
 	}
-	
-	public void agregar_elemento(int indice,TElemento e) throws Exception {
+
+	// Agrega el elemento con un id particular, utilizado por la modificación,
+	// donde los id del objeto original debe coincidir con el del nuevo
+	public void agregar_elemento(int indice, TElemento e, int id)
+			throws Exception {
 		// Si ya existe un elemento con ese id,
 		// no se puede agregar el nuevo elemento
 		// No puede haber elementos con id repetido
@@ -223,25 +233,32 @@ public class TGestorDeDatos {
 
 			switch (e.getTipo()) {
 			case EMPLEADO:
-				dat.getLista_empleados().add(indice,(TEmpleado) e);
+				((TEmpleado) e).setId_empleado(id);
+				dat.getLista_empleados().add(indice, (TEmpleado) e);
 				break;
 			case PEDIDO:
-				dat.getLista_pedidos().add(indice,(TPedido) e);
+				((TPedido) e).setId_pedido(id);
+				dat.getLista_pedidos().add(indice, (TPedido) e);
 				break;
 			case EVENTO:
-				dat.getLista_eventos().add(indice,(TEvento) e);
+				((TEvento) e).setId_evento(id);
+				dat.getLista_eventos().add(indice, (TEvento) e);
 				break;
 			case GASTO:
-				dat.getLista_gastos().add(indice,(TGasto) e);
+				((TGasto) e).setId_gasto(id);
+				dat.getLista_gastos().add(indice, (TGasto) e);
 				break;
 			case CLIENTE:
-				dat.getLista_clientes().add(indice,(TCliente) e);
+				((TCliente) e).setId_cliente(id);
+				dat.getLista_clientes().add(indice, (TCliente) e);
 				break;
 			case VEHICULO:
-				dat.getLista_vehiculos().add(indice,(TVehiculo) e);
+				((TVehiculo) e).setId_vehiculo(id);
+				dat.getLista_vehiculos().add(indice, (TVehiculo) e);
 				break;
 			case EQUIPO:
-				dat.getLista_equipos().add(indice,(TEquipo) e);
+				((TEquipo) e).setId_equipo(id);
+				dat.getLista_equipos().add(indice, (TEquipo) e);
 				break;
 			}
 		}
@@ -252,17 +269,45 @@ public class TGestorDeDatos {
 		// Asi no se encuentra a si mismo en la búsqueda que sigue
 		TElemento Eori = buscar_elemento(indice, E.getTipo());
 		quitar_elemento(Eori);
+		
+		System.out.print("Original: ");System.out.println(Eori.toString());
+		System.out.print("Modificiación: ");System.out.println(E.toString());
+		
+		int id=0;
+		switch (Eori.getTipo()) {
+		case EMPLEADO:
+			id=((TEmpleado)Eori).getId_empleado();
+			break;
+		case PEDIDO:
+			id=((TPedido)Eori).getId_pedido();
+			break;
+		case EVENTO:
+			id=((TEvento)Eori).getId_evento();
+			break;
+		case GASTO:
+			id=((TGasto)Eori).getId_gasto();
+			break;
+		case CLIENTE:
+			id=((TCliente)Eori).getId_cliente();
+			break;
+		case VEHICULO:
+			id=((TVehiculo)Eori).getId_vehiculo();
+			break;
+		case EQUIPO:
+			id=((TEquipo)Eori).getId_equipo();
+			break;
+		}
 
 		// Luego se agrega el nuevo elemento
 		// Trata de agregarlo, si ya existe la clave
 		// del elemento, no va ser posible, por lo
 		// que se restaura el elemento original
 		try {
-			agregar_elemento(indice,E);
+			agregar_elemento(indice, E,id);
 		} catch (Exception exep) {
 			// No deberia fallar, ya estaba en la lista
-			agregar_elemento(indice,Eori);
-			// Envia la esepción para que la maneje el controlador
+			agregar_elemento(indice, Eori,id);
+			// Envia la excepción para que la maneje el controlador
 			throw exep;
 		}
 	}

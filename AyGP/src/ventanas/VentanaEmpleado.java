@@ -91,6 +91,7 @@ public class VentanaEmpleado {
 
 		initComponents();
 
+		FActEmpleado.pack();
 		FActEmpleado.setVisible(true);
 	}
 
@@ -109,6 +110,7 @@ public class VentanaEmpleado {
 
 		horariolocal=Emp.getRangosHorarios();
 
+		FActEmpleado.pack();
 		FActEmpleado.setVisible(true);
 	}
 

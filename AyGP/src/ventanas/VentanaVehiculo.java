@@ -17,7 +17,7 @@ import formateadores.FormateadorPatente;
  * @author Graham
  */
 public class VentanaVehiculo {
-	cadministrador controlador;
+	private cadministrador controlador;
 
 	private void inicializarModelo(String titulo,String boton,cadministrador P) {
 		controlador = P;
@@ -43,6 +43,7 @@ public class VentanaVehiculo {
 
 		initComponents();
 
+		FActVehiculo.pack();
 		FActVehiculo.setVisible(true);
 	}
 
@@ -64,6 +65,7 @@ public class VentanaVehiculo {
 		CBEstado.setSelectedItem(vehiculo.getEstado());
 		CBTipo.setSelectedItem(vehiculo.getTipoVehiculo());
 		
+		FActVehiculo.pack();
 		FActVehiculo.setVisible(true);
 	}
 

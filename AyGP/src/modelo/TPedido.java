@@ -108,6 +108,10 @@ public class TPedido extends TElemento {
 	public int getId_pedido() {
 		return id_pedido;
 	}
+	
+	public void setId_pedido(int i){
+		id_pedido=i;
+	}
 
 	public ArrayList<TEmpleado> getEmpleados() {
 		return empleados;
