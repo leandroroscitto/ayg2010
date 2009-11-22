@@ -16,7 +16,7 @@ public class TVehiculo extends TElemento {
 	private long kilometraje;
 	private EEstadoVehiculo estado;
 	private ETipoVehiculo tvehiculo;
-	private int id_vehiculo;
+	//private int id_vehiculo;
 
 	public TVehiculo(String pat, String mar, String mod, String col, long kil,
 			EEstadoVehiculo est,ETipoVehiculo tip,int id) {
@@ -28,7 +28,7 @@ public class TVehiculo extends TElemento {
 		kilometraje = kil;
 		estado = est;
 		tvehiculo=tip;
-		id_vehiculo=id;
+		//id_vehiculo=id;
 	}
 	
 	//Determina si el estado del equipo permite su planificación en un pedido.
@@ -99,8 +99,8 @@ public class TVehiculo extends TElemento {
 	}
 
 	@Override
-	public int getEID() {
-		return id_vehiculo;
+	public Object getEID() {
+		return patente;
 	}
 
 }

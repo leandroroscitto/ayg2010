@@ -2,22 +2,22 @@ package modelo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 import enumerados.EDia;
 
-public class THorario implements Serializable{
-	
+public class THorario implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
-	public class TRangoHorario implements Serializable{
+	public class TRangoHorario implements Serializable {
 
 		private static final long serialVersionUID = 1L;
-		
+
 		private int HoraIni;
 		private int HoraFin;
+		private EDia Dia;
 
-		public TRangoHorario(int HI, int HF) {
+		public TRangoHorario(EDia D, int HI, int HF) {
 			assert (HI >= 0) && (HI <= 2359 && ((HI % 100) <= 59)) : System.out
 					.printf("Error hora inicio %d", HI);
 			assert (HF >= 0) && (HF <= 2359) && ((HF % 100) <= 59) : System.out
@@ -26,6 +26,7 @@ public class THorario implements Serializable{
 
 			HoraIni = HI;
 			HoraFin = HF;
+			Dia = D;
 		}
 
 		public int getHoraIni() {
@@ -35,20 +36,16 @@ public class THorario implements Serializable{
 		public int getHoraFin() {
 			return HoraFin;
 		}
+
+		public EDia getDia() {
+			return Dia;
+		}
 	}
 
-	private Hashtable<EDia, ArrayList<TRangoHorario>> Asignacion;
+	private ArrayList<TRangoHorario> Asignacion;
 
 	public THorario() {
-		Asignacion = new Hashtable<EDia, ArrayList<TRangoHorario>>();
-		
-		Asignacion.put(EDia.LUNES, new ArrayList<TRangoHorario>());
-		Asignacion.put(EDia.MARTES, new ArrayList<TRangoHorario>());
-		Asignacion.put(EDia.MIERCOLES, new ArrayList<TRangoHorario>());
-		Asignacion.put(EDia.JUEVES, new ArrayList<TRangoHorario>());
-		Asignacion.put(EDia.VIERNES, new ArrayList<TRangoHorario>());
-		Asignacion.put(EDia.SABADO, new ArrayList<TRangoHorario>());
-		Asignacion.put(EDia.DOMINGO, new ArrayList<TRangoHorario>());
+		Asignacion = new ArrayList<TRangoHorario>();
 	}
 
 	public boolean rangos_validos(int HI1, int HF1, int HI2, int HF2) {
@@ -56,63 +53,87 @@ public class THorario implements Serializable{
 	}
 
 	public void agregar_rango_horario(EDia Dia, int HI, int HF) {
-		TRangoHorario rango = new TRangoHorario(HI, HF);
+		TRangoHorario rango = new TRangoHorario(Dia, HI, HF);
 
-		Asignacion.get(Dia).add(rango);
+		Asignacion.add(rango);
 	}
 
 	public void quitar_rango_horario(EDia Dia, int HI, int HF) {
-		ArrayList<TRangoHorario> lista = Asignacion.get(Dia);
-
 		int i = 0;
-		int tam = lista.size();
+		int tam = Asignacion.size();
 		boolean encontro = false;
 		TRangoHorario rh;
 
 		while ((i < tam) || !encontro) {
-			rh = lista.get(i);
-			encontro = (rh.getHoraIni() == HI && rh.getHoraFin() == HF);
+			rh = Asignacion.get(i);
+			encontro = (rh.getDia().equals(Dia) && rh.getHoraIni() == HI && rh
+					.getHoraFin() == HF);
 			i++;
 		}
 
-		lista.remove(i--);
+		Asignacion.remove(i--);
+	}
+	
+	public void quitar_rango_horario(int indice) {
+		assert indice>=0;
+		assert indice<Asignacion.size();
+		
+		Asignacion.remove(indice);
+	}
+	
+	public TRangoHorario getvaloren(int indice){
+		assert indice>=0;
+		assert indice<Asignacion.size();
+		
+		return Asignacion.get(indice);
+	}
+	
+	public ArrayList<TRangoHorario> getAsignacion(){
+		return Asignacion;
 	}
 
-	public ArrayList<String> get_rangos_dia(EDia Dia) {
-		ArrayList<TRangoHorario> lista = Asignacion.get(Dia);
-		ArrayList<String> listaS = new ArrayList<String>();
+	public ArrayList<TRangoHorario> get_rangos_dia(EDia Dia) {
+		ArrayList<TRangoHorario> listaR = new ArrayList<TRangoHorario>();
 
 		int i = 0;
-		int tam = lista.size();
+		int tam = Asignacion.size();
 		TRangoHorario rh;
-		String cadena;
 
 		while (i < tam) {
-			rh = lista.get(i);
-			cadena = String.valueOf(rh.getHoraIni()) + ','
-					+ String.valueOf(rh.getHoraFin());
-			listaS.add(cadena);
+			rh = Asignacion.get(i);
+			if (rh.getDia().equals(Dia)) {
+				listaR.add(rh);
+			}
 			i++;
 		}
 
-		return listaS;
+		return listaR;
 	}
 
 	public boolean trabaja_en_rango(EDia Dia, int HI, int HF) {
-		ArrayList<TRangoHorario> lista = Asignacion.get(Dia);
-
 		int i = 0;
-		int tam = lista.size();
+		int tam = Asignacion.size();
 		boolean encontro = false;
 		TRangoHorario rh;
 
 		while ((i < tam) || !encontro) {
-			rh = lista.get(i);
-			encontro = (rh.getHoraIni() <= HI && rh.getHoraFin() >= HF);
+			rh = Asignacion.get(i);
+			encontro = (rh.getDia().equals(Dia) && rh.getHoraIni() <= HI && rh.getHoraFin() >= HF);
 			i++;
 		}
 
 		return encontro;
 	}
 
+	public THorario clonar(){
+		ArrayList<TRangoHorario> ListaR=new ArrayList<TRangoHorario>();
+		for (TRangoHorario R:Asignacion){
+			ListaR.add(R);
+		}
+		
+		THorario Clon = new THorario();
+		Clon.Asignacion=ListaR;
+		
+		return Clon;
+	}
 }

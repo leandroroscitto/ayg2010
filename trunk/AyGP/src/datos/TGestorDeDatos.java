@@ -91,58 +91,96 @@ public class TGestorDeDatos {
 	}
 
 	@SuppressWarnings("unchecked")
-	public TElemento buscar_elemento(int ID, ETipoElemento T) {
-		ArrayList Lista=null;
-		
+	public TElemento buscar_elemento(int indice, ETipoElemento T) {
+		assert indice >= 0;
+		ArrayList Lista = null;
+
 		switch (T) {
 		case EMPLEADO:
-			Lista=dat.getLista_empleados();
+			Lista = dat.getLista_empleados();
 			break;
 		case PEDIDO:
-			Lista=dat.getLista_pedidos();
+			Lista = dat.getLista_pedidos();
 			break;
 		case EVENTO:
-			Lista=dat.getLista_eventos();
+			Lista = dat.getLista_eventos();
 			break;
 		case GASTO:
-			Lista=dat.getLista_gastos();
+			Lista = dat.getLista_gastos();
 			break;
 		case CLIENTE:
-			Lista=dat.getLista_clientes();
+			Lista = dat.getLista_clientes();
 			break;
 		case VEHICULO:
-			Lista=dat.getLista_vehiculos();
+			Lista = dat.getLista_vehiculos();
 			break;
 		case EQUIPO:
-			Lista=dat.getLista_equipos();
+			Lista = dat.getLista_equipos();
 			break;
 		}
-		
-		int i=0;
-		boolean encontro=false;
-		int tam=Lista.size();
+
+		if (indice > Lista.size()) {
+			return null;
+		} else {
+			return (TElemento) Lista.get(indice);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public TElemento buscar_elemento(Object ID, ETipoElemento T) {
+		ArrayList Lista = null;
+
+		switch (T) {
+		case EMPLEADO:
+			Lista = dat.getLista_empleados();
+			break;
+		case PEDIDO:
+			Lista = dat.getLista_pedidos();
+			break;
+		case EVENTO:
+			Lista = dat.getLista_eventos();
+			break;
+		case GASTO:
+			Lista = dat.getLista_gastos();
+			break;
+		case CLIENTE:
+			Lista = dat.getLista_clientes();
+			break;
+		case VEHICULO:
+			Lista = dat.getLista_vehiculos();
+			break;
+		case EQUIPO:
+			Lista = dat.getLista_equipos();
+			break;
+		}
+
+		int i = 0;
+		boolean encontro = false;
+		int tam = Lista.size();
 		TElemento E;
-		while ((i<tam) && (!encontro)){
-			E=((TElemento)Lista.get(i));
-			encontro=(E.getEID()==ID);
+		while ((i < tam) && (!encontro)) {
+			E = ((TElemento) Lista.get(i));
+			encontro = (E.getEID().equals(ID));
 			i++;
 		}
-		
-		if (!encontro){
+
+		if (!encontro) {
 			return null;
-		}else{
-			return ((TElemento)Lista.get(i-1));
+		} else {
+			return ((TElemento) Lista.get(i - 1));
 		}
 	}
 
 	public void agregar_elemento(TElemento e) throws Exception {
-
 		// Si ya existe un elemento con ese id,
 		// no se puede agregar el nuevo elemento
 		// No puede haber elementos con id repetido
+		// El id depende del tipo de elemento,
+		// por ejemplo el id del empleado es el legajo
 		TElemento E = buscar_elemento(e.getEID(), e.getTipo());
 		if (E != null) {
-			throw (new Exception("Ya existe el elemento ingresado del tipo " + e.getTipo().toString()));
+			throw (new Exception("Ya existe un elemento ingresado del tipo "
+					+ e.getTipo().toString() + " con la misma clave."));
 		} else {
 
 			switch (e.getTipo()) {
@@ -168,6 +206,64 @@ public class TGestorDeDatos {
 				dat.getLista_equipos().add((TEquipo) e);
 				break;
 			}
+		}
+	}
+	
+	public void agregar_elemento(int indice,TElemento e) throws Exception {
+		// Si ya existe un elemento con ese id,
+		// no se puede agregar el nuevo elemento
+		// No puede haber elementos con id repetido
+		// El id depende del tipo de elemento,
+		// por ejemplo el id del empleado es el legajo
+		TElemento E = buscar_elemento(e.getEID(), e.getTipo());
+		if (E != null) {
+			throw (new Exception("Ya existe un elemento ingresado del tipo "
+					+ e.getTipo().toString() + " con la misma clave."));
+		} else {
+
+			switch (e.getTipo()) {
+			case EMPLEADO:
+				dat.getLista_empleados().add(indice,(TEmpleado) e);
+				break;
+			case PEDIDO:
+				dat.getLista_pedidos().add(indice,(TPedido) e);
+				break;
+			case EVENTO:
+				dat.getLista_eventos().add(indice,(TEvento) e);
+				break;
+			case GASTO:
+				dat.getLista_gastos().add(indice,(TGasto) e);
+				break;
+			case CLIENTE:
+				dat.getLista_clientes().add(indice,(TCliente) e);
+				break;
+			case VEHICULO:
+				dat.getLista_vehiculos().add(indice,(TVehiculo) e);
+				break;
+			case EQUIPO:
+				dat.getLista_equipos().add(indice,(TEquipo) e);
+				break;
+			}
+		}
+	}
+
+	public void modificar_elemento(int indice, TElemento E) throws Exception {
+		// Primero saca al elemento originar de la lista
+		// Asi no se encuentra a si mismo en la búsqueda que sigue
+		TElemento Eori = buscar_elemento(indice, E.getTipo());
+		quitar_elemento(Eori);
+
+		// Luego se agrega el nuevo elemento
+		// Trata de agregarlo, si ya existe la clave
+		// del elemento, no va ser posible, por lo
+		// que se restaura el elemento original
+		try {
+			agregar_elemento(indice,E);
+		} catch (Exception exep) {
+			// No deberia fallar, ya estaba en la lista
+			agregar_elemento(indice,Eori);
+			// Envia la esepción para que la maneje el controlador
+			throw exep;
 		}
 	}
 

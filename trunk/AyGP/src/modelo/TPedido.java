@@ -122,7 +122,7 @@ public class TPedido extends TElemento {
 	}
 	
 	@Override
-	public int getEID(){
+	public Object getEID(){
 		return id_pedido;
 	}
 }
