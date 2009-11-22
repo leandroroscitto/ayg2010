@@ -1,27 +1,8 @@
 package pruebas;
 
-import java.util.Calendar;
-
-import javax.swing.JOptionPane;
-
-import modelo.TCliente;
-import modelo.TEmpleado;
-import modelo.TEquipo;
-import modelo.TEvento;
-import modelo.TGasto;
-import modelo.TPedido;
-import modelo.TVehiculo;
 import control.cadministrador;
 import control.coperador;
 import datos.TGestorDeDatos;
-import enumerados.ECategoriaEmpleado;
-import enumerados.ECategoriaEquipo;
-import enumerados.ECategoriaPedido;
-import enumerados.EEstadoEmpleado;
-import enumerados.EEstadoEquipo;
-import enumerados.EEstadoPedido;
-import enumerados.EEstadoVehiculo;
-import enumerados.ETipoVehiculo;
 
 public class prueba {
 
@@ -31,18 +12,19 @@ public class prueba {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		TEmpleado empleado = new TEmpleado(100, "31272448", "Juan", "BB",
+		/*
+		TEmpleado empleado = new TEmpleado(100, 31272448, "Juan", "BB",
 				"45790123", ECategoriaEmpleado.MOTOCICLISTA,
 				EEstadoEmpleado.DISPONIBLE,1);
-		TEmpleado empleado2 = new TEmpleado(101, "32246441", "Pedro", "Roca",
+		TEmpleado empleado2 = new TEmpleado(101, 32246441, "Pedro", "Roca",
 				"4265541", ECategoriaEmpleado.MOTOCICLISTA,
-				EEstadoEmpleado.DISPONIBLE,2);
-		TEmpleado empleado3 = new TEmpleado(110, "193272452", "Jose", "Suarez",
-				"151790123", ECategoriaEmpleado.MOTOCICLISTA,
+				EEstadoEmpleado.LICENCIA_ENFERMEDAD,2);
+		TEmpleado empleado3 = new TEmpleado(110, 19327245, "Jose", "Suarez",
+				"151790123", ECategoriaEmpleado.CICLISTA,
 				EEstadoEmpleado.DISPONIBLE,3);
-		TEmpleado empleado4 = new TEmpleado(100, "25562282", "Gonzalo", "BB",
-				"45790123", ECategoriaEmpleado.MOTOCICLISTA,
-				EEstadoEmpleado.DISPONIBLE,4);
+		TEmpleado empleado4 = new TEmpleado(200, 25562282, "Gonzalo", "BB",
+				"45790123", ECategoriaEmpleado.CHOFER,
+				EEstadoEmpleado.NO_DISPONIBLE,4);
 		TEquipo equipo1 = new TEquipo(1, "Radio", ECategoriaEquipo.RADIO,
 				EEstadoEquipo.EN_REPARACION);
 		TEquipo equipo2 = new TEquipo(2, "Casco Rojo", ECategoriaEquipo.CASCO,
@@ -53,18 +35,19 @@ public class prueba {
 		C.set(2000, 02, 30);
 		TEvento evento1 = new TEvento(1, "Fin del mundo", "Fin del mundo", C);
 		TVehiculo V1= new TVehiculo("ABC123","Ford","Falcon","Rojo",123,EEstadoVehiculo.EN_REPARACION,ETipoVehiculo.CAMIONETA,1);
-		TVehiculo V2= new TVehiculo("ABC312","Subaru","Impreza","Azul",123,EEstadoVehiculo.RETENIDO_INFRACCIONES,ETipoVehiculo.COCHE,2);
+		TVehiculo V2= new TVehiculo("ABC523","Subaru","Impreza","Azul",123,EEstadoVehiculo.RETENIDO_INFRACCIONES,ETipoVehiculo.COCHE,2);
 		TGasto G1 = new TGasto(123,"Nose",ECategoriaPedido.FLETES,"Nose que poner",(float) 12.3);
 		TGasto G2 = new TGasto(321,"Igual",ECategoriaPedido.REMISERIA,"Igual que antes",(float) 4.58);
-		TCliente Cl1 = new TCliente("Carlos","BB","45787979","31272431","13-131231231-21",1);
-		TCliente Cl2 = new TCliente("Lenny","AA","1231234","4123123","13-13145231-21",2);
+		TCliente Cl1 = new TCliente("Carlos","BB","1231234","465464","13-131231231-21",1);
+		TCliente Cl2 = new TCliente("Lenny","AA","1231234","31272431","13-13145231-21",2);
 		TPedido Pd1 = new TPedido(1,"Bahia Blanca","Buenos Aires",EEstadoPedido.DEMORADO,C,C,Cl1);
 		TPedido Pd2 = new TPedido(2,"Buenos Blanca","Blanca Aires",EEstadoPedido.EN_ESPERA,C,C,Cl2);
-		
+		*/
 		g = new TGestorDeDatos();
 
 		g.cargar_estado();
 		
+		/*
 		try {
 			g.agregar_elemento(evento1);
 			g.agregar_elemento(equipo1);
@@ -84,8 +67,10 @@ public class prueba {
 			g.agregar_elemento(Pd2);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
+		}*/
 
+		g.guardar_estado();
+		
 		@SuppressWarnings("unused")
 		cadministrador adm = new cadministrador(g);
 		@SuppressWarnings("unused")

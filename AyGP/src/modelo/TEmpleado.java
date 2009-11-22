@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 
+import modelo.THorario.TRangoHorario;
 import datos.TElemento;
 import enumerados.ECategoriaEmpleado;
 import enumerados.EDia;
@@ -12,28 +13,28 @@ public class TEmpleado extends TElemento {
 
 	private static final long serialVersionUID = 1L;
 
-	private int legajo;
-	private String dni;
+	private long legajo;
+	private long dni;
 	private String nombre;
 	private String direccion;
 	private String telefono;
 	private THorario horario;
 	private ECategoriaEmpleado categoria;
 	private EEstadoEmpleado estado;
-	private int id_empleado;
+	//private int id_empleado;
 
-	public TEmpleado(int leg, String dnis, String nom, String dir, String tel,
+	public TEmpleado(long leg, long dnie, String nom, String dir, String tel,
 			ECategoriaEmpleado cat, EEstadoEmpleado est,int id) {
 		super(ETipoElemento.EMPLEADO);
 		legajo = leg;
-		dni = dnis;
+		dni = dnie;
 		nombre = nom;
 		direccion = dir;
 		telefono = tel;
 		horario = new THorario();
 		categoria = cat;
 		estado = est;
-		id_empleado=id;
+		//id_empleado=id;
 	}
 
 	// Determina si el estado del equipo permite su planificación en un pedido.
@@ -47,15 +48,15 @@ public class TEmpleado extends TElemento {
 		}
 	}
 
-	public String getDni() {
+	public long getDni() {
 		return dni;
 	}
 
-	public void setDni(String dni) {
-		this.dni = dni;
+	public void setDni(long dnie) {
+		this.dni = dnie;
 	}
 
-	public int getLegajo() {
+	public long getLegajo() {
 		return legajo;
 	}
 
@@ -87,10 +88,19 @@ public class TEmpleado extends TElemento {
 		this.telefono = telefono;
 	}
 
-	public ArrayList<String> getRangosHorarios(EDia Dia) {
+	public ArrayList<TRangoHorario> getRangosHorarios(EDia Dia) {
 		return horario.get_rangos_dia(Dia);
 	}
+	
+	public THorario getRangosHorarios(){
+		return horario.clonar();
+	}
 
+	public void setHorario(THorario H){
+		assert H!=null;
+		horario=H;
+	}
+	
 	public void asignar_horario(EDia Dia, int HI, int HF) {
 		horario.agregar_rango_horario(Dia, HI, HF);
 	}
@@ -120,8 +130,8 @@ public class TEmpleado extends TElemento {
 	}
 
 	@Override
-	public int getEID() {
-		return id_empleado;
+	public Object getEID() {
+		return legajo;
 	}
 
 }

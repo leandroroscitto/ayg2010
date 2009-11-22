@@ -65,7 +65,7 @@ public class TGasto extends TElemento {
 	}
 
 	@Override
-	public int getEID() {
+	public Object getEID() {
 		return id_gasto;
 	}
 }

@@ -18,5 +18,5 @@ public abstract class TElemento implements Serializable {
 		return tipo;
 	}
 
-	public abstract int getEID();
+	public abstract Object getEID();
 }

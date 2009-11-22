@@ -64,7 +64,7 @@ public class TEquipo extends TElemento {
 		this.estado = estado;
 	}
 
-	public int getEID(){
+	public Object getEID(){
 		return id_equipo;
 	}
 

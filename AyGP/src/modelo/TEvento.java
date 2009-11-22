@@ -56,7 +56,7 @@ public class TEvento extends TElemento {
 		this.fecha = fecha;
 	}
 
-	public int getEID(){
+	public Object getEID(){
 		return id_evento;
 	}
 
