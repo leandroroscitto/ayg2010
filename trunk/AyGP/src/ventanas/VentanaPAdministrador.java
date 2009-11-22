@@ -96,15 +96,31 @@ public class VentanaPAdministrador {
 	}
 
 	private void BRegistrarEqActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		controlador.crearEquipo();
 	}
 
 	private void BModificarEqActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		int indicevista = TEquipos.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPAdministrador,
+					"Seleccione un equipo primero.");
+		} else {
+			int indice = TEquipos.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.modificarEquipo(indice);
+		}
 	}
 
 	private void BBajaEqActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		int indicevista = TEquipos.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPAdministrador,
+					"Seleccione un equipo primero.");
+		} else {
+			int indice = TEquipos.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.quitoEquipo(indice);
+		}
 	}
 
 	private void BRegistrarEvActionPerformed(ActionEvent e) {
