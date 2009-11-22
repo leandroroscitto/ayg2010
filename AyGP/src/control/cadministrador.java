@@ -16,6 +16,7 @@ import modelo.THorario.TRangoHorario;
 import ventanas.VentanaEmpleado;
 import ventanas.VentanaHorarios;
 import ventanas.VentanaPAdministrador;
+import ventanas.VentanaVehiculo;
 import datos.TGestorDeDatos;
 import enumerados.EDia;
 
@@ -25,6 +26,8 @@ public class cadministrador {
 	private VentanaEmpleado vempleado;
 	@SuppressWarnings("unused")
 	private VentanaHorarios vhorarios;
+	@SuppressWarnings("unused")
+	private VentanaVehiculo vvehiculo;
 
 	private int indicemodf = -1;
 
@@ -37,14 +40,14 @@ public class cadministrador {
 		actualizartablas();
 	}
 
-	// ===================EMPLEADO===============================================
+	// ===================EMPLEADOS==============================================
 
 	public void crearEmpleado() {
 		// Le dice que no está modificando un elemento de alguna tabla
 		indicemodf = -1;
 
 		ventana.getFramePrincipal().setEnabled(false);
-		vempleado = new VentanaEmpleado(this);
+		vempleado = new VentanaEmpleado("Creación de empleado","Crear",this);
 	}
 
 	public void modificarEmpleado(int indice) {
@@ -57,7 +60,7 @@ public class cadministrador {
 		TEmpleado Empleado = GDatos.getDatos().getLista_empleados().get(indice);
 
 		ventana.getFramePrincipal().setEnabled(false);
-		vempleado = new VentanaEmpleado(this, Empleado);
+		vempleado = new VentanaEmpleado("Modificación de empleado","Modificar",this, Empleado);
 		actualizarthorarios();
 	}
 
@@ -71,7 +74,7 @@ public class cadministrador {
 
 			TEmpleado Empleado = GDatos.getDatos().getLista_empleados().get(
 					indice);
-			
+
 			GDatos.quitar_elemento(Empleado);
 			GDatos.guardar_estado();
 
@@ -91,7 +94,7 @@ public class cadministrador {
 						"El legajo ingresado ya existe en el sistema.");
 				// Aca hay dos opciones, o cancela todo, o le vuelve a mostrar
 				// la pantalla
-				vempleado = new VentanaEmpleado(this, Empleado);
+				vempleado = new VentanaEmpleado("Creación de empleado","Crear",this, Empleado);
 			}
 		} else {
 			// Si es una modificación, indicemodf es el indice del
@@ -103,7 +106,7 @@ public class cadministrador {
 						"El legajo ingresado ya existe en el sistema.");
 				// Aca hay dos opciones, o cancela todo, o le vuelve a mostrar
 				// la pantalla
-				vempleado = new VentanaEmpleado(this, Empleado);
+				vempleado = new VentanaEmpleado("Modificación de empleado","Modificar",this, Empleado);
 			}
 		}
 		// Se actualizan las tablas de empleados
@@ -123,7 +126,7 @@ public class cadministrador {
 		ventana.getFramePrincipal().setEnabled(true);
 	}
 
-	// ==================HORARIOS===============================================
+	// ==================HORARIOS================================================
 
 	public void crearHorario() {
 		vempleado.getFramePrincipal().setEnabled(false);
@@ -175,9 +178,103 @@ public class cadministrador {
 		}
 	}
 
-	// ==================HORARIOS===============================================
+	// ==============FIN HORARIOS==============================================
 
-	// ===================EMPLEADO===============================================
+	// ===============FIN EMPLEADOS===========================================
+
+	// ===================VEHICULOS==============================================
+
+	public void crearVehiculo() {
+		// Le dice que no está modificando un elemento de alguna tabla
+		indicemodf = -1;
+
+		ventana.getFramePrincipal().setEnabled(false);
+		vvehiculo = new VentanaVehiculo("Creación de vehículo", "Crear", this);
+	}
+
+	public void modificarVehiculo(int indice) {
+		assert indice >= 0;
+		assert indice < GDatos.getDatos().getLista_vehiculos().size();
+
+		// Se está modificando un elemento existente
+		indicemodf = indice;
+
+		TVehiculo Vehiculo = GDatos.getDatos().getLista_vehiculos().get(indice);
+
+		ventana.getFramePrincipal().setEnabled(false);
+		vvehiculo = new VentanaVehiculo("Modificación de vehículo",
+				"Modificar", this, Vehiculo);
+	}
+
+	public void quitoVehiculo(int indice) {
+		assert indice >= 0;
+		assert indice < GDatos.getDatos().getLista_empleados().size();
+
+		ventana.getFramePrincipal().setEnabled(false);
+		if (JOptionPane.showConfirmDialog(ventana.getFramePrincipal(),
+				"¿Está seguro que desa eliminar el vehículo?") == 0) {
+
+			TVehiculo Vehiculo = GDatos.getDatos().getLista_vehiculos().get(
+					indice);
+
+			GDatos.quitar_elemento(Vehiculo);
+			GDatos.guardar_estado();
+
+			actualizartvehiculos();
+		}
+		ventana.getFramePrincipal().setEnabled(true);
+		ventana.getFramePrincipal().requestFocus();
+	}
+
+	public void actualizoVehiculo(TVehiculo Vehiculo) {
+		// Si es una creación
+		if (indicemodf == -1) {
+			try {
+				GDatos.agregar_elemento(Vehiculo);
+			} catch (Exception e) {
+				JOptionPane
+						.showMessageDialog(ventana.getFramePrincipal(),
+								"La patente asignada al vehículo ya existe en el sistema.");
+				// Aca hay dos opciones, o cancela todo, o le vuelve a mostrar
+				// la pantalla para que la modifique
+				vvehiculo = new VentanaVehiculo("Creación de vehículo",
+						"Crear", this, Vehiculo);
+			}
+		} else {
+			// Si es una modificación, indicemodf es el indice del
+			// elemento a modificar
+			try {
+				GDatos.modificar_elemento(indicemodf, Vehiculo);
+			} catch (Exception e) {
+				JOptionPane
+						.showMessageDialog(ventana.getFramePrincipal(),
+								"La patente asignada al vehículo ya existe en el sistema.");
+				// Aca hay dos opciones, o cancela todo, o le vuelve a mostrar
+				// la pantalla
+				vvehiculo = new VentanaVehiculo("Modificación de vehículo",
+						"Modificar", this, Vehiculo);
+			}
+		}
+		// Se actualizan las tablas de empleados
+		actualizartvehiculos();
+
+		// Y se guarda el estado
+		GDatos.guardar_estado();
+
+		// Luego de que creo o modificó la ventana devería desaparecer
+		ventana.getFramePrincipal().setEnabled(true);
+	}
+
+	public void cerroventanaVehiculo(boolean Actualizo) {
+		if (Actualizo) {
+			actualizartvehiculos();
+		}
+		ventana.getFramePrincipal().setEnabled(true);
+	}
+
+	// ===============FIN VEHICULOS===========================================
+
+	// ===================VENTANA PRINCIPAL===================================
 
 	public void actualizartablas() {
 		actualizartempleados();
@@ -316,4 +413,6 @@ public class cadministrador {
 					Marca, Modelo });
 		}
 	}
+
+	// ===============FIN VENTANA PRINCIPAL===================================
 }

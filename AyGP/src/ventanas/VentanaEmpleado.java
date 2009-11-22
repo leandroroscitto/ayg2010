@@ -45,9 +45,12 @@ public class VentanaEmpleado {
 	private THorario horariolocal;
 
 	@SuppressWarnings("serial")
-	private void inicilizarModelo(cadministrador P) {
+	private void inicilizarModelo(String titulo,String boton,cadministrador P) {
 		controlador = P;
 		horariolocal = new THorario();
+		
+		FActEmpleado = new JFrame(titulo);
+		BActEmpleadoOK = new JButton(boton);
 
 		DefaultTableModel TM = new DefaultTableModel(new String[] { "Día",
 				"Entrada", "Salida" }, 0) {
@@ -83,16 +86,16 @@ public class VentanaEmpleado {
 		return FActEmpleado;
 	}
 
-	public VentanaEmpleado(cadministrador P) {
-		inicilizarModelo(P);
+	public VentanaEmpleado(String titulo,String boton,cadministrador P) {
+		inicilizarModelo(titulo,boton,P);
 
 		initComponents();
 
 		FActEmpleado.setVisible(true);
 	}
 
-	public VentanaEmpleado(cadministrador P, TEmpleado Emp) {
-		inicilizarModelo(P);
+	public VentanaEmpleado(String titulo,String boton,cadministrador P, TEmpleado Emp) {
+		inicilizarModelo(titulo,boton,P);
 
 		initComponents();
 
@@ -163,7 +166,8 @@ public class VentanaEmpleado {
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
-		FActEmpleado = new JFrame();
+		
+		//FActEmpleado = new JFrame();
 		SPAtributosEmpleado = new JScrollPane();
 		PAtributosEmpleado = new JPanel();
 		LNombre = new JLabel();
@@ -191,12 +195,12 @@ public class VentanaEmpleado {
 		BAgregarH = new JButton();
 		BQuitarH = new JButton();
 		PBotonesEmpleado = new JPanel();
-		BActEmpleadoOK = new JButton();
+		//BActEmpleadoOK = new JButton();
 		BActEmpleadoCancel = new JButton();
 
 		// ======== FActEmpleado ========
 		{
-			FActEmpleado.setTitle("Alta/Modificaci\u00f3n de Empleado");
+			//FActEmpleado.setTitle("Alta/Modificaci\u00f3n de Empleado");
 			FActEmpleado
 					.setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
 			FActEmpleado
@@ -409,7 +413,7 @@ public class VentanaEmpleado {
 						30, 5));
 
 				// ---- BActEmpleadoOK ----
-				BActEmpleadoOK.setText("Crear");
+				//BActEmpleadoOK.setText("Crear");
 				BActEmpleadoOK.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						BActEmpleadoOKActionPerformed(e);
