@@ -68,15 +68,31 @@ public class VentanaPAdministrador {
 	}
 
 	private void BRegistrarVActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		controlador.crearVehiculo();
 	}
 
 	private void BModificarVActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		int indicevista = TVehiculos.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPAdministrador,
+					"Seleccione un vehículo primero.");
+		} else {
+			int indice = TVehiculos.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.modificarVehiculo(indice);
+		}
 	}
 
 	private void BBajaVActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		int indicevista = TVehiculos.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPAdministrador,
+					"Seleccione un vehículo primero.");
+		} else {
+			int indice = TVehiculos.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.quitoVehiculo(indice);
+		}
 	}
 
 	private void BRegistrarEqActionPerformed(ActionEvent e) {
