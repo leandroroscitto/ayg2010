@@ -1,5 +1,9 @@
 package ventanas;
 
+/*
+ * Created by JFormDesigner on Mon Nov 16 19:21:44 GYT 2009
+ */
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -7,9 +11,7 @@ import javax.swing.*;
 
 import modelo.TEquipo;
 
-import control.cadministrador; /*
- * Created by JFormDesigner on Mon Nov 16 19:21:44 GYT 2009
- */
+import control.cadministrador;
 import enumerados.ECategoriaEquipo;
 import enumerados.EEstadoEquipo;
 
@@ -56,7 +58,7 @@ public class VentanaEquipo {
 		FActEquipo.setVisible(true);
 	}
 
-	private void FActVehiculoWindowClosing(WindowEvent e) {
+	private void FActEquipoWindowClosing(WindowEvent e) {
 		controlador.cerroventanaEquipo(false);
 	}
 
@@ -65,11 +67,12 @@ public class VentanaEquipo {
 		EEstadoEquipo est = (EEstadoEquipo) CBEstado.getSelectedItem();
 		ECategoriaEquipo cat = (ECategoriaEquipo) CBCategoria.getSelectedItem();
 
-		boolean novacio = (nom != "");
+		boolean novacio = (!nom.equals(""));
 
 		if (novacio) {
 			TEquipo Equipo = new TEquipo(0, nom, cat, est);
 
+			FActEquipo.setEnabled(false);
 			controlador.actualizoEquipo(Equipo);
 			FActEquipo.dispose();
 		} else {
@@ -109,7 +112,7 @@ public class VentanaEquipo {
 			FActEquipo.addWindowListener(new WindowAdapter() {
 				@Override
 				public void windowClosing(WindowEvent e) {
-					FActVehiculoWindowClosing(e);
+					FActEquipoWindowClosing(e);
 				}
 			});
 			Container FActEquipoContentPane = FActEquipo.getContentPane();

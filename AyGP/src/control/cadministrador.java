@@ -1,7 +1,7 @@
 package control;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -15,6 +15,7 @@ import modelo.TVehiculo;
 import modelo.THorario.TRangoHorario;
 import ventanas.VentanaEmpleado;
 import ventanas.VentanaEquipo;
+import ventanas.VentanaEvento;
 import ventanas.VentanaHorarios;
 import ventanas.VentanaPAdministrador;
 import ventanas.VentanaVehiculo;
@@ -31,6 +32,8 @@ public class cadministrador {
 	private VentanaVehiculo vvehiculo;
 	@SuppressWarnings("unused")
 	private VentanaEquipo vequipo;
+	@SuppressWarnings("unused")
+	private VentanaEvento vevento;
 
 	private int indicemodf = -1;
 
@@ -102,6 +105,7 @@ public class cadministrador {
 				ventana.getFramePrincipal().setEnabled(false);
 				vempleado = new VentanaEmpleado("Creación de empleado",
 						"Crear", this, Empleado);
+				actualizarthorarios();
 				error = true;
 			}
 		} else {
@@ -117,6 +121,7 @@ public class cadministrador {
 				ventana.getFramePrincipal().setEnabled(false);
 				vempleado = new VentanaEmpleado("Modificación de empleado",
 						"Modificar", this, Empleado);
+				actualizarthorarios();
 				error = true;
 			}
 		}
@@ -129,6 +134,8 @@ public class cadministrador {
 
 			// Luego de que creo o modificó la ventana devería desaparecer
 			ventana.getFramePrincipal().setEnabled(true);
+			// Se recupera el foco
+			ventana.getFramePrincipal().requestFocus();
 		}
 	}
 
@@ -137,6 +144,7 @@ public class cadministrador {
 			actualizartempleados();
 		}
 		ventana.getFramePrincipal().setEnabled(true);
+		ventana.getFramePrincipal().requestFocus();
 	}
 
 	// ==================HORARIOS=============================================
@@ -160,10 +168,20 @@ public class cadministrador {
 		vempleado.agregarRHorario(Dia, HI, HF);
 		actualizarthorarios();
 		vempleado.getFramePrincipal().setEnabled(true);
+		vempleado.getFramePrincipal().requestFocus();
 	}
 
 	public void cerroventanaHorarios() {
 		vempleado.getFramePrincipal().setEnabled(true);
+		vempleado.getFramePrincipal().requestFocus();
+	}
+
+	private String rellenarint(int i) {
+		if (i < 10) {
+			return ("0" + i);
+		} else {
+			return String.valueOf(i);
+		}
 	}
 
 	@SuppressWarnings("serial")
@@ -184,10 +202,20 @@ public class cadministrador {
 		};
 		thorario.setModel(TM);
 
+		int HoraI, HoraF, MinI, MinF;
+		String HoraIS, HoraFS, MinIS, MinFS;
 		for (TRangoHorario rango : Horario.getAsignacion()) {
-			TM.addRow(new Object[] { rango.getDia(), rango.getHoraIni(),
-					rango.getHoraFin() });
-			// TODO:QUE SE MUESTRE BIEN LA HORA
+			HoraI = rango.getHoraIni() / 100;
+			MinI = rango.getHoraIni() % 100;
+			HoraF = rango.getHoraFin() / 100;
+			MinF = rango.getHoraFin() % 100;
+			HoraIS = rellenarint(HoraI);
+			MinIS = rellenarint(MinI);
+			HoraFS = rellenarint(HoraF);
+			MinFS = rellenarint(MinF);
+
+			TM.addRow(new Object[] { rango.getDia(), HoraIS + ":" + MinIS,
+					HoraFS + ":" + MinFS });
 		}
 	}
 
@@ -282,6 +310,8 @@ public class cadministrador {
 
 			// Luego de que creo o modificó la ventana devería desaparecer
 			ventana.getFramePrincipal().setEnabled(true);
+			// Se recupera el foco
+			ventana.getFramePrincipal().requestFocus();
 		}
 	}
 
@@ -290,6 +320,8 @@ public class cadministrador {
 			actualizartvehiculos();
 		}
 		ventana.getFramePrincipal().setEnabled(true);
+		// Se recupera el foco
+		ventana.getFramePrincipal().requestFocus();
 	}
 
 	// ===============FIN VEHICULOS===========================================
@@ -380,6 +412,8 @@ public class cadministrador {
 
 			// Luego de que creo o modificó la ventana devería desaparecer
 			ventana.getFramePrincipal().setEnabled(true);
+			// Se recupera el foco
+			ventana.getFramePrincipal().requestFocus();
 		}
 	}
 
@@ -388,6 +422,110 @@ public class cadministrador {
 			actualizartvehiculos();
 		}
 		ventana.getFramePrincipal().setEnabled(true);
+		// Se recupera el foco
+		ventana.getFramePrincipal().requestFocus();
+	}
+
+	// ===============FIN EQUIPOS=============================================
+
+	// ===================EQUIPOS=============================================
+
+	public void crearEvento() {
+		// Le dice que no está modificando un elemento de alguna tabla
+		indicemodf = -1;
+
+		ventana.getFramePrincipal().setEnabled(false);
+		vevento = new VentanaEvento("Creación de eventos", "Crear", this);
+	}
+
+	public void modificarEvento(int indice) {
+		assert indice >= 0;
+		assert indice < GDatos.getDatos().getLista_eventos().size();
+
+		// Se está modificando un elemento existente
+		indicemodf = indice;
+
+		TEvento Evento = GDatos.getDatos().getLista_eventos().get(indice);
+
+		ventana.getFramePrincipal().setEnabled(false);
+		vevento = new VentanaEvento("Modificación de evento", "Modificar",
+				this, Evento);
+	}
+
+	public void quitoEvento(int indice) {
+		assert indice >= 0;
+		assert indice < GDatos.getDatos().getLista_eventos().size();
+
+		ventana.getFramePrincipal().setEnabled(false);
+		if (JOptionPane.showConfirmDialog(ventana.getFramePrincipal(),
+				"¿Está seguro que desa eliminar el evento?") == 0) {
+
+			TEvento Evento = GDatos.getDatos().getLista_eventos().get(indice);
+
+			GDatos.quitar_elemento(Evento);
+			GDatos.guardar_estado();
+
+			actualizarteventos();
+		}
+		ventana.getFramePrincipal().setEnabled(true);
+		ventana.getFramePrincipal().requestFocus();
+	}
+
+	public void actualizoEvento(TEvento Evento) {
+		boolean error = false;
+		// Si es una creación
+		if (indicemodf == -1) {
+			try {
+				GDatos.agregar_elemento(Evento);
+			} catch (Exception e) {
+				// NO DEBERIA OCURRIR, TODOS LOS EQUIPOS SON UNICOS
+				JOptionPane.showMessageDialog(ventana.getFramePrincipal(),
+						"La id asignada al evento ya existe en el sistema.");
+				// Aca hay dos opciones, o cancela todo, o le vuelve a mostrar
+				// la pantalla para que la modifique
+				ventana.getFramePrincipal().setEnabled(false);
+				vevento = new VentanaEvento("Creación de evento", "Crear",
+						this, Evento);
+				error = true;
+			}
+		} else {
+			// Si es una modificación, indicemodf es el indice del
+			// elemento a modificar
+			try {
+				GDatos.modificar_elemento(indicemodf, Evento);
+			} catch (Exception e) {
+				// NO DEBERIA OCURRIR, TODOS LOS EQUIPOS SON UNICOS
+				JOptionPane.showMessageDialog(ventana.getFramePrincipal(),
+						"La id asignada al evento ya existe en el sistema.");
+				// Aca hay dos opciones, o cancela todo, o le vuelve a mostrar
+				// la pantalla
+				ventana.getFramePrincipal().setEnabled(false);
+				vevento = new VentanaEvento("Modificación de evento",
+						"Modificar", this, Evento);
+				error = true;
+			}
+		}
+		if (!error) {
+			// Se actualizan las tablas de empleados
+			actualizarteventos();
+
+			// Y se guarda el estado
+			GDatos.guardar_estado();
+
+			// Luego de que creo o modificó la ventana devería desaparecer
+			ventana.getFramePrincipal().setEnabled(true);
+			// Se recupera el foco
+			ventana.getFramePrincipal().requestFocus();
+		}
+	}
+
+	public void cerroventanaEvento(boolean Actualizo) {
+		if (Actualizo) {
+			actualizarteventos();
+		}
+		ventana.getFramePrincipal().setEnabled(true);
+		// Se recupera el foco
+		ventana.getFramePrincipal().requestFocus();
 	}
 
 	// ===============FIN EQUIPOS=============================================
@@ -464,7 +602,7 @@ public class cadministrador {
 		}
 	}
 
-	@SuppressWarnings("serial")
+	@SuppressWarnings( { "serial", "deprecation" })
 	public void actualizarteventos() {
 		ArrayList<TEvento> lista_eventos = GDatos.getDatos().getLista_eventos();
 		JTable eventos = ventana.getTEventos();
@@ -484,17 +622,38 @@ public class cadministrador {
 		for (TEvento E : lista_eventos) {
 			String id = String.valueOf(E.getId_evento());
 			String nombres = E.get_nombre();
-			Calendar fecha = E.getFecha();
+			Date fecha = E.getFecha();
 
-			String months[] = { "Diciembre", "Enero", "Febrero", "Marzo",
-					"Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
-					"Octubre", "Noviembre" };
+			int Dia = fecha.getDate();
+			int Mes = fecha.getMonth() + 1;
+			int Anio = fecha.getYear();
 
-			String Dia = String.valueOf(fecha.get(Calendar.DATE));
-			String Mes = months[fecha.get(Calendar.MONTH)];
-			String Anio = String.valueOf(fecha.get(Calendar.YEAR));
+			if (Anio > 100) {
+				// Es despues de 2000
+				Anio = Anio - 100;
+			} // Es antes del 2000
+
+			String DiaS;
+			String MesS;
+			String AnioS;
+			if (Dia < 10) {
+				DiaS = "0" + String.valueOf(Dia);
+			} else {
+				DiaS = String.valueOf(Dia);
+			}
+			if (Mes < 10) {
+				MesS = "0" + String.valueOf(Mes);
+			} else {
+				MesS = String.valueOf(Mes);
+			}
+			if (Anio < 10) {
+				AnioS = "0" + String.valueOf(Anio);
+			} else {
+				AnioS = String.valueOf(Anio);
+			}
+
 			TM.addRow(new String[] { id, nombres,
-					Dia + " de " + Mes + " del " + Anio });
+					DiaS + "/" + MesS + "/" + AnioS });
 		}
 	}
 

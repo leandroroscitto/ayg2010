@@ -1,6 +1,6 @@
 package modelo;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import datos.TElemento;
 import enumerados.ETipoElemento;
@@ -12,9 +12,9 @@ public class TEvento extends TElemento {
 	private String nombre;
 	private int id_evento;
 	private String descripcion;
-	private Calendar fecha;
+	private Date fecha;
 
-	public TEvento(int id, String nom, String des, Calendar d) {
+	public TEvento(int id, String nom, String des, Date d) {
 		super(ETipoElemento.EVENTO);
 		
 		nombre = nom;
@@ -48,11 +48,11 @@ public class TEvento extends TElemento {
 		this.descripcion = descripcion;
 	}
 
-	public Calendar getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Calendar fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 
