@@ -155,7 +155,7 @@ public class VentanaHorarios {
 								0));
 
 						// ---- SHoraI ----
-						SHoraI.setModel(new SpinnerNumberModel(0, 0, 11, 1));
+						SHoraI.setModel(new SpinnerNumberModel(0, 0, 23, 1));
 						SHoraI.setToolTipText("Hora");
 						PRInicio.add(SHoraI);
 
@@ -188,7 +188,7 @@ public class VentanaHorarios {
 										0));
 
 						// ---- SHoraF ----
-						SHoraF.setModel(new SpinnerNumberModel(0, 0, 11, 1));
+						SHoraF.setModel(new SpinnerNumberModel(0, 0, 23, 1));
 						SHoraF.setToolTipText("Hora");
 						PRFin.add(SHoraF);
 

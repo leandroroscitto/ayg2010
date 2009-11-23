@@ -31,6 +31,9 @@ public class VentanaPAdministrador {
 	public VentanaPAdministrador(cadministrador P) {
 		initComponents();
 
+		//No es posible modificar eventos
+		BModificarEv.setEnabled(false);
+		
 		controlador = P;
 		JVentanaPAdministrador.setVisible(true);
 	}
@@ -124,15 +127,31 @@ public class VentanaPAdministrador {
 	}
 
 	private void BRegistrarEvActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		controlador.crearEvento();
 	}
 
 	private void BModificarEvActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		int indicevista = TEventos.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPAdministrador,
+					"Seleccione un evento primero.");
+		} else {
+			int indice = TEventos.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.modificarEvento(indice);
+		}
 	}
 
 	private void BBajaEvActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		int indicevista = TEventos.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPAdministrador,
+					"Seleccione un equipo primero.");
+		} else {
+			int indice = TEventos.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.quitoEvento(indice);
+		}
 	}
 
 	@SuppressWarnings("serial")

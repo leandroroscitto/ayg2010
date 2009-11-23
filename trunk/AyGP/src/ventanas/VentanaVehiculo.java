@@ -82,12 +82,13 @@ public class VentanaVehiculo {
 		EEstadoVehiculo est = (EEstadoVehiculo) CBEstado.getSelectedItem();
 		ETipoVehiculo tip = (ETipoVehiculo) CBTipo.getSelectedItem();
 
-		boolean novacio = ((pat != "") && (mar != "") && (mod != "") && (col != ""));
+		boolean novacio = ((!pat.equals("")) && (!mar.equals("")) && (!mod.equals("")) && (!col.equals("")));
 
 		if (novacio) {
 			TVehiculo Vehiculo = new TVehiculo(pat, mar, mod, col, kil, est,
 					tip, 0);
 
+			FActVehiculo.setEnabled(false);
 			controlador.actualizoVehiculo(Vehiculo);
 			FActVehiculo.dispose();
 		} else {

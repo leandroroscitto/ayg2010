@@ -270,9 +270,6 @@ public class TGestorDeDatos {
 		TElemento Eori = buscar_elemento(indice, E.getTipo());
 		quitar_elemento(Eori);
 		
-		System.out.print("Original: ");System.out.println(Eori.toString());
-		System.out.print("Modificiación: ");System.out.println(E.toString());
-		
 		int id=0;
 		switch (Eori.getTipo()) {
 		case EMPLEADO:

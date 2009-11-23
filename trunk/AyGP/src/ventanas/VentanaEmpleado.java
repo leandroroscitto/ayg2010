@@ -144,13 +144,14 @@ public class VentanaEmpleado {
 				.getSelectedItem();
 		EEstadoEmpleado est = (EEstadoEmpleado) CBEstado.getSelectedItem();
 
-		boolean novacio = ((nom != "") && (dir != "")
+		boolean novacio = ((!nom.equals("")) && (!dir.equals(""))
 				&& (tel != "0" || tel != "") && (dni != 0) && (leg != 0));
 		if (novacio) {
 			TEmpleado Empleado = new TEmpleado(leg, dni, nom, dir, tel, cat,
 					est, 0);
 			Empleado.setHorario(horariolocal);
-
+			
+			FActEmpleado.setEnabled(false);
 			controlador.actualizoEmpleado(Empleado);
 			FActEmpleado.dispose();
 		} else {
