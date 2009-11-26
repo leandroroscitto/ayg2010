@@ -1,9 +1,10 @@
 package modelo;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 
 import datos.TElemento;
+import enumerados.ECategoriaPedido;
 import enumerados.EEstadoPedido;
 import enumerados.ETipoElemento;
 
@@ -15,15 +16,17 @@ public class TPedido extends TElemento {
 	private String origen;
 	private String destino;
 	private EEstadoPedido estado;
-	private Calendar ini;
-	private Calendar fin;
+	private ECategoriaPedido categoria;
+	private Date ini;
+	private Date fin;
+	private float costo;
 
 	private ArrayList<TEmpleado> empleados;
 	private TCliente cliente;
 	private ArrayList<TVehiculo> vehiculos;
 
-	public TPedido(int id, String O, String D, EEstadoPedido E, Calendar I,
-			Calendar F, TCliente C) {
+	public TPedido(int id, String O, String D, EEstadoPedido E,ECategoriaPedido cat, Date I,
+			Date F, TCliente C, float cos) {
 		super(ETipoElemento.PEDIDO);
 		
 		assert (I.before(F) || I.equals(F));
@@ -32,9 +35,11 @@ public class TPedido extends TElemento {
 		origen=O;
 		destino=D;
 		estado=E;
+		categoria=cat;
 		ini=I;
 		fin=F;
 		cliente=C;
+		costo= cos;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -48,8 +53,8 @@ public class TPedido extends TElemento {
 		return null;
 	}
 
-	public boolean superpone_IF(Calendar Ini, Calendar Fin) {
-		Calendar iniP, finP;
+	public boolean superpone_IF(Date Ini, Date Fin) {
+		Date iniP, finP;
 
 		iniP = get_ini();
 		finP = get_fin();
@@ -87,20 +92,20 @@ public class TPedido extends TElemento {
 		this.estado = estado;
 	}
 
-	public Calendar get_ini() {
+	public Date get_ini() {
 		return ini;
 	}
 
-	public void set_ini(Calendar Ini) {
+	public void set_ini(Date Ini) {
 		assert (Ini.before(fin) || Ini.equals(fin));
 		this.ini = Ini;
 	}
 
-	public Calendar get_fin() {
+	public Date get_fin() {
 		return fin;
 	}
 
-	public void set_fin(Calendar Fin) {
+	public void set_fin(Date Fin) {
 		assert (ini.before(Fin) || ini.equals(Fin));
 		this.fin = Fin;
 	}
@@ -128,5 +133,21 @@ public class TPedido extends TElemento {
 	@Override
 	public Object getEID(){
 		return id_pedido;
+	}
+
+	public ECategoriaPedido getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(ECategoriaPedido categoria) {
+		this.categoria = categoria;
+	}
+
+	public float getCosto() {
+		return costo;
+	}
+
+	public void setCosto(float costo) {
+		this.costo = costo;
 	}
 }

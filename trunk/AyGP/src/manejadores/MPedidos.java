@@ -2,6 +2,7 @@ package manejadores;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import modelo.TEmpleado;
 import modelo.TEquipo;
@@ -21,7 +22,7 @@ public class MPedidos {
 	}
 
 	private boolean superpone_pedidos_IF(ArrayList<TPedido> listaP,
-			Calendar Ini, Calendar Fin) {
+			Date Ini, Date Fin) {
 		for (TPedido P : listaP) {
 			if (P.superpone_IF(Ini, Fin)) {
 				return false;
@@ -43,7 +44,7 @@ public class MPedidos {
 		return lista;
 	}
 
-	public boolean consultarDispEquipo(TEquipo E, Calendar Ini, Calendar Fin) {
+	public boolean consultarDispEquipo(TEquipo E, Date Ini, Date Fin) {
 		assert (Ini.before(Fin) || Ini.equals(Fin));
 
 		ArrayList<TPedido> pedidosE;
@@ -63,8 +64,8 @@ public class MPedidos {
 		return false;
 	}
 
-	public boolean consultarDispVehiculos(TVehiculo V, Calendar Ini,
-			Calendar Fin) {
+	public boolean consultarDispVehiculos(TVehiculo V, Date Ini,
+			Date Fin) {
 		assert (Ini.before(Fin) || Ini.equals(Fin));
 
 		ArrayList<TPedido> pedidosV;
@@ -78,26 +79,31 @@ public class MPedidos {
 		return false;
 	}
 
-	public boolean consultarDispEmpleados(TEmpleado Em, Calendar Ini,
-			Calendar Fin) {
+	@SuppressWarnings("deprecation")
+	public boolean consultarDispEmpleados(TEmpleado Em, Date Ini,
+			Date Fin) {
 		assert (Ini.before(Fin) || Ini.equals(Fin));
 
 		ArrayList<TPedido> pedidosEm;
 
 		if (Em.estado_disp()) {
 			// Verifica que el empleado trabaje en ese rango horario
-			EDia DiaWIni = EDia.to_EDia(Ini.get(Calendar.DAY_OF_WEEK));
-			EDia DiaWFin = EDia.to_EDia(Fin.get(Calendar.DAY_OF_WEEK));
+			EDia DiaWIni = EDia.to_EDia(Ini.getDay());
+			EDia DiaWFin = EDia.to_EDia(Fin.getDay());
 
 			// NOSE: PARA EVITAR PROBLEMAS NO PUEDE HABER PEDIDOS ENTRE DOS AÑOS
-			int DiaYIni = Ini.get(Calendar.DAY_OF_YEAR);
-			int DiaYFin = Fin.get(Calendar.DAY_OF_YEAR);
+			Calendar C = Calendar.getInstance();
+			
+			C.setTime(Ini);			
+			int DiaYIni = C.get(Calendar.DAY_OF_YEAR);
+			C.setTime(Fin);
+			int DiaYFin = C.get(Calendar.DAY_OF_YEAR);
 
 			// PARA CALCULAR HI Y HF
-			int HoraI = Ini.get(Calendar.HOUR_OF_DAY);
-			int HoraF = Fin.get(Calendar.HOUR_OF_DAY);
-			int MinI = Ini.get(Calendar.MINUTE);
-			int MinF = Fin.get(Calendar.MINUTE);
+			int HoraI = Ini.getHours();
+			int HoraF = Fin.getHours();
+			int MinI = Ini.getMinutes();
+			int MinF = Fin.getMinutes();
 
 			// Transforma a hora 0000-2359
 			int HI = HoraI * 100 + MinI;

@@ -165,7 +165,6 @@ public class VentanaEmpleado {
 		FActEmpleado.dispose();
 	}
 
-	@SuppressWarnings("serial")
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
