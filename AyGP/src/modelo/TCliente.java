@@ -3,7 +3,6 @@ package modelo;
 import datos.TElemento;
 import enumerados.EEstadoCliente;
 import enumerados.ETipoElemento;
-import formateadores.TTelefono;
 
 public class TCliente extends TElemento {
 	private static final long serialVersionUID = 1L;

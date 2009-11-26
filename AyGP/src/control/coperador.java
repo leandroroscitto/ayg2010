@@ -7,11 +7,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import manejadores.MPedidos;
 import modelo.TCliente;
+import modelo.TEmpleado;
 import modelo.TGasto;
 import modelo.TPedido;
+import modelo.TVehiculo;
 import ventanas.VentanaCliente;
 import ventanas.VentanaGasto;
+import ventanas.VentanaLEmpleados;
+import ventanas.VentanaLVehiculos;
 import ventanas.VentanaPOperador;
 import ventanas.VentanaPedido;
 import datos.TGestorDeDatos;
@@ -23,14 +28,22 @@ public class coperador {
 	private VentanaGasto vgasto;
 	@SuppressWarnings("unused")
 	private VentanaCliente vcliente;
+	@SuppressWarnings("unused")
 	private VentanaPedido vpedido;
+	@SuppressWarnings("unused")
+	private VentanaLEmpleados vlempleados;
+	@SuppressWarnings("unused")
+	private VentanaLVehiculos vlvehiculos;
 
 	private int indicemodf = -1;
 
 	private TGestorDeDatos GDatos;
+	@SuppressWarnings("unused")
+	private MPedidos ManejadorP;
 
 	public coperador(TGestorDeDatos GD) {
 		GDatos = GD;
+		ManejadorP = new MPedidos(GDatos.getDatos());
 
 		ventana = new VentanaPOperador(this);
 		actualizartablas();
@@ -56,8 +69,8 @@ public class coperador {
 		TGasto Gasto = GDatos.getDatos().getLista_gastos().get(indice);
 
 		ventana.getFramePrincipal().setEnabled(false);
-		vgasto = new VentanaGasto("Modificación de gasto", "Modificar",
-				this, Gasto);
+		vgasto = new VentanaGasto("Modificación de gasto", "Modificar", this,
+				Gasto);
 	}
 
 	public void quitoGasto(int indice) {
@@ -92,8 +105,8 @@ public class coperador {
 				// Aca hay dos opciones, o cancela todo, o le vuelve a mostrar
 				// la pantalla para que la modifique
 				ventana.getFramePrincipal().setEnabled(false);
-				vgasto = new VentanaGasto("Creación de gasto", "Crear",
-						this, Gasto);
+				vgasto = new VentanaGasto("Creación de gasto", "Crear", this,
+						Gasto);
 				error = true;
 			}
 		} else {
@@ -108,8 +121,8 @@ public class coperador {
 				// Aca hay dos opciones, o cancela todo, o le vuelve a mostrar
 				// la pantalla
 				ventana.getFramePrincipal().setEnabled(false);
-				vgasto = new VentanaGasto("Modificación de gasto",
-						"Modificar", this, Gasto);
+				vgasto = new VentanaGasto("Modificación de gasto", "Modificar",
+						this, Gasto);
 				error = true;
 			}
 		}
@@ -145,7 +158,8 @@ public class coperador {
 		indicemodf = -1;
 
 		ventana.getFramePrincipal().setEnabled(false);
-		vcliente = new VentanaCliente("Creación de cliente", "Crear", this);
+		vcliente = new VentanaCliente(true, "Creación de cliente", "Crear",
+				this);
 	}
 
 	public void modificarCliente(int indice) {
@@ -158,8 +172,8 @@ public class coperador {
 		TCliente Cliente = GDatos.getDatos().getLista_clientes().get(indice);
 
 		ventana.getFramePrincipal().setEnabled(false);
-		vcliente = new VentanaCliente("Modificación de cliente", "Modificar",
-				this, Cliente);
+		vcliente = new VentanaCliente(true, "Modificación de cliente",
+				"Modificar", this, Cliente);
 	}
 
 	public void quitoCliente(int indice) {
@@ -170,7 +184,8 @@ public class coperador {
 		if (JOptionPane.showConfirmDialog(ventana.getFramePrincipal(),
 				"¿Está seguro que desa eliminar el cliente?") == 0) {
 
-			TCliente Cliente = GDatos.getDatos().getLista_clientes().get(indice);
+			TCliente Cliente = GDatos.getDatos().getLista_clientes()
+					.get(indice);
 
 			GDatos.quitar_elemento(Cliente);
 			GDatos.guardar_estado();
@@ -188,14 +203,13 @@ public class coperador {
 			try {
 				GDatos.agregar_elemento(Cliente);
 			} catch (Exception e) {
-				// NO DEBERIA OCURRIR, TODOS LOS GASTOS SON UNICOS
 				JOptionPane.showMessageDialog(ventana.getFramePrincipal(),
 						"La id asignada al cliente ya existe en el sistema.");
 				// Aca hay dos opciones, o cancela todo, o le vuelve a mostrar
 				// la pantalla para que la modifique
 				ventana.getFramePrincipal().setEnabled(false);
-				vcliente = new VentanaCliente("Creación de cliente", "Crear",
-						this, Cliente);
+				vcliente = new VentanaCliente(true, "Creación de cliente",
+						"Crear", this, Cliente);
 				error = true;
 			}
 		} else {
@@ -204,13 +218,12 @@ public class coperador {
 			try {
 				GDatos.modificar_elemento(indicemodf, Cliente);
 			} catch (Exception e) {
-				// NO DEBERIA OCURRIR, TODOS LOS EQUIPOS SON UNICOS
 				JOptionPane.showMessageDialog(ventana.getFramePrincipal(),
 						"La id asignada al cliente ya existe en el sistema.");
 				// Aca hay dos opciones, o cancela todo, o le vuelve a mostrar
 				// la pantalla
 				ventana.getFramePrincipal().setEnabled(false);
-				vcliente = new VentanaCliente("Modificación de cliente",
+				vcliente = new VentanaCliente(true, "Modificación de cliente",
 						"Modificar", this, Cliente);
 				error = true;
 			}
@@ -240,8 +253,7 @@ public class coperador {
 
 	// ===============FIN CLIENTE=============================================
 
-
-	// ===================CLIENTE=============================================
+	// ===================PEDIDO=============================================
 
 	public void crearPedido() {
 		// Le dice que no está modificando un elemento de alguna tabla
@@ -260,12 +272,13 @@ public class coperador {
 
 		TPedido Pedido = GDatos.getDatos().getLista_pedidos().get(indice);
 
-		if (Pedido.getEstado()!=EEstadoPedido.CANCELADO){
-		ventana.getFramePrincipal().setEnabled(false);
-		vpedido = new VentanaPedido("Modificación de pedido", "Modificar",
-				this, Pedido);
-		}else{
-			JOptionPane.showMessageDialog(ventana.getFramePrincipal(), "El pedido ya fue cancelado.");
+		if (Pedido.getEstado() != EEstadoPedido.CANCELADO) {
+			ventana.getFramePrincipal().setEnabled(false);
+			vpedido = new VentanaPedido("Modificación de pedido", "Modificar",
+					this, Pedido);
+		} else {
+			JOptionPane.showMessageDialog(ventana.getFramePrincipal(),
+					"El pedido ya fué cancelado.");
 		}
 	}
 
@@ -273,67 +286,112 @@ public class coperador {
 		assert indice >= 0;
 		assert indice < GDatos.getDatos().getLista_pedidos().size();
 
-		ventana.getFramePrincipal().setEnabled(false);
-		if (JOptionPane.showConfirmDialog(ventana.getFramePrincipal(),
-				"¿Está seguro que desa eliminar el pedido?") == 0) {
+		if (GDatos.getDatos().getLista_pedidos().get(indice).getEstado() != EEstadoPedido.CANCELADO) {
+			ventana.getFramePrincipal().setEnabled(false);
+			if (JOptionPane.showConfirmDialog(ventana.getFramePrincipal(),
+					"¿Está seguro que desa cancelar el pedido?") == 0) {
 
-			TPedido Pedido = GDatos.getDatos().getLista_pedidos().get(indice);
+				TPedido Pedido = GDatos.getDatos().getLista_pedidos().get(
+						indice);
 
-			//GDatos.quitar_elemento(Pedido);
-			Pedido.setEstado(EEstadoPedido.CANCELADO);
-			GDatos.guardar_estado();
+				// GDatos.quitar_elemento(Pedido);
+				Pedido.setEstado(EEstadoPedido.CANCELADO);
+				GDatos.guardar_estado();
 
-			actualizartpedidos();
+				actualizartpedidos();
+			}
+			ventana.getFramePrincipal().setEnabled(true);
+			ventana.getFramePrincipal().requestFocus();
+		} else {
+			JOptionPane.showMessageDialog(ventana.getFramePrincipal(),
+					"El pedido ya fué cancelado");
 		}
-		ventana.getFramePrincipal().setEnabled(true);
-		ventana.getFramePrincipal().requestFocus();
 	}
 
 	public void actualizoPedido(TPedido Pedido) {
 		boolean error = false;
-		// Si es una creación
-		if (indicemodf == -1) {
-			try {
-				GDatos.agregar_elemento(Pedido);
-			} catch (Exception e) {
-				// NO DEBERIA OCURRIR, TODOS LOS GASTOS SON UNICOS
-				JOptionPane.showMessageDialog(ventana.getFramePrincipal(),
-						"La id asignada al pedido ya existe en el sistema.");
-				// Aca hay dos opciones, o cancela todo, o le vuelve a mostrar
-				// la pantalla para que la modifique
+		
+		if (indicemodf!=-1){
+			TPedido P=GDatos.getDatos().getLista_pedidos().get(indicemodf);
+			Pedido.setId_pedido(P.getId_pedido());
+		}
+
+		// Consulta si todos los empleados y vehiculos asignados al pedido están
+		// disponibles en el rango
+		boolean empleadosdisp = true;
+		boolean vehiculosdisp = true;
+		for (TEmpleado E : Pedido.getEmpleados()) {
+			empleadosdisp = empleadosdisp
+					&& ManejadorP.consultarDispEmpleados(Pedido,E, Pedido.get_ini(),
+							Pedido.get_fin());
+		}
+		;
+		for (TVehiculo V : Pedido.getVehiculos()) {
+			vehiculosdisp = vehiculosdisp
+					&& ManejadorP.consultarDispVehiculos(Pedido,V, Pedido.get_fin(),
+							Pedido.get_fin());
+		}
+		if ((!empleadosdisp) || (!vehiculosdisp)) {
+			JOptionPane
+					.showMessageDialog(
+							ventana.getFramePrincipal(),
+							"Algunos de los recursos asignados al pedido no están disponibles en el rango de días de su duración");
+			if (indicemodf == -1) {
 				ventana.getFramePrincipal().setEnabled(false);
 				vpedido = new VentanaPedido("Creación de pedido", "Crear",
 						this, Pedido);
-				error = true;
-			}
-		} else {
-			// Si es una modificación, indicemodf es el indice del
-			// elemento a modificar
-			try {
-				GDatos.modificar_elemento(indicemodf, Pedido);
-			} catch (Exception e) {
-				// NO DEBERIA OCURRIR, TODOS LOS EQUIPOS SON UNICOS
-				JOptionPane.showMessageDialog(ventana.getFramePrincipal(),
-						"La id asignada al pedido ya existe en el sistema.");
-				// Aca hay dos opciones, o cancela todo, o le vuelve a mostrar
-				// la pantalla
+			} else {
 				ventana.getFramePrincipal().setEnabled(false);
 				vpedido = new VentanaPedido("Modificación de pedido",
 						"Modificar", this, Pedido);
-				error = true;
 			}
-		}
-		if (!error) {
-			// Se actualizan las tablas de pedidos
-			actualizartpedidos();
+		} else {
+			// Si es una creación
+			if (indicemodf == -1) {
+				try {
+					GDatos.agregar_elemento(Pedido);
+				} catch (Exception e) {
+					JOptionPane
+							.showMessageDialog(ventana.getFramePrincipal(),
+									"La id asignada al pedido ya existe en el sistema.");
+					// Aca hay dos opciones, o cancela todo, o le vuelve a
+					// mostrar
+					// la pantalla para que la modifique
+					ventana.getFramePrincipal().setEnabled(false);
+					vpedido = new VentanaPedido("Creación de pedido", "Crear",
+							this, Pedido);
+					error = true;
+				}
+			} else {
+				// Si es una modificación, indicemodf es el indice del
+				// elemento a modificar
+				try {
+					GDatos.modificar_elemento(indicemodf, Pedido);
+				} catch (Exception e) {
+					JOptionPane
+							.showMessageDialog(ventana.getFramePrincipal(),
+									"La id asignada al pedido ya existe en el sistema.");
+					// Aca hay dos opciones, o cancela todo, o le vuelve a
+					// mostrar
+					// la pantalla
+					ventana.getFramePrincipal().setEnabled(false);
+					vpedido = new VentanaPedido("Modificación de pedido",
+							"Modificar", this, Pedido);
+					error = true;
+				}
+			}
+			if (!error) {
+				// Se actualizan las tablas de pedidos
+				actualizartpedidos();
 
-			// Y se guarda el estado
-			GDatos.guardar_estado();
+				// Y se guarda el estado
+				GDatos.guardar_estado();
 
-			// Luego de que creo o modificó la ventana devería desaparecer
-			ventana.getFramePrincipal().setEnabled(true);
-			// Se recupera el foco
-			ventana.getFramePrincipal().requestFocus();
+				// Luego de que creo o modificó la ventana devería desaparecer
+				ventana.getFramePrincipal().setEnabled(true);
+				// Se recupera el foco
+				ventana.getFramePrincipal().requestFocus();
+			}
 		}
 	}
 
@@ -346,29 +404,112 @@ public class coperador {
 		ventana.getFramePrincipal().requestFocus();
 	}
 
-	public TCliente getCliente(Long DNI){
-		ArrayList<TCliente> clientes=GDatos.getDatos().getLista_clientes();
-		TCliente Cliente=null;
-		
-		boolean encontro=false;
-		int i=0;
-		int tam=clientes.size();
-		
-		while ((!encontro) && (i<tam)){
-			Cliente=clientes.get(i);
-			encontro=(Cliente.getDni()==DNI);			
+	public TCliente getCliente(Long DNI) {
+		ArrayList<TCliente> clientes = GDatos.getDatos().getLista_clientes();
+		TCliente Cliente = null;
+
+		boolean encontro = false;
+		int i = 0;
+		int tam = clientes.size();
+
+		while ((!encontro) && (i < tam)) {
+			Cliente = clientes.get(i);
+			encontro = (Cliente.getDni() == DNI);
 			i++;
-		};
-		
-		if (encontro){
-			return Cliente; 
-		}else{
+		}
+		;
+
+		if (encontro) {
+			return Cliente;
+		} else {
 			return null;
 		}
 	}
-	
-	// ===============FIN CLIENTE=============================================
-	
+
+	public void crearClienteEnPedido() {
+		vpedido.getFramePrincipal().setEnabled(false);
+		vcliente = new VentanaCliente(false, "Creación de cliente", "Crear",
+				this);
+	}
+
+	public void actualizoClienteEnPedido(TCliente Cliente) {
+		boolean error = false;
+		// Solo puede ser una creación
+		try {
+			GDatos.agregar_elemento(Cliente);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(ventana.getFramePrincipal(),
+					"La id asignada al cliente ya existe en el sistema.");
+			// Aca hay dos opciones, o cancela todo, o le vuelve a mostrar
+			// la pantalla para que la modifique
+			vpedido.getFramePrincipal().setEnabled(false);
+			vcliente = new VentanaCliente(false, "Creación de cliente",
+					"Crear", this, Cliente);
+			error = true;
+		}
+
+		if (!error) {
+			// Se actualizan las tablas de clientes
+			actualizartclientes();
+
+			// Y se guarda el estado
+			GDatos.guardar_estado();
+
+			vpedido.setearCliente(Cliente);
+			// Luego de que creo o modificó la ventana devería desaparecer
+			vpedido.getFramePrincipal().setEnabled(true);
+			// Se recupera el foco
+			vpedido.getFramePrincipal().requestFocus();
+		}
+	}
+
+	public void cerroventanaClienteEnPedido(boolean Actualizo) {
+		if (Actualizo) {
+			actualizartclientes();
+		}
+		vpedido.getFramePrincipal().setEnabled(true);
+		// Se recupera el foco
+		vpedido.getFramePrincipal().requestFocus();
+	}
+
+	public void anadirEmpleados(ArrayList<TEmpleado> EmpSinAsignar) {
+		vpedido.getFramePrincipal().setEnabled(false);
+		vlempleados = new VentanaLEmpleados(this, EmpSinAsignar);
+	}
+
+	public void anadirVehiculos(ArrayList<TVehiculo> VehSinAsignar) {
+		vpedido.getFramePrincipal().setEnabled(false);
+		vlvehiculos = new VentanaLVehiculos(this, VehSinAsignar);
+	}
+
+	public void anadioEmpleado(TEmpleado Empleado) {
+		vpedido.agregarEmpleado(Empleado);
+	}
+
+	public void anadioVehiculo(TVehiculo Vehiculo) {
+		vpedido.agregarVehiculo(Vehiculo);
+	}
+
+	public void cerroVLEmpleados() {
+		vpedido.getFramePrincipal().setEnabled(true);
+		vpedido.getFramePrincipal().requestFocus();
+	}
+
+	public void cerroVLVehiculos() {
+		vpedido.getFramePrincipal().setEnabled(false);
+		vpedido.getFramePrincipal().requestFocus();
+	}
+
+	public ArrayList<TEmpleado> getEmpleados() {
+		return GDatos.getDatos().getLista_empleados();
+	}
+
+	public ArrayList<TVehiculo> getVehiculos() {
+		return GDatos.getDatos().getLista_vehiculos();
+	}
+
+	// ===============FIN PEDIDO=============================================
+
 	public void actualizartablas() {
 		actualizartpedidos();
 		actualizartclientes();

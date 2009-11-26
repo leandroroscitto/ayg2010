@@ -40,6 +40,9 @@ public class TPedido extends TElemento {
 		fin=F;
 		cliente=C;
 		costo= cos;
+		
+		empleados=new ArrayList<TEmpleado>();
+		vehiculos=new ArrayList<TVehiculo>();
 	}
 
 	@SuppressWarnings("unchecked")

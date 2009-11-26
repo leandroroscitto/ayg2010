@@ -1,8 +1,8 @@
 package enumerados;
 
 public enum EDia {
-	LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO, DOMINGO;
-
+	DOMINGO, LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO;
+	
 	// Devuelve el próximo día al actual.
 	public EDia proximo() {
 		switch (this) {

@@ -1,28 +1,43 @@
 package ventanas;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Container;
+import java.awt.Dialog;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.table.*;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.WindowConstants;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 import modelo.TCliente;
 import modelo.TEmpleado;
-import modelo.TGasto;
 import modelo.TPedido;
 import modelo.TVehiculo;
 
-import com.toedter.calendar.*; /*
-import com.toedter.calendar.demo.DateChooserPanel;
-import com.toedter.calendar.demo.DateChooserPanel;
- * Created by JFormDesigner on Thu Nov 19 22:46:59 ARST 2009
- */
+import com.toedter.calendar.JDateChooser;
 
 import control.coperador;
 import enumerados.ECategoriaPedido;
@@ -31,11 +46,23 @@ import enumerados.EEstadoPedido;
 public class VentanaPedido {
 	private coperador controlador;
 	private TCliente cliente;
-	private ArrayList<TEmpleado> empleados;
-	private ArrayList<TVehiculo> vehiculos;
+	private ArrayList<TEmpleado> empleadosasig;
+	private ArrayList<TVehiculo> vehiculosasig;
+	private ArrayList<TEmpleado> empleadosSinasig;
+	private ArrayList<TVehiculo> vehiculosSinasig;
 
+	@SuppressWarnings("unchecked")
 	private void inicializarModelo(String titulo, String boton, coperador P) {
 		controlador = P;
+
+		empleadosSinasig = new ArrayList<TEmpleado>();
+		for (TEmpleado emp : P.getEmpleados()) {
+			empleadosSinasig.add(emp);
+		}
+		vehiculosSinasig = new ArrayList<TVehiculo>();
+		for (TVehiculo veh : P.getVehiculos()) {
+			vehiculosSinasig.add(veh);
+		}
 
 		CBCategoria = new JComboBox(ECategoriaPedido.values());
 		CBEstado = new JComboBox(EEstadoPedido.values());
@@ -50,18 +77,25 @@ public class VentanaPedido {
 		return FActPedido;
 	}
 
+	public void setearCliente(TCliente Cliente) {
+		cliente = Cliente;
+
+		FTDNI.setValue(Cliente.getDni());
+		TFNombre.setText(Cliente.getNombre());
+	}
+
 	public VentanaPedido(String titulo, String boton, coperador P) {
 		inicializarModelo(titulo, boton, P);
 
 		initComponents();
 
-		empleados = new ArrayList<TEmpleado>();
-		vehiculos = new ArrayList<TVehiculo>();
+		empleadosasig = new ArrayList<TEmpleado>();
+		vehiculosasig = new ArrayList<TVehiculo>();
 
 		FActPedido.setVisible(true);
 	}
 
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings( { "deprecation", "unchecked" })
 	public VentanaPedido(String titulo, String boton, coperador P,
 			TPedido Pedido) {
 		inicializarModelo(titulo, boton, P);
@@ -84,16 +118,39 @@ public class VentanaPedido {
 		FTDNI.setValue(Pedido.getCliente().getDni());
 		TFNombre.setText(Pedido.getCliente().getNombre());
 
-		empleados = (ArrayList<TEmpleado>) Pedido.getEmpleados().clone();
-		vehiculos = (ArrayList<TVehiculo>) Pedido.getVehiculos().clone();
+		empleadosasig = new ArrayList<TEmpleado>();
+		vehiculosasig = new ArrayList<TVehiculo>();
+		
+		for (TEmpleado emp : Pedido.getEmpleados()) {
+			empleadosasig.add(emp);
+		}
 
-		mostrar_lista_empleados();
-		mostrar_lista_vehiculos();
+		for (TVehiculo veh : Pedido.getVehiculos()) {
+			vehiculosasig.add(veh);
+		}
+		empleadosSinasig.removeAll(empleadosasig);
+		vehiculosSinasig.removeAll(vehiculosasig);
+
+		actualizar_lista_empleados();
+		actualizar_lista_vehiculos();
 
 		FActPedido.setVisible(true);
 	}
 
-	private void mostrar_lista_empleados() {
+	public void agregarEmpleado(TEmpleado Empleado) {
+		empleadosasig.add(Empleado);
+		empleadosSinasig.remove(Empleado);
+		actualizar_lista_empleados();
+	}
+
+	public void agregarVehiculo(TVehiculo Vehiculo) {
+		vehiculosasig.add(Vehiculo);
+		vehiculosSinasig.remove(Vehiculo);
+		actualizar_lista_vehiculos();
+	}
+
+	@SuppressWarnings("serial")
+	private void actualizar_lista_empleados() {
 		TEmpleados.removeAll();
 
 		DefaultTableModel TM = new DefaultTableModel(new String[] { "Legajo",
@@ -106,13 +163,14 @@ public class VentanaPedido {
 			}
 		};
 		TEmpleados.setModel(TM);
-		for (TEmpleado emp : empleados) {
+		for (TEmpleado emp : empleadosasig) {
 			TM.addRow(new String[] { String.valueOf(emp.getLegajo()),
 					emp.getNombre() });
 		}
 	}
 
-	private void mostrar_lista_vehiculos() {
+	@SuppressWarnings("serial")
+	private void actualizar_lista_vehiculos() {
 		TVehiculos.removeAll();
 
 		DefaultTableModel TM = new DefaultTableModel(new String[] { "Patente",
@@ -125,12 +183,12 @@ public class VentanaPedido {
 			}
 		};
 		TVehiculos.setModel(TM);
-		for (TVehiculo ve : vehiculos) {
+		for (TVehiculo ve : vehiculosasig) {
 			TM.addRow(new String[] { ve.getPatente(),
 					ve.getTipoVehiculo().toString() });
 		}
 	}
-	
+
 	private void FTDNIPropertyChange(PropertyChangeEvent e) {
 		long dni = (Long) FTDNI.getValue();
 		if (dni > 0) {
@@ -149,7 +207,7 @@ public class VentanaPedido {
 	}
 
 	private void BCrearClienteActionPerformed(ActionEvent e) {
-		controlador.crearCliente();
+		controlador.crearClienteEnPedido();
 	}
 
 	private void BSeleccionarClienteActionPerformed(ActionEvent e) {
@@ -157,19 +215,41 @@ public class VentanaPedido {
 	}
 
 	private void BAnadirEActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		controlador.anadirEmpleados(empleadosSinasig);
 	}
 
 	private void BQuitarEActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		int indicevista = TEmpleados.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(FActPedido,
+					"Seleccione un empleado primero.");
+		} else {
+			int indice = TEmpleados.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			TEmpleado Empleado = empleadosasig.get(indice);
+			empleadosasig.remove(Empleado);
+			empleadosSinasig.add(Empleado);
+			actualizar_lista_empleados();
+		}
 	}
 
 	private void BAnadirVActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		controlador.anadirVehiculos(vehiculosSinasig);
 	}
 
 	private void BQuitarVActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		int indicevista = TVehiculos.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(FActPedido,
+					"Seleccione un vehículo primero.");
+		} else {
+			int indice = TVehiculos.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			TVehiculo Vehiculo = vehiculosasig.get(indice);
+			vehiculosasig.remove(Vehiculo);
+			vehiculosSinasig.add(Vehiculo);
+			actualizar_lista_vehiculos();
+		}
 	}
 
 	@SuppressWarnings("deprecation")
@@ -194,9 +274,16 @@ public class VentanaPedido {
 		novacio = novacio && ini.before(fin);
 
 		if (novacio) {
-			if ((cliente != null) && (empleados.size() > 0)) {
+			if ((cliente != null) && (empleadosasig.size() > 0)) {
 				TPedido Pedido = new TPedido(0, ori, des, est, cat, ini, fin,
 						cliente, cost);
+				
+				for(TEmpleado emp:empleadosasig){
+					Pedido.getEmpleados().add(emp);
+				}
+				for(TVehiculo veh:vehiculosasig){
+					Pedido.getVehiculos().add(veh);
+				}
 
 				FActPedido.setEnabled(false);
 				controlador.actualizoPedido(Pedido);
@@ -220,7 +307,7 @@ public class VentanaPedido {
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
-		//FActPedido = new JFrame();
+		// FActPedido = new JFrame();
 		SPAtributosP = new JScrollPane();
 		PAtributosP = new JPanel();
 		LOrigen = new JLabel();
@@ -228,23 +315,23 @@ public class VentanaPedido {
 		LDestino = new JLabel();
 		TFDestino = new JTextField();
 		LFInicio = new JLabel();
-		//DCInicio = new JDateChooser();
+		// DCInicio = new JDateChooser();
 		LHInicio = new JLabel();
 		PHoraI = new JPanel();
 		SHoraI = new JSpinner();
 		LDosP = new JLabel();
 		SMinI = new JSpinner();
 		LFFin = new JLabel();
-		//DCFin = new JDateChooser();
+		// DCFin = new JDateChooser();
 		LHFin = new JLabel();
 		PHoraF = new JPanel();
 		SHoraF = new JSpinner();
 		LDosP2 = new JLabel();
 		SMinF = new JSpinner();
 		LCategoria = new JLabel();
-		//CBCategoria = new JComboBox();
+		// CBCategoria = new JComboBox();
 		LEstado = new JLabel();
-		//CBEstado = new JComboBox();
+		// CBEstado = new JComboBox();
 		LCosto = new JLabel();
 		FTCosto = new JFormattedTextField(new Float(0.0));
 		PCliente = new JPanel();
@@ -265,12 +352,12 @@ public class VentanaPedido {
 		BAnadirV = new JButton();
 		BQuitarV = new JButton();
 		PBotonesPedido = new JPanel();
-		//BActPedidoOK = new JButton();
+		// BActPedidoOK = new JButton();
 		BActPedidoCancel = new JButton();
 
 		// ======== FActPedido ========
 		{
-			//FActPedido.setTitle("Alta/Modificaci\u00f3n de Pedido");
+			// FActPedido.setTitle("Alta/Modificaci\u00f3n de Pedido");
 			FActPedido
 					.setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
 			FActPedido
@@ -463,12 +550,15 @@ public class VentanaPedido {
 								GridBagConstraints.VERTICAL, new Insets(0, 0,
 										5, 5), 0, 0));
 
-						// ---- FTDNI ----		
-						FTDNI.addPropertyChangeListener("value", new PropertyChangeListener() {
-							public void propertyChange(PropertyChangeEvent e) {
-								FTDNIPropertyChange(e);
-							}});
-						
+						// ---- FTDNI ----
+						FTDNI.addPropertyChangeListener("value",
+								new PropertyChangeListener() {
+									public void propertyChange(
+											PropertyChangeEvent e) {
+										FTDNIPropertyChange(e);
+									}
+								});
+
 						PCliente.add(FTDNI, new GridBagConstraints(1, 0, 1, 1,
 								0.0, 0.0, GridBagConstraints.CENTER,
 								GridBagConstraints.BOTH,
@@ -543,10 +633,7 @@ public class VentanaPedido {
 											50, 80));
 							TEmpleados
 									.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-							TEmpleados.setModel(new DefaultTableModel(
-									new Object[][] { { null, null },
-											{ null, null }, }, new String[] {
-											"Legajo", "Nombre" }));
+							TEmpleados.setModel(new DefaultTableModel(new Object[] { "Legajo", "Nombre" },0));
 							TEmpleados.setAutoCreateRowSorter(true);
 							SPTablaEmp.setViewportView(TEmpleados);
 						}
@@ -607,10 +694,7 @@ public class VentanaPedido {
 											50, 80));
 							TVehiculos
 									.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-							TVehiculos.setModel(new DefaultTableModel(
-									new Object[][] { { null, null },
-											{ null, null }, }, new String[] {
-											"Patente", "Tipo" }));
+							TVehiculos.setModel(new DefaultTableModel(new Object[] {"Patente", "Tipo"},0));
 							TVehiculos.setAutoCreateRowSorter(true);
 							SPTablaVehi.setViewportView(TVehiculos);
 						}
@@ -660,7 +744,7 @@ public class VentanaPedido {
 						5));
 
 				// ---- BActPedidoOK ----
-				//BActPedidoOK.setText("Crear");
+				// BActPedidoOK.setText("Crear");
 				BActPedidoOK.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						BActPedidoOKActionPerformed(e);
