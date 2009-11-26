@@ -24,7 +24,6 @@ import enumerados.EDia;
 
 public class cadministrador {
 	private VentanaPAdministrador ventana;
-	@SuppressWarnings("unused")
 	private VentanaEmpleado vempleado;
 	@SuppressWarnings("unused")
 	private VentanaHorarios vhorarios;
@@ -428,7 +427,7 @@ public class cadministrador {
 
 	// ===============FIN EQUIPOS=============================================
 
-	// ===================EQUIPOS=============================================
+	// ===================EVENTOS=============================================
 
 	public void crearEvento() {
 		// Le dice que no está modificando un elemento de alguna tabla
@@ -528,7 +527,7 @@ public class cadministrador {
 		ventana.getFramePrincipal().requestFocus();
 	}
 
-	// ===============FIN EQUIPOS=============================================
+	// ===============FIN EVENTOS=============================================
 
 	// ===================VENTANA PRINCIPAL===================================
 

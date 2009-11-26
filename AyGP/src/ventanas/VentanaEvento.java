@@ -81,8 +81,7 @@ public class VentanaEvento {
 		String des = TPDescripcion.getText();
 		Date fec = DCFecha.getDate();
 
-		boolean novacio = ((!nom.equals("")) && (!des.equals("")));
-
+		boolean novacio = ((!nom.equals("")) && (!des.equals("")));	
 		if (novacio) {
 			TEvento Evento = new TEvento(0, nom, des, fec);
 

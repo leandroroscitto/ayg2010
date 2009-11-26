@@ -12,7 +12,7 @@ public class prueba {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		/*
+	/*	
 		TEmpleado empleado = new TEmpleado(100, 31272448, "Juan", "BB",
 				"45790123", ECategoriaEmpleado.MOTOCICLISTA,
 				EEstadoEmpleado.DISPONIBLE,1);
@@ -32,8 +32,8 @@ public class prueba {
 		TEquipo equipo3 = new TEquipo(3, "Casco Verde", ECategoriaEquipo.CASCO,
 				EEstadoEquipo.NO_DISPONIBLE);
 		Calendar C = Calendar.getInstance();
-		C.set(2000, 02, 30);
-		TEvento evento1 = new TEvento(1, "Fin del mundo", "Fin del mundo", C);
+		//C.set(2000, 02, 30);
+		TEvento evento1 = new TEvento(1, "Fin del mundo", "Fin del mundo", C.getTime());
 		TVehiculo V1= new TVehiculo("ABC123","Ford","Falcon","Rojo",123,EEstadoVehiculo.EN_REPARACION,ETipoVehiculo.CAMIONETA,1);
 		TVehiculo V2= new TVehiculo("ABC523","Subaru","Impreza","Azul",123,EEstadoVehiculo.RETENIDO_INFRACCIONES,ETipoVehiculo.COCHE,2);
 		TGasto G1 = new TGasto(123,"Nose",ECategoriaPedido.FLETES,"Nose que poner",(float) 12.3);
@@ -43,6 +43,9 @@ public class prueba {
 		TPedido Pd1 = new TPedido(1,"Bahia Blanca","Buenos Aires",EEstadoPedido.DEMORADO,C,C,Cl1);
 		TPedido Pd2 = new TPedido(2,"Buenos Blanca","Blanca Aires",EEstadoPedido.EN_ESPERA,C,C,Cl2);
 		*/
+
+		new AltaModCliente();
+		
 		g = new TGestorDeDatos();
 
 		g.cargar_estado();
@@ -67,14 +70,18 @@ public class prueba {
 			g.agregar_elemento(Pd2);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
-		}*/
-
+		}
+		*/
+		
+		coperador c = new coperador(g); 	
+		
 		g.guardar_estado();
 		
-		@SuppressWarnings("unused")
+		/*@SuppressWarnings("unused")
 		cadministrador adm = new cadministrador(g);
 		@SuppressWarnings("unused")
 		coperador ope = new coperador(g);
+		*/
 		/*
 		 * empleado.asignar_horario(EDia.JUEVES, 1200, 1835);
 		 * //g.dat.getLista_empleados().add(empleado);

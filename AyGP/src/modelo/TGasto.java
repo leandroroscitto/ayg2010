@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.Date;
+
 import datos.TElemento;
 import enumerados.ECategoriaPedido;
 import enumerados.ETipoElemento;
@@ -13,8 +15,9 @@ public class TGasto extends TElemento {
 	private int id_gasto;
 	private String descripcion;
 	private float monto;
+	private Date fecha;
 
-	public TGasto(int id, String nom, ECategoriaPedido cat, String des, float m) {
+	public TGasto(int id, String nom, ECategoriaPedido cat, String des, float m,Date f) {
 		super(ETipoElemento.GASTO);
 
 		id_gasto = id;
@@ -22,6 +25,7 @@ public class TGasto extends TElemento {
 		categoria = cat;
 		descripcion = des;
 		monto = m;
+		fecha=f;
 	}
 
 	public int getId_gasto() {
@@ -63,6 +67,15 @@ public class TGasto extends TElemento {
 	public void setCategoria(ECategoriaPedido categoria) {
 		this.categoria = categoria;
 	}
+	
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
 
 	@Override
 	public Object getEID() {

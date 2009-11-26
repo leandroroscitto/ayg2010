@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -21,48 +22,108 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import control.coperador;
+
 
 public class VentanaPOperador  {
+	private coperador controlador;
 	
-	public VentanaPOperador(){
+	public VentanaPOperador(coperador P){
 		initComponents();
+		
+		BModificarG.setEnabled(false);
+		BBajaG.setEnabled(false);
+		
+		controlador=P;
 		JVentanaPOperador.setVisible(true);
+	}
+	
+	public JFrame getFramePrincipal(){
+		return JVentanaPOperador;
 	}
 
 	private void BRegistrarPActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		controlador.crearPedido();
 	}
 
 	private void BModificarPActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		int indicevista = TPedidos.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPOperador,
+					"Seleccione un pedido primero.");
+		} else {
+			int indice = TPedidos.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.modificarPedido(indice);
+		}
 	}
 
 	private void BBajaPActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		int indicevista = TPedidos.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPOperador,
+					"Seleccione un pedido primero.");
+		} else {
+			int indice = TPedidos.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.quitoPedido(indice);
+		}
 	}
 
 	private void BRegistrarCActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		controlador.crearCliente();
 	}
 
 	private void BModificarCActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		int indicevista = TClientes.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPOperador,
+					"Seleccione un cliente primero.");
+		} else {
+			int indice = TClientes.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.modificarCliente(indice);
+		}
 	}
 
 	private void BBajaCActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		int indicevista = TClientes.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPOperador,
+					"Seleccione un cliente primero.");
+		} else {
+			int indice = TClientes.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.quitoCliente(indice);
+		}
 	}
 
 	private void BRegistrarGActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		controlador.crearGasto();
 	}
 
 	private void BModificarGActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		int indicevista = TGastos.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPOperador,
+					"Seleccione un gasto primero.");
+		} else {
+			int indice = TGastos.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.modificarGasto(indice);
+		}
 	}
 
 	private void BBajaGActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		int indicevista = TGastos.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPOperador,
+					"Seleccione un gasto primero.");
+		} else {
+			int indice = TGastos.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.quitoGasto(indice);
+		}
 	}
 
 	@SuppressWarnings("serial")

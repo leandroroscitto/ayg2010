@@ -3,6 +3,7 @@ package modelo;
 import datos.TElemento;
 import enumerados.EEstadoCliente;
 import enumerados.ETipoElemento;
+import formateadores.TTelefono;
 
 public class TCliente extends TElemento {
 	private static final long serialVersionUID = 1L;
@@ -10,12 +11,12 @@ public class TCliente extends TElemento {
 	private String nombre;
 	private String direccion;
 	private String telefono;
-	private String dni;
+	private long dni;
 	private String cuil_cuit;
 	private EEstadoCliente estado;
 	private int id_cliente;
 
-	public TCliente(String nom, String dir, String tel, String d, String c,int id) {
+	public TCliente(String nom, String dir, String tel, long d, String c,int id) {
 		super(ETipoElemento.CLIENTE);
 		nombre = nom;
 		direccion = dir;
@@ -26,7 +27,7 @@ public class TCliente extends TElemento {
 		id_cliente=id;
 	}
 	
-	public TCliente(String nom, String dir, String tel, String d,int id) {
+	public TCliente(String nom, String dir, String tel, long d,int id) {
 		super(ETipoElemento.CLIENTE);
 		nombre = nom;
 		direccion = dir;
@@ -61,11 +62,11 @@ public class TCliente extends TElemento {
 		this.telefono = telefono;
 	}
 
-	public String getDni() {
+	public long getDni() {
 		return dni;
 	}
 
-	public void setDni(String dni) {
+	public void setDni(long dni) {
 		this.dni = dni;
 	}
 
