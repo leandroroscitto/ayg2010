@@ -115,10 +115,10 @@ public class THorario implements Serializable {
 		int tam = Asignacion.size();
 		boolean encontro = false;
 		TRangoHorario rh;
-
-		while ((i < tam) || !encontro) {
+		
+		while ((i < tam) && !encontro) {
 			rh = Asignacion.get(i);
-			encontro = (rh.getDia().equals(Dia) && rh.getHoraIni() <= HI && rh.getHoraFin() >= HF);
+			encontro = (rh.getDia().equals(Dia) && (rh.getHoraIni() <= HI) && (rh.getHoraFin() >= HF));
 			i++;
 		}
 

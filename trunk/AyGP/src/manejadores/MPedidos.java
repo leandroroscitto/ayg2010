@@ -5,12 +5,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 import modelo.TEmpleado;
-import modelo.TEquipo;
 import modelo.TPedido;
 import modelo.TVehiculo;
 import datos.TDatos;
 import datos.TElemento;
 import enumerados.EDia;
+import enumerados.EEstadoPedido;
 
 public class MPedidos {
 	private TDatos datos;
@@ -21,10 +21,10 @@ public class MPedidos {
 		lpedidos = datos.getLista_pedidos();
 	}
 
-	private boolean superpone_pedidos_IF(ArrayList<TPedido> listaP,
+	private boolean superpone_pedidos_IF(TPedido PAct,ArrayList<TPedido> listaP,
 			Date Ini, Date Fin) {
 		for (TPedido P : listaP) {
-			if (P.superpone_IF(Ini, Fin)) {
+			if ((P.getId_pedido()!=PAct.getId_pedido()) && (P.superpone_IF(Ini, Fin))) {
 				return false;
 			}
 		}
@@ -37,13 +37,14 @@ public class MPedidos {
 		ArrayList<TPedido> lista = new ArrayList<TPedido>();
 
 		for (TPedido pedido : lpedidos) {
-			if (pedido.getLista_Tipo(E.getTipo()).contains(E)) {
+			if (((pedido.getEstado()!=EEstadoPedido.CANCELADO) && (pedido.getEstado()!=EEstadoPedido.ENTREGADO)) && (pedido.getLista_Tipo(E.getTipo()).contains(E))) {
 				lista.add(pedido);
 			}
 		}
 		return lista;
 	}
 
+	/*
 	public boolean consultarDispEquipo(TEquipo E, Date Ini, Date Fin) {
 		assert (Ini.before(Fin) || Ini.equals(Fin));
 
@@ -63,8 +64,9 @@ public class MPedidos {
 
 		return false;
 	}
+	*/
 
-	public boolean consultarDispVehiculos(TVehiculo V, Date Ini,
+	public boolean consultarDispVehiculos(TPedido P,TVehiculo V, Date Ini,
 			Date Fin) {
 		assert (Ini.before(Fin) || Ini.equals(Fin));
 
@@ -73,14 +75,14 @@ public class MPedidos {
 		if (V.estado_disp()) {
 			pedidosV = pedidos_de_elemento(V);
 
-			return superpone_pedidos_IF(pedidosV, Ini, Fin);
+			return superpone_pedidos_IF(P,pedidosV, Ini, Fin);
 		}
 
 		return false;
 	}
 
 	@SuppressWarnings("deprecation")
-	public boolean consultarDispEmpleados(TEmpleado Em, Date Ini,
+	public boolean consultarDispEmpleados(TPedido P,TEmpleado Em, Date Ini,
 			Date Fin) {
 		assert (Ini.before(Fin) || Ini.equals(Fin));
 
@@ -119,12 +121,13 @@ public class MPedidos {
 
 				// TRABAJA DESDE LA HORA DE INICIO HASTA EL FINAL DEL DIA
 				trabaja = Em.trabaja_en_rango(DiaWIni, HI, 2359);
-
+				
 				// DIAS COMPLETOS
 				EDia Dia = DiaWIni;
 				while ((i < difDia) || (trabaja)) {
 					Dia = Dia.proximo();
 					trabaja = Em.trabaja_en_rango(Dia, 0000, 2359);
+					i++;
 				}
 
 				// ULTIMO DIA
@@ -140,8 +143,7 @@ public class MPedidos {
 			// VERIFICA QUE NO ESTE ASIGNADO A UN PEDIDO SUPERPUESTO
 			if (trabaja) {
 				pedidosEm = pedidos_de_elemento(Em);
-
-				return superpone_pedidos_IF(pedidosEm, Ini, Fin);
+				return superpone_pedidos_IF(P,pedidosEm, Ini, Fin);
 			}
 			return false;
 		}

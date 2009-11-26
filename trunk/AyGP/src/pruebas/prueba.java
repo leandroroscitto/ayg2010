@@ -43,8 +43,6 @@ public class prueba {
 		TPedido Pd1 = new TPedido(1,"Bahia Blanca","Buenos Aires",EEstadoPedido.DEMORADO,C,C,Cl1);
 		TPedido Pd2 = new TPedido(2,"Buenos Blanca","Blanca Aires",EEstadoPedido.EN_ESPERA,C,C,Cl2);
 		*/
-
-		new AltaModCliente();
 		
 		g = new TGestorDeDatos();
 
@@ -72,7 +70,7 @@ public class prueba {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		*/
-		
+		cadministrador c1 = new cadministrador(g);
 		coperador c = new coperador(g); 	
 		
 		g.guardar_estado();
