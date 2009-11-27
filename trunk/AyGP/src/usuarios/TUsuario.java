@@ -27,7 +27,15 @@ public class TUsuario implements Serializable {
 	public ETipoUsuario getTipo() {
 		return Tipo;
 	}
-
+	
+	public String getNombre(String pass){
+		if (Password.equals(pass)){
+			return Nombre;
+		}else{
+			return null;
+		}
+	}
+	
 	public boolean setPassword(String OldPass, String NewPass) {
 		if (OldPass.equals(Password)) {
 			Password = NewPass;

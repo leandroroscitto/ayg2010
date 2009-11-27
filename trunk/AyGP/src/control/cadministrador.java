@@ -21,6 +21,7 @@ import ventanas.VentanaPAdministrador;
 import ventanas.VentanaVehiculo;
 import datos.TGestorDeDatos;
 import enumerados.EDia;
+import enumerados.EEstadoEmpleado;
 
 public class cadministrador {
 	private VentanaPAdministrador ventana;
@@ -38,10 +39,10 @@ public class cadministrador {
 
 	private TGestorDeDatos GDatos;
 
-	public cadministrador(TGestorDeDatos GD) {
+	public cadministrador(String NomUsa,TGestorDeDatos GD) {
 		GDatos = GD;
 
-		ventana = new VentanaPAdministrador(this);
+		ventana = new VentanaPAdministrador(NomUsa,this);
 		actualizartablas();
 	}
 
@@ -81,7 +82,8 @@ public class cadministrador {
 			TEmpleado Empleado = GDatos.getDatos().getLista_empleados().get(
 					indice);
 
-			GDatos.quitar_elemento(Empleado);
+			//GDatos.quitar_elemento(Empleado);
+			Empleado.setEstado(EEstadoEmpleado.NO_DISPONIBLE);
 			GDatos.guardar_estado();
 
 			actualizartempleados();

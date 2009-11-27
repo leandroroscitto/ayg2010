@@ -13,7 +13,6 @@ public class clogin {
 	public static void main(String[] args) {
 		new clogin();
 	}
-	@SuppressWarnings("unused")
 	private VentanaLogin vlogin;
 	private TGestorDeDatos GDatos;
 	private TGestorDeUsuarios GUsuarios;
@@ -51,11 +50,11 @@ public class clogin {
 			ETipoUsuario TUsuario=Usuario.getTipo();
 			if (TUsuario==ETipoUsuario.ADMINISTRADOR){
 				vlogin.descartar();
-				CAdministrador = new cadministrador(GDatos);
+				CAdministrador = new cadministrador(Usuario.getNombre(pass),GDatos);
 			};
 			if (TUsuario==ETipoUsuario.OPERADOR){
 				vlogin.descartar();
-				COperador = new coperador(GDatos);
+				COperador = new coperador(Usuario.getNombre(pass),GDatos);
 			}
 		}else{
 			JOptionPane.showMessageDialog(vlogin.getFramePrincipal(), "Usuario o contraseña incorrectos");

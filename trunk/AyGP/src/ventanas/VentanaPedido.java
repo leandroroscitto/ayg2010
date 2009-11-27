@@ -133,7 +133,7 @@ public class VentanaPedido {
 		FActPedido.setVisible(true);
 	}
 
-	@SuppressWarnings( { "deprecation", "unchecked" })
+	@SuppressWarnings( { "deprecation" })
 	public VentanaPedido(String titulo, String boton, coperador P,
 			TPedido Pedido) {
 		inicializarModelo(titulo, boton, P);
@@ -353,7 +353,6 @@ public class VentanaPedido {
 		return FActPedido;
 	}
 
-	@SuppressWarnings("unchecked")
 	private void inicializarModelo(String titulo, String boton, coperador P) {
 		controlador = P;
 

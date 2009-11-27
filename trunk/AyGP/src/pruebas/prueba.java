@@ -70,8 +70,8 @@ public class prueba {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		*/
-		cadministrador c1 = new cadministrador(g);
-		coperador c = new coperador(g); 	
+		cadministrador c1 = new cadministrador("Prueba",g);
+		coperador c = new coperador("Prueba",g); 	
 		
 		g.guardar_estado();
 		
