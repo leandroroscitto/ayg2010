@@ -38,17 +38,32 @@ import control.cadministrador;
 public class VentanaEvento {
 	private cadministrador controlador;
 
-	private void inicializarModelo(String titulo, String boton, cadministrador P) {
-		controlador = P;
+	// JFormDesigner - Variables declaration - DO NOT MODIFY
+	// //GEN-BEGIN:variables
+	private JFrame FActEvento;
 
-		FActEvento = new JFrame(titulo);
-		BActEventoOK = new JButton(boton);
-	}
+	private JScrollPane SPAtributosEvento;
 
-	public JFrame getFramePrincipal() {
-		return FActEvento;
-	}
+	private JPanel PAtributosEvento;
 
+	private JPanel PNombre;
+
+	private JLabel LNombre;
+
+	private JTextField TFNombre;
+
+	private JLabel LDescripcion;
+
+	private JScrollPane SPDescripcion;
+
+	private JTextPane TPDescripcion;
+	private JPanel PFecha;
+	private JLabel LFecha;
+	private JDateChooser DCFecha;
+	private JPanel PBotonesEvento;
+	private JButton BActEventoOK;
+	private JButton BActEventoCancel;
+	// JFormDesigner - End of variables declaration //GEN-END:variables
 	public VentanaEvento(String titulo, String boton, cadministrador P) {
 		inicializarModelo(titulo, boton, P);
 
@@ -56,7 +71,6 @@ public class VentanaEvento {
 
 		FActEvento.setVisible(true);
 	}
-
 	public VentanaEvento(String titulo, String boton, cadministrador P,
 			TEvento Evento) {
 		inicializarModelo(titulo, boton, P);
@@ -71,11 +85,10 @@ public class VentanaEvento {
 		FActEvento.pack();
 		FActEvento.setVisible(true);
 	}
-
-	private void FActEventoWindowClosing(WindowEvent e) {
+	private void BActEventoCancelActionPerformed(ActionEvent e) {
 		controlador.cerroventanaEvento(false);
+		FActEvento.dispose();
 	}
-
 	private void BActEventoOKActionPerformed(ActionEvent e) {
 		String nom = TFNombre.getText();
 		String des = TPDescripcion.getText();
@@ -93,12 +106,18 @@ public class VentanaEvento {
 					"Ingrese todos los campos obligatorios.");
 		}
 	}
-
-	private void BActEventoCancelActionPerformed(ActionEvent e) {
+	private void FActEventoWindowClosing(WindowEvent e) {
 		controlador.cerroventanaEvento(false);
-		FActEvento.dispose();
 	}
+	public JFrame getFramePrincipal() {
+		return FActEvento;
+	}
+	private void inicializarModelo(String titulo, String boton, cadministrador P) {
+		controlador = P;
 
+		FActEvento = new JFrame(titulo);
+		BActEventoOK = new JButton(boton);
+	}
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -244,23 +263,4 @@ public class VentanaEvento {
 		// JFormDesigner - End of component initialization
 		// //GEN-END:initComponents
 	}
-
-	// JFormDesigner - Variables declaration - DO NOT MODIFY
-	// //GEN-BEGIN:variables
-	private JFrame FActEvento;
-	private JScrollPane SPAtributosEvento;
-	private JPanel PAtributosEvento;
-	private JPanel PNombre;
-	private JLabel LNombre;
-	private JTextField TFNombre;
-	private JLabel LDescripcion;
-	private JScrollPane SPDescripcion;
-	private JTextPane TPDescripcion;
-	private JPanel PFecha;
-	private JLabel LFecha;
-	private JDateChooser DCFecha;
-	private JPanel PBotonesEvento;
-	private JButton BActEventoOK;
-	private JButton BActEventoCancel;
-	// JFormDesigner - End of variables declaration //GEN-END:variables
 }

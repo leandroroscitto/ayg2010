@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import modelo.TCliente;
 import modelo.TEmpleado;
 import modelo.TPedido;
 import modelo.TVehiculo;
@@ -12,6 +13,13 @@ import datos.TElemento;
 import enumerados.EDia;
 import enumerados.EEstadoPedido;
 
+/**
+ * Esta clase ofrece funcionalidad relacionada con el manejo de los pedidos,
+ * como es determinar los pedidos asociados a un empleado, vehículo o cliente.
+ * También permite determinar si un empleado o vehículo está disponible en un
+ * rango de fechas determinado, de acuerdo a su asignación a los pedidos del
+ * sistema.
+ */
 public class MPedidos {
 	private TDatos datos;
 	private ArrayList<TPedido> lpedidos;
@@ -21,68 +29,8 @@ public class MPedidos {
 		lpedidos = datos.getLista_pedidos();
 	}
 
-	private boolean superpone_pedidos_IF(TPedido PAct,ArrayList<TPedido> listaP,
-			Date Ini, Date Fin) {
-		for (TPedido P : listaP) {
-			if ((P.getId_pedido()!=PAct.getId_pedido()) && (P.superpone_IF(Ini, Fin))) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	// MAS GENERAL PARA OBTENER LA LISTA DE PEDIDOS
-	private ArrayList<TPedido> pedidos_de_elemento(TElemento E) {
-		ArrayList<TPedido> lista = new ArrayList<TPedido>();
-
-		for (TPedido pedido : lpedidos) {
-			if (((pedido.getEstado()!=EEstadoPedido.CANCELADO) && (pedido.getEstado()!=EEstadoPedido.ENTREGADO)) && (pedido.getLista_Tipo(E.getTipo()).contains(E))) {
-				lista.add(pedido);
-			}
-		}
-		return lista;
-	}
-
-	/*
-	public boolean consultarDispEquipo(TEquipo E, Date Ini, Date Fin) {
-		assert (Ini.before(Fin) || Ini.equals(Fin));
-
-		ArrayList<TPedido> pedidosE;
-
-		// En un principio verifica que este disponible mas allá del momento
-		if (E.estado_disp()) {
-			// Luego verifica que el intervalo Ini-Fin no se superponga con
-			// ningún pedido al cual el equipo ya esté asignado
-
-			// Obtiene todos los pedidos en el que aparece E
-			pedidosE = pedidos_de_elemento(E);
-
-			// Verifica la superposición
-			return superpone_pedidos_IF(pedidosE, Ini, Fin);
-		}
-
-		return false;
-	}
-	*/
-
-	public boolean consultarDispVehiculos(TPedido P,TVehiculo V, Date Ini,
-			Date Fin) {
-		assert (Ini.before(Fin) || Ini.equals(Fin));
-
-		ArrayList<TPedido> pedidosV;
-
-		if (V.estado_disp()) {
-			pedidosV = pedidos_de_elemento(V);
-
-			return superpone_pedidos_IF(P,pedidosV, Ini, Fin);
-		}
-
-		return false;
-	}
-
 	@SuppressWarnings("deprecation")
-	public boolean consultarDispEmpleados(TPedido P,TEmpleado Em, Date Ini,
+	public boolean consultarDispEmpleados(TPedido P, TEmpleado Em, Date Ini,
 			Date Fin) {
 		assert (Ini.before(Fin) || Ini.equals(Fin));
 
@@ -95,8 +43,8 @@ public class MPedidos {
 
 			// NOSE: PARA EVITAR PROBLEMAS NO PUEDE HABER PEDIDOS ENTRE DOS AÑOS
 			Calendar C = Calendar.getInstance();
-			
-			C.setTime(Ini);			
+
+			C.setTime(Ini);
 			int DiaYIni = C.get(Calendar.DAY_OF_YEAR);
 			C.setTime(Fin);
 			int DiaYFin = C.get(Calendar.DAY_OF_YEAR);
@@ -121,7 +69,7 @@ public class MPedidos {
 
 				// TRABAJA DESDE LA HORA DE INICIO HASTA EL FINAL DEL DIA
 				trabaja = Em.trabaja_en_rango(DiaWIni, HI, 2359);
-				
+
 				// DIAS COMPLETOS
 				EDia Dia = DiaWIni;
 				while ((i < difDia) || (trabaja)) {
@@ -143,11 +91,79 @@ public class MPedidos {
 			// VERIFICA QUE NO ESTE ASIGNADO A UN PEDIDO SUPERPUESTO
 			if (trabaja) {
 				pedidosEm = pedidos_de_elemento(Em);
-				return superpone_pedidos_IF(P,pedidosEm, Ini, Fin);
+				return superpone_pedidos_IF(P, pedidosEm, Ini, Fin);
 			}
 			return false;
 		}
 
 		return false;
+	}
+
+	public boolean consultarDispVehiculos(TPedido P, TVehiculo V, Date Ini,
+			Date Fin) {
+		assert (Ini.before(Fin) || Ini.equals(Fin));
+
+		ArrayList<TPedido> pedidosV;
+
+		if (V.estado_disp()) {
+			pedidosV = pedidos_de_elemento(V);
+
+			return superpone_pedidos_IF(P, pedidosV, Ini, Fin);
+		}
+
+		return false;
+	}
+
+	/*
+	 * public boolean consultarDispEquipo(TEquipo E, Date Ini, Date Fin) {
+	 * assert (Ini.before(Fin) || Ini.equals(Fin));
+	 * 
+	 * ArrayList<TPedido> pedidosE; // En un principio verifica que este
+	 * disponible mas allá del momento if (E.estado_disp()) { // Luego verifica
+	 * que el intervalo Ini-Fin no se superponga con // ningún pedido al cual el
+	 * equipo ya esté asignado // Obtiene todos los pedidos en el que aparece E
+	 * pedidosE = pedidos_de_elemento(E); // Verifica la superposición return
+	 * superpone_pedidos_IF(pedidosE, Ini, Fin); }
+	 * 
+	 * return false; }
+	 */
+
+	// MAS GENERAL PARA OBTENER LA LISTA DE PEDIDOS
+	private ArrayList<TPedido> pedidos_de_elemento(TElemento E) {
+		ArrayList<TPedido> lista = new ArrayList<TPedido>();
+
+		for (TPedido pedido : lpedidos) {
+			if (((pedido.getEstado() != EEstadoPedido.CANCELADO) && (pedido
+					.getEstado() != EEstadoPedido.ENTREGADO))
+					&& (pedido.getLista_Tipo(E.getTipo()).contains(E))) {
+				lista.add(pedido);
+			}
+		}
+		return lista;
+	}
+
+	private boolean superpone_pedidos_IF(TPedido PAct,
+			ArrayList<TPedido> listaP, Date Ini, Date Fin) {
+		for (TPedido P : listaP) {
+			if ((P.getId_pedido() != PAct.getId_pedido())
+					&& (P.superpone_IF(Ini, Fin))) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public ArrayList<TPedido> consultarPedidosDeCliente(TCliente cliente) {
+		ArrayList<TPedido> lista_pedidos = datos.getLista_pedidos();
+		ArrayList<TPedido> ped_cliente = new ArrayList<TPedido>();
+
+		for (TPedido P : lista_pedidos) {
+			if (P.getCliente().getId_cliente() == cliente.getId_cliente()) {
+				ped_cliente.add(P);
+			}
+		}
+
+		return ped_cliente;
 	}
 }

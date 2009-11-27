@@ -9,6 +9,14 @@ import enumerados.EDia;
 import enumerados.EEstadoEmpleado;
 import enumerados.ETipoElemento;
 
+/**
+ * Representa a un empleado de la empresa de servicios de cadetaría. Continene
+ * toda la información requerida por la empresa para determinar su
+ * disponibilidad y rangos de horarios de trabajo. El atributo legajo es el que
+ * identifica a un empleado particular de otro, no su DNI. Debido a las
+ * limitaciones del modelo, pueden existir dos empleados con el mismo DNI, pero
+ * no con el mismo legajo. Son manejados por el usuario administrativo.
+ */
 public class TEmpleado extends TElemento {
 
 	private static final long serialVersionUID = 1L;
@@ -24,7 +32,7 @@ public class TEmpleado extends TElemento {
 	private int id_empleado;
 
 	public TEmpleado(long leg, long dnie, String nom, String dir, String tel,
-			ECategoriaEmpleado cat, EEstadoEmpleado est,int id) {
+			ECategoriaEmpleado cat, EEstadoEmpleado est, int id) {
 		super(ETipoElemento.EMPLEADO);
 		legajo = leg;
 		dni = dnie;
@@ -34,7 +42,15 @@ public class TEmpleado extends TElemento {
 		horario = new THorario();
 		categoria = cat;
 		estado = est;
-		id_empleado=id;
+		id_empleado = id;
+	}
+
+	public void asignar_horario(EDia Dia, int HI, int HF) {
+		horario.agregar_rango_horario(Dia, HI, HF);
+	}
+
+	public void eliminar_horario(EDia Dia, int HI, int HF) {
+		horario.quitar_rango_horario(Dia, HI, HF);
 	}
 
 	// Determina si el estado del equipo permite su planificación en un pedido.
@@ -48,85 +64,16 @@ public class TEmpleado extends TElemento {
 		}
 	}
 
-	public long getDni() {
-		return dni;
-	}
-
-	public void setDni(long dnie) {
-		this.dni = dnie;
-	}
-
-	public long getLegajo() {
-		return legajo;
-	}
-
-	public void setLegajo(int legajo) {
-		this.legajo = legajo;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public ECategoriaEmpleado getCategoria() {
+		return categoria;
 	}
 
 	public String getDireccion() {
 		return direccion;
 	}
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
-
-	public String getTelefono() {
-		return telefono;
-	}
-
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-
-	public ArrayList<TRangoHorario> getRangosHorarios(EDia Dia) {
-		return horario.get_rangos_dia(Dia);
-	}
-	
-	public THorario getRangosHorarios(){
-		return horario.clonar();
-	}
-
-	public void setHorario(THorario H){
-		assert H!=null;
-		horario=H;
-	}
-	
-	public void asignar_horario(EDia Dia, int HI, int HF) {
-		horario.agregar_rango_horario(Dia, HI, HF);
-	}
-
-	public void eliminar_horario(EDia Dia, int HI, int HF) {
-		horario.quitar_rango_horario(Dia, HI, HF);
-	}
-
-	public boolean trabaja_en_rango(EDia Dia, int HI, int HF) {
-		return horario.trabaja_en_rango(Dia, HI, HF);
-	}
-
-	public ECategoriaEmpleado getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(ECategoriaEmpleado categoria) {
-		this.categoria = categoria;
-	}
-
-	public EEstadoEmpleado getEstado() {
-		return estado;
-	}
-
-	public void setEstado(EEstadoEmpleado estado) {
-		this.estado = estado;
+	public long getDni() {
+		return dni;
 	}
 
 	@Override
@@ -134,12 +81,73 @@ public class TEmpleado extends TElemento {
 		return legajo;
 	}
 
+	public EEstadoEmpleado getEstado() {
+		return estado;
+	}
+
 	public int getId_empleado() {
 		return id_empleado;
 	}
 
+	public long getLegajo() {
+		return legajo;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public THorario getRangosHorarios() {
+		return horario.clonar();
+	}
+
+	public ArrayList<TRangoHorario> getRangosHorarios(EDia Dia) {
+		return horario.get_rangos_dia(Dia);
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setCategoria(ECategoriaEmpleado categoria) {
+		this.categoria = categoria;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public void setDni(long dnie) {
+		this.dni = dnie;
+	}
+
+	public void setEstado(EEstadoEmpleado estado) {
+		this.estado = estado;
+	}
+
+	public void setHorario(THorario H) {
+		assert H != null;
+		horario = H;
+	}
+
 	public void setId_empleado(int id_empleado) {
 		this.id_empleado = id_empleado;
+	}
+
+	public void setLegajo(int legajo) {
+		this.legajo = legajo;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public boolean trabaja_en_rango(EDia Dia, int HI, int HF) {
+		return horario.trabaja_en_rango(Dia, HI, HF);
 	}
 
 }

@@ -20,6 +20,7 @@ import ventanas.VentanaLVehiculos;
 import ventanas.VentanaPOperador;
 import ventanas.VentanaPedido;
 import datos.TGestorDeDatos;
+import enumerados.EEstadoCliente;
 import enumerados.EEstadoPedido;
 
 public class coperador {
@@ -186,11 +187,21 @@ public class coperador {
 
 			TCliente Cliente = GDatos.getDatos().getLista_clientes()
 					.get(indice);
+			
+			//Verifica que el cliente no tenga pedidos asignados
+			ArrayList<TPedido> pedidoscliente=ManejadorP.consultarPedidosDeCliente(Cliente);
+			
+			if (pedidoscliente.size()>0){
+				Cliente.setEstado(EEstadoCliente.INACTIVO);
+				GDatos.guardar_estado();
+				actualizartclientes();
+			}else{
+				//Si no tiene pedidos asignados lo elimina
+				GDatos.quitar_elemento(Cliente);
+				GDatos.guardar_estado();
 
-			GDatos.quitar_elemento(Cliente);
-			GDatos.guardar_estado();
-
-			actualizartclientes();
+				actualizartclientes();
+			}
 		}
 		ventana.getFramePrincipal().setEnabled(true);
 		ventana.getFramePrincipal().requestFocus();
@@ -310,9 +321,9 @@ public class coperador {
 
 	public void actualizoPedido(TPedido Pedido) {
 		boolean error = false;
-		
-		if (indicemodf!=-1){
-			TPedido P=GDatos.getDatos().getLista_pedidos().get(indicemodf);
+
+		if (indicemodf != -1) {
+			TPedido P = GDatos.getDatos().getLista_pedidos().get(indicemodf);
 			Pedido.setId_pedido(P.getId_pedido());
 		}
 
@@ -322,14 +333,14 @@ public class coperador {
 		boolean vehiculosdisp = true;
 		for (TEmpleado E : Pedido.getEmpleados()) {
 			empleadosdisp = empleadosdisp
-					&& ManejadorP.consultarDispEmpleados(Pedido,E, Pedido.get_ini(),
-							Pedido.get_fin());
+					&& ManejadorP.consultarDispEmpleados(Pedido, E, Pedido
+							.get_ini(), Pedido.get_fin());
 		}
 		;
 		for (TVehiculo V : Pedido.getVehiculos()) {
 			vehiculosdisp = vehiculosdisp
-					&& ManejadorP.consultarDispVehiculos(Pedido,V, Pedido.get_fin(),
-							Pedido.get_fin());
+					&& ManejadorP.consultarDispVehiculos(Pedido, V, Pedido
+							.get_fin(), Pedido.get_fin());
 		}
 		if ((!empleadosdisp) || (!vehiculosdisp)) {
 			JOptionPane
@@ -568,7 +579,7 @@ public class coperador {
 		DefaultTableModel TM = new DefaultTableModel(new String[] { "Nombre",
 				"DNI", "CUIT/CUIL", "Dirección", "Teléfono", "Estado" }, 0) {
 			boolean[] columnEditable = new boolean[] { false, false, false,
-					false, false };
+					false, false, false };
 
 			@Override
 			public boolean isCellEditable(int rowIndex, int columnIndex) {

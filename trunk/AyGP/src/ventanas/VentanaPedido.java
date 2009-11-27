@@ -41,6 +41,7 @@ import com.toedter.calendar.JDateChooser;
 
 import control.coperador;
 import enumerados.ECategoriaPedido;
+import enumerados.EEstadoCliente;
 import enumerados.EEstadoPedido;
 
 public class VentanaPedido {
@@ -51,39 +52,76 @@ public class VentanaPedido {
 	private ArrayList<TEmpleado> empleadosSinasig;
 	private ArrayList<TVehiculo> vehiculosSinasig;
 
-	@SuppressWarnings("unchecked")
-	private void inicializarModelo(String titulo, String boton, coperador P) {
-		controlador = P;
+	// JFormDesigner - Variables declaration - DO NOT MODIFY
+	// //GEN-BEGIN:variables
+	private JFrame FActPedido;
 
-		empleadosSinasig = new ArrayList<TEmpleado>();
-		for (TEmpleado emp : P.getEmpleados()) {
-			empleadosSinasig.add(emp);
-		}
-		vehiculosSinasig = new ArrayList<TVehiculo>();
-		for (TVehiculo veh : P.getVehiculos()) {
-			vehiculosSinasig.add(veh);
-		}
+	private JScrollPane SPAtributosP;
 
-		CBCategoria = new JComboBox(ECategoriaPedido.values());
-		CBEstado = new JComboBox(EEstadoPedido.values());
-		DCInicio = new JDateChooser(Calendar.getInstance().getTime());
-		DCFin = new JDateChooser(Calendar.getInstance().getTime());
+	private JPanel PAtributosP;
 
-		FActPedido = new JFrame(titulo);
-		BActPedidoOK = new JButton(boton);
-	}
+	private JLabel LOrigen;
 
-	public JFrame getFramePrincipal() {
-		return FActPedido;
-	}
+	private JTextField TFOrigen;
 
-	public void setearCliente(TCliente Cliente) {
-		cliente = Cliente;
+	private JLabel LDestino;
 
-		FTDNI.setValue(Cliente.getDni());
-		TFNombre.setText(Cliente.getNombre());
-	}
+	private JTextField TFDestino;
 
+	private JLabel LFInicio;
+
+	private JDateChooser DCInicio;
+
+	private JLabel LHInicio;
+
+	private JPanel PHoraI;
+
+	private JSpinner SHoraI;
+
+	private JLabel LDosP;
+
+	private JSpinner SMinI;
+
+	private JLabel LFFin;
+
+	private JDateChooser DCFin;
+
+	private JLabel LHFin;
+
+	private JPanel PHoraF;
+
+	private JSpinner SHoraF;
+
+	private JLabel LDosP2;
+	private JSpinner SMinF;
+	private JLabel LCategoria;
+	private JComboBox CBCategoria;
+	private JLabel LEstado;
+	private JComboBox CBEstado;
+	private JLabel LCosto;
+	private JFormattedTextField FTCosto;
+	private JPanel PCliente;
+	private JLabel LDni;
+	private JFormattedTextField FTDNI;
+	private JButton BCrearCliente;
+	private JLabel LNombre;
+	private JTextField TFNombre;
+	private JButton BSeleccionarCliente;
+	private JPanel PEmpleados;
+	private JScrollPane SPTablaEmp;
+	private JTable TEmpleados;
+	private JButton BAnadirE;
+	private JButton BQuitarE;
+	private JPanel PVehiculos;
+	private JScrollPane SPTablaVehi;
+	private JTable TVehiculos;
+	private JButton BAnadirV;
+	private JButton BQuitarV;
+	private JPanel PBotonesPedido;
+	private JButton BActPedidoOK;
+	private JButton BActPedidoCancel;
+
+	// JFormDesigner - End of variables declaration //GEN-END:variables
 	public VentanaPedido(String titulo, String boton, coperador P) {
 		inicializarModelo(titulo, boton, P);
 
@@ -120,7 +158,7 @@ public class VentanaPedido {
 
 		empleadosasig = new ArrayList<TEmpleado>();
 		vehiculosasig = new ArrayList<TVehiculo>();
-		
+
 		for (TEmpleado emp : Pedido.getEmpleados()) {
 			empleadosasig.add(emp);
 		}
@@ -135,18 +173,6 @@ public class VentanaPedido {
 		actualizar_lista_vehiculos();
 
 		FActPedido.setVisible(true);
-	}
-
-	public void agregarEmpleado(TEmpleado Empleado) {
-		empleadosasig.add(Empleado);
-		empleadosSinasig.remove(Empleado);
-		actualizar_lista_empleados();
-	}
-
-	public void agregarVehiculo(TVehiculo Vehiculo) {
-		vehiculosasig.add(Vehiculo);
-		vehiculosSinasig.remove(Vehiculo);
-		actualizar_lista_vehiculos();
 	}
 
 	@SuppressWarnings("serial")
@@ -189,67 +215,21 @@ public class VentanaPedido {
 		}
 	}
 
-	private void FTDNIPropertyChange(PropertyChangeEvent e) {
-		long dni = (Long) FTDNI.getValue();
-		if (dni > 0) {
-			TCliente Cliente = controlador.getCliente(dni);
-			if (Cliente != null) {
-				cliente = Cliente;
-				TFNombre.setText(Cliente.getNombre());
-			} else {
-				cliente = null;
-				TFNombre.setText("ERROR: NO EXITE EL CLIENTE DADO EL DNI");
-			}
-		} else {
-			cliente = null;
-			TFNombre.setText("ERROR: DNI NO VÁLIDO");
-		}
+	public void agregarEmpleado(TEmpleado Empleado) {
+		empleadosasig.add(Empleado);
+		empleadosSinasig.remove(Empleado);
+		actualizar_lista_empleados();
 	}
 
-	private void BCrearClienteActionPerformed(ActionEvent e) {
-		controlador.crearClienteEnPedido();
+	public void agregarVehiculo(TVehiculo Vehiculo) {
+		vehiculosasig.add(Vehiculo);
+		vehiculosSinasig.remove(Vehiculo);
+		actualizar_lista_vehiculos();
 	}
 
-	private void BSeleccionarClienteActionPerformed(ActionEvent e) {
-		// TODO add your code here
-	}
-
-	private void BAnadirEActionPerformed(ActionEvent e) {
-		controlador.anadirEmpleados(empleadosSinasig);
-	}
-
-	private void BQuitarEActionPerformed(ActionEvent e) {
-		int indicevista = TEmpleados.getSelectedRow();
-		if (indicevista < 0) {
-			JOptionPane.showMessageDialog(FActPedido,
-					"Seleccione un empleado primero.");
-		} else {
-			int indice = TEmpleados.getRowSorter().convertRowIndexToModel(
-					indicevista);
-			TEmpleado Empleado = empleadosasig.get(indice);
-			empleadosasig.remove(Empleado);
-			empleadosSinasig.add(Empleado);
-			actualizar_lista_empleados();
-		}
-	}
-
-	private void BAnadirVActionPerformed(ActionEvent e) {
-		controlador.anadirVehiculos(vehiculosSinasig);
-	}
-
-	private void BQuitarVActionPerformed(ActionEvent e) {
-		int indicevista = TVehiculos.getSelectedRow();
-		if (indicevista < 0) {
-			JOptionPane.showMessageDialog(FActPedido,
-					"Seleccione un vehículo primero.");
-		} else {
-			int indice = TVehiculos.getRowSorter().convertRowIndexToModel(
-					indicevista);
-			TVehiculo Vehiculo = vehiculosasig.get(indice);
-			vehiculosasig.remove(Vehiculo);
-			vehiculosSinasig.add(Vehiculo);
-			actualizar_lista_vehiculos();
-		}
+	private void BActPedidoCancelActionPerformed(ActionEvent e) {
+		controlador.cerroventanaPedido(false);
+		FActPedido.dispose();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -277,11 +257,11 @@ public class VentanaPedido {
 			if ((cliente != null) && (empleadosasig.size() > 0)) {
 				TPedido Pedido = new TPedido(0, ori, des, est, cat, ini, fin,
 						cliente, cost);
-				
-				for(TEmpleado emp:empleadosasig){
+
+				for (TEmpleado emp : empleadosasig) {
 					Pedido.getEmpleados().add(emp);
 				}
-				for(TVehiculo veh:vehiculosasig){
+				for (TVehiculo veh : vehiculosasig) {
 					Pedido.getVehiculos().add(veh);
 				}
 
@@ -299,9 +279,100 @@ public class VentanaPedido {
 		}
 	}
 
-	private void BActPedidoCancelActionPerformed(ActionEvent e) {
-		controlador.cerroventanaPedido(false);
-		FActPedido.dispose();
+	private void BAnadirEActionPerformed(ActionEvent e) {
+		controlador.anadirEmpleados(empleadosSinasig);
+	}
+
+	private void BAnadirVActionPerformed(ActionEvent e) {
+		controlador.anadirVehiculos(vehiculosSinasig);
+	}
+
+	private void BCrearClienteActionPerformed(ActionEvent e) {
+		controlador.crearClienteEnPedido();
+	}
+
+	private void BQuitarEActionPerformed(ActionEvent e) {
+		int indicevista = TEmpleados.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(FActPedido,
+					"Seleccione un empleado primero.");
+		} else {
+			int indice = TEmpleados.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			TEmpleado Empleado = empleadosasig.get(indice);
+			empleadosasig.remove(Empleado);
+			empleadosSinasig.add(Empleado);
+			actualizar_lista_empleados();
+		}
+	}
+
+	private void BQuitarVActionPerformed(ActionEvent e) {
+		int indicevista = TVehiculos.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(FActPedido,
+					"Seleccione un vehículo primero.");
+		} else {
+			int indice = TVehiculos.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			TVehiculo Vehiculo = vehiculosasig.get(indice);
+			vehiculosasig.remove(Vehiculo);
+			vehiculosSinasig.add(Vehiculo);
+			actualizar_lista_vehiculos();
+		}
+	}
+
+	private void BSeleccionarClienteActionPerformed(ActionEvent e) {
+		// TODO add your code here
+	}
+
+	private void FTDNIPropertyChange(PropertyChangeEvent e) {
+		long dni = (Long) FTDNI.getValue();
+		if (dni > 0) {
+			TCliente Cliente = controlador.getCliente(dni);
+			if (Cliente != null) {
+				if (Cliente.getEstado()==EEstadoCliente.ACTIVO){
+					//Si el cliente está activo es posible seleccionarlo
+					cliente = Cliente;
+					TFNombre.setText(Cliente.getNombre());
+				}else{
+					cliente=null;
+					TFNombre.setText("EL CLIENTE SELECCIONADO NO ESTA ACTIVO");
+				}
+				
+			} else {
+				cliente = null;
+				TFNombre.setText("ERROR: NO EXITE EL CLIENTE DADO EL DNI");
+			}
+		} else {
+			cliente = null;
+			TFNombre.setText("ERROR: DNI NO VÁLIDO");
+		}
+	}
+
+	public JFrame getFramePrincipal() {
+		return FActPedido;
+	}
+
+	@SuppressWarnings("unchecked")
+	private void inicializarModelo(String titulo, String boton, coperador P) {
+		controlador = P;
+
+		empleadosSinasig = new ArrayList<TEmpleado>();
+		for (TEmpleado emp : P.getEmpleados()) {
+			empleadosSinasig.add(emp);
+		}
+		vehiculosSinasig = new ArrayList<TVehiculo>();
+		for (TVehiculo veh : P.getVehiculos()) {
+			vehiculosSinasig.add(veh);
+		}
+
+		CBCategoria = new JComboBox(ECategoriaPedido.values());
+		CBEstado = new JComboBox(EEstadoPedido.values());
+		DCInicio = new JDateChooser(Calendar.getInstance().getTime());
+		DCFin = new JDateChooser(Calendar.getInstance().getTime());
+
+		FActPedido = new JFrame(titulo);
+		BActPedidoOK = new JButton(boton);
 	}
 
 	private void initComponents() {
@@ -633,7 +704,8 @@ public class VentanaPedido {
 											50, 80));
 							TEmpleados
 									.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-							TEmpleados.setModel(new DefaultTableModel(new Object[] { "Legajo", "Nombre" },0));
+							TEmpleados.setModel(new DefaultTableModel(
+									new Object[] { "Legajo", "Nombre" }, 0));
 							TEmpleados.setAutoCreateRowSorter(true);
 							SPTablaEmp.setViewportView(TEmpleados);
 						}
@@ -694,7 +766,8 @@ public class VentanaPedido {
 											50, 80));
 							TVehiculos
 									.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-							TVehiculos.setModel(new DefaultTableModel(new Object[] {"Patente", "Tipo"},0));
+							TVehiculos.setModel(new DefaultTableModel(
+									new Object[] { "Patente", "Tipo" }, 0));
 							TVehiculos.setAutoCreateRowSorter(true);
 							SPTablaVehi.setViewportView(TVehiculos);
 						}
@@ -771,54 +844,10 @@ public class VentanaPedido {
 		// //GEN-END:initComponents
 	}
 
-	// JFormDesigner - Variables declaration - DO NOT MODIFY
-	// //GEN-BEGIN:variables
-	private JFrame FActPedido;
-	private JScrollPane SPAtributosP;
-	private JPanel PAtributosP;
-	private JLabel LOrigen;
-	private JTextField TFOrigen;
-	private JLabel LDestino;
-	private JTextField TFDestino;
-	private JLabel LFInicio;
-	private JDateChooser DCInicio;
-	private JLabel LHInicio;
-	private JPanel PHoraI;
-	private JSpinner SHoraI;
-	private JLabel LDosP;
-	private JSpinner SMinI;
-	private JLabel LFFin;
-	private JDateChooser DCFin;
-	private JLabel LHFin;
-	private JPanel PHoraF;
-	private JSpinner SHoraF;
-	private JLabel LDosP2;
-	private JSpinner SMinF;
-	private JLabel LCategoria;
-	private JComboBox CBCategoria;
-	private JLabel LEstado;
-	private JComboBox CBEstado;
-	private JLabel LCosto;
-	private JFormattedTextField FTCosto;
-	private JPanel PCliente;
-	private JLabel LDni;
-	private JFormattedTextField FTDNI;
-	private JButton BCrearCliente;
-	private JLabel LNombre;
-	private JTextField TFNombre;
-	private JButton BSeleccionarCliente;
-	private JPanel PEmpleados;
-	private JScrollPane SPTablaEmp;
-	private JTable TEmpleados;
-	private JButton BAnadirE;
-	private JButton BQuitarE;
-	private JPanel PVehiculos;
-	private JScrollPane SPTablaVehi;
-	private JTable TVehiculos;
-	private JButton BAnadirV;
-	private JButton BQuitarV;
-	private JPanel PBotonesPedido;
-	private JButton BActPedidoOK;
-	private JButton BActPedidoCancel;
-	// JFormDesigner - End of variables declaration //GEN-END:variables
+	public void setearCliente(TCliente Cliente) {
+		cliente = Cliente;
+
+		FTDNI.setValue(Cliente.getDni());
+		TFNombre.setText(Cliente.getNombre());
+	}
 }

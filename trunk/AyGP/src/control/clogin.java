@@ -10,18 +10,18 @@ import ventanas.VentanaLogin;
 
 //CLASE PRINCIPAL
 public class clogin {
+	public static void main(String[] args) {
+		new clogin();
+	}
 	@SuppressWarnings("unused")
 	private VentanaLogin vlogin;
 	private TGestorDeDatos GDatos;
 	private TGestorDeUsuarios GUsuarios;
 	@SuppressWarnings("unused")
 	private cadministrador CAdministrador;
+	
 	@SuppressWarnings("unused")
 	private coperador COperador;
-	
-	public static void main(String[] args) {
-		new clogin();
-	}
 
 	public clogin() {
 		GDatos = new TGestorDeDatos();
@@ -40,6 +40,11 @@ public class clogin {
 
 	}
 
+	public void cerroVentanaLogin() {
+		GDatos.guardar_estado();
+		GUsuarios.guardar_estado();
+	}
+
 	public void intentaringreso(String nombre, String pass) {
 		TUsuario Usuario=GUsuarios.valida(nombre,pass);
 		if (Usuario!=null){
@@ -55,10 +60,5 @@ public class clogin {
 		}else{
 			JOptionPane.showMessageDialog(vlogin.getFramePrincipal(), "Usuario o contraseña incorrectos");
 		}
-	}
-
-	public void cerroVentanaLogin() {
-		GDatos.guardar_estado();
-		GUsuarios.guardar_estado();
 	}
 }

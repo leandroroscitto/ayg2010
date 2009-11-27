@@ -3,27 +3,6 @@ package enumerados;
 public enum EDia {
 	DOMINGO, LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO;
 	
-	// Devuelve el próximo día al actual.
-	public EDia proximo() {
-		switch (this) {
-		case DOMINGO:
-			return LUNES;
-		case LUNES:
-			return MARTES;
-		case MARTES:
-			return MIERCOLES;
-		case MIERCOLES:
-			return JUEVES;
-		case JUEVES:
-			return VIERNES;
-		case VIERNES:
-			return SABADO;
-		case SABADO:
-			return DOMINGO;
-		}
-		return null;
-	}
-
 	// Convierte un dia de Calendar.DAY_OF_WEEK
 	public static EDia to_EDia(int Day) {
 		switch (Day) {
@@ -41,6 +20,27 @@ public enum EDia {
 			return VIERNES;
 		case 7:
 			return SABADO;
+		}
+		return null;
+	}
+
+	// Devuelve el próximo día al actual.
+	public EDia proximo() {
+		switch (this) {
+		case DOMINGO:
+			return LUNES;
+		case LUNES:
+			return MARTES;
+		case MARTES:
+			return MIERCOLES;
+		case MIERCOLES:
+			return JUEVES;
+		case JUEVES:
+			return VIERNES;
+		case VIERNES:
+			return SABADO;
+		case SABADO:
+			return DOMINGO;
 		}
 		return null;
 	}

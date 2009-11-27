@@ -35,25 +35,37 @@ import formateadores.FormateadorPatente;
 public class VentanaVehiculo {
 	private cadministrador controlador;
 
-	private void inicializarModelo(String titulo,String boton,cadministrador P) {
-		controlador = P;
-		
-		FActVehiculo = new JFrame(titulo);
-		BActVehiculoOK = new JButton(boton);
-		
-		DefaultComboBoxModel CMEst = new DefaultComboBoxModel(EEstadoVehiculo
-				.values());
-		DefaultComboBoxModel CMTipo = new DefaultComboBoxModel(ETipoVehiculo
-				.values());
+	// JFormDesigner - Variables declaration - DO NOT MODIFY
+	// //GEN-BEGIN:variables
+	private JFrame FActVehiculo;
 
-		CBEstado = new JComboBox(CMEst);
-		CBTipo = new JComboBox(CMTipo);
-	}
+	private JScrollPane SPAtributosVehiculo;
 
-	public JFrame getFramePrincipal() {
-		return FActVehiculo;
-	}
+	private JPanel PAtributosVehiculo;
 
+	private JLabel LPatente;
+
+	private JFormattedTextField FTPatente;
+
+	private JLabel LMarca;
+
+	private JTextField TFMarca;
+
+	private JLabel LModelo;
+
+	private JTextField TFModelo;
+	private JLabel LColor;
+	private JTextField TFColor;
+	private JLabel LKilometraje;
+	private JFormattedTextField SKilometraje;
+	private JLabel LEstado;
+	private JComboBox CBEstado;
+	private JLabel LTipo;
+	private JComboBox CBTipo;
+	private JPanel PBotonesVehiculo;
+	private JButton BActVehiculoOK;
+	private JButton BActVehiculoCancel;
+	// JFormDesigner - End of variables declaration //GEN-END:variables
 	public VentanaVehiculo(String titulo,String boton,cadministrador P) {
 		inicializarModelo(titulo,boton,P);
 
@@ -62,7 +74,6 @@ public class VentanaVehiculo {
 		FActVehiculo.pack();
 		FActVehiculo.setVisible(true);
 	}
-
 	public VentanaVehiculo(String titulo,String boton,cadministrador P, TVehiculo vehiculo) {
 		inicializarModelo(titulo,boton,P);
 
@@ -84,11 +95,10 @@ public class VentanaVehiculo {
 		FActVehiculo.pack();
 		FActVehiculo.setVisible(true);
 	}
-
-	private void FActVehiculoWindowClosing(WindowEvent e) {
+	private void BActVehiculoCancelActionPerformed(ActionEvent e) {
 		controlador.cerroventanaVehiculo(false);
+		FActVehiculo.dispose();
 	}
-
 	private void BActVehiculoOKActionPerformed(ActionEvent e) {
 		String pat = FTPatente.getValue().toString();
 		String mar = TFMarca.getText();
@@ -112,12 +122,26 @@ public class VentanaVehiculo {
 					"Ingrese todos los campos obligatorios.");
 		}
 	}
-
-	private void BActVehiculoCancelActionPerformed(ActionEvent e) {
+	private void FActVehiculoWindowClosing(WindowEvent e) {
 		controlador.cerroventanaVehiculo(false);
-		FActVehiculo.dispose();
 	}
+	public JFrame getFramePrincipal() {
+		return FActVehiculo;
+	}
+	private void inicializarModelo(String titulo,String boton,cadministrador P) {
+		controlador = P;
+		
+		FActVehiculo = new JFrame(titulo);
+		BActVehiculoOK = new JButton(boton);
+		
+		DefaultComboBoxModel CMEst = new DefaultComboBoxModel(EEstadoVehiculo
+				.values());
+		DefaultComboBoxModel CMTipo = new DefaultComboBoxModel(ETipoVehiculo
+				.values());
 
+		CBEstado = new JComboBox(CMEst);
+		CBTipo = new JComboBox(CMTipo);
+	}
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -323,28 +347,4 @@ public class VentanaVehiculo {
 		// JFormDesigner - End of component initialization
 		// //GEN-END:initComponents
 	}
-
-	// JFormDesigner - Variables declaration - DO NOT MODIFY
-	// //GEN-BEGIN:variables
-	private JFrame FActVehiculo;
-	private JScrollPane SPAtributosVehiculo;
-	private JPanel PAtributosVehiculo;
-	private JLabel LPatente;
-	private JFormattedTextField FTPatente;
-	private JLabel LMarca;
-	private JTextField TFMarca;
-	private JLabel LModelo;
-	private JTextField TFModelo;
-	private JLabel LColor;
-	private JTextField TFColor;
-	private JLabel LKilometraje;
-	private JFormattedTextField SKilometraje;
-	private JLabel LEstado;
-	private JComboBox CBEstado;
-	private JLabel LTipo;
-	private JComboBox CBTipo;
-	private JPanel PBotonesVehiculo;
-	private JButton BActVehiculoOK;
-	private JButton BActVehiculoCancel;
-	// JFormDesigner - End of variables declaration //GEN-END:variables
 }

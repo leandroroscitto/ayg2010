@@ -44,48 +44,48 @@ public class VentanaEmpleado {
 	private cadministrador controlador;
 	private THorario horariolocal;
 
-	@SuppressWarnings("serial")
-	private void inicilizarModelo(String titulo,String boton,cadministrador P) {
-		controlador = P;
-		horariolocal = new THorario();
-		
-		FActEmpleado = new JFrame(titulo);
-		BActEmpleadoOK = new JButton(boton);
+	// JFormDesigner - Variables declaration - DO NOT MODIFY
+	// //GEN-BEGIN:variables
+	private JFrame FActEmpleado;
 
-		DefaultTableModel TM = new DefaultTableModel(new String[] { "Día",
-				"Entrada", "Salida" }, 0) {
-			boolean[] columnEditable = new boolean[] { false, false, false };
+	private JScrollPane SPAtributosEmpleado;
 
-			@Override
-			public boolean isCellEditable(int rowIndex, int columnIndex) {
-				return columnEditable[columnIndex];
-			}
-		};
-		DefaultComboBoxModel CMCat = new DefaultComboBoxModel(
-				ECategoriaEmpleado.values());
-		DefaultComboBoxModel CMEst = new DefaultComboBoxModel(EEstadoEmpleado
-				.values());
-		THorarios = new JTable(TM);
-		CBCategoria = new JComboBox(CMCat);
-		CBEstado = new JComboBox(CMEst);
-	}
+	private JPanel PAtributosEmpleado;
 
-	public THorario getHorarioLocal() {
-		return horariolocal;
-	}
+	private JLabel LNombre;
 
-	public JTable getTHorarios() {
-		return THorarios;
-	}
+	private JTextField TFNombre;
 
-	public void agregarRHorario(EDia Dia, int HI, int HF) {
-		horariolocal.agregar_rango_horario(Dia, HI, HF);
-	}
+	private JLabel LDireccion;
 
-	public JFrame getFramePrincipal() {
-		return FActEmpleado;
-	}
+	private JTextField TFDireccion;
 
+	private JLabel LDNI;
+
+	private JFormattedTextField FTDNI;
+
+	private JLabel LLegajo;
+
+	private JFormattedTextField FTLegajo;
+
+	private JLabel LTelefono;
+
+	private JFormattedTextField FTTelefeno;
+
+	private JLabel LCategoria;
+	private JComboBox CBCategoria;
+	private JLabel LEstado;
+	private JComboBox CBEstado;
+	private JPanel PHorarios;
+	private JScrollPane SPHorarios;
+	private JTable THorarios;
+	private JPanel PBHorarios;
+	private JButton BAgregarH;
+	private JButton BQuitarH;
+	private JPanel PBotonesEmpleado;
+	private JButton BActEmpleadoOK;
+	private JButton BActEmpleadoCancel;
+	// JFormDesigner - End of variables declaration //GEN-END:variables
 	public VentanaEmpleado(String titulo,String boton,cadministrador P) {
 		inicilizarModelo(titulo,boton,P);
 
@@ -94,7 +94,6 @@ public class VentanaEmpleado {
 		FActEmpleado.pack();
 		FActEmpleado.setVisible(true);
 	}
-
 	public VentanaEmpleado(String titulo,String boton,cadministrador P, TEmpleado Emp) {
 		inicilizarModelo(titulo,boton,P);
 
@@ -113,27 +112,13 @@ public class VentanaEmpleado {
 		FActEmpleado.pack();
 		FActEmpleado.setVisible(true);
 	}
-
-	private void FActEmpleadoWindowClosing(WindowEvent e) {
+	public void agregarRHorario(EDia Dia, int HI, int HF) {
+		horariolocal.agregar_rango_horario(Dia, HI, HF);
+	}
+	private void BActEmpleadoCancelActionPerformed(ActionEvent e) {
 		controlador.cerroventanaEmpleado(false);
+		FActEmpleado.dispose();
 	}
-
-	private void BAgregarHActionPerformed(ActionEvent e) {
-		controlador.crearHorario();
-	}
-
-	private void BQuitarHActionPerformed(ActionEvent e) {
-		int indicevista = THorarios.getSelectedRow();
-		if (indicevista < 0) {
-			JOptionPane.showMessageDialog(FActEmpleado,
-					"Seleccione un rango horario primero.");
-		} else {
-			int indice = THorarios.getRowSorter().convertRowIndexToModel(
-					indicevista);
-			controlador.quitoHorario(indice);
-		}
-	}
-
 	private void BActEmpleadoOKActionPerformed(ActionEvent e) {
 		String nom = TFNombre.getText();
 		String dir = TFDireccion.getText();
@@ -159,12 +144,57 @@ public class VentanaEmpleado {
 					"Ingrese todos los campos obligatorios.");
 		}
 	}
-
-	private void BActEmpleadoCancelActionPerformed(ActionEvent e) {
-		controlador.cerroventanaEmpleado(false);
-		FActEmpleado.dispose();
+	private void BAgregarHActionPerformed(ActionEvent e) {
+		controlador.crearHorario();
 	}
+	private void BQuitarHActionPerformed(ActionEvent e) {
+		int indicevista = THorarios.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(FActEmpleado,
+					"Seleccione un rango horario primero.");
+		} else {
+			int indice = THorarios.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.quitoHorario(indice);
+		}
+	}
+	private void FActEmpleadoWindowClosing(WindowEvent e) {
+		controlador.cerroventanaEmpleado(false);
+	}
+	public JFrame getFramePrincipal() {
+		return FActEmpleado;
+	}
+	public THorario getHorarioLocal() {
+		return horariolocal;
+	}
+	public JTable getTHorarios() {
+		return THorarios;
+	}
+	@SuppressWarnings("serial")
+	private void inicilizarModelo(String titulo,String boton,cadministrador P) {
+		controlador = P;
+		horariolocal = new THorario();
+		
+		FActEmpleado = new JFrame(titulo);
+		BActEmpleadoOK = new JButton(boton);
 
+		DefaultTableModel TM = new DefaultTableModel(new String[] { "Día",
+				"Entrada", "Salida" }, 0) {
+			boolean[] columnEditable = new boolean[] { false, false, false };
+
+			@Override
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
+				return columnEditable[columnIndex];
+			}
+		};
+		DefaultComboBoxModel CMCat = new DefaultComboBoxModel(
+				ECategoriaEmpleado.values());
+		DefaultComboBoxModel CMEst = new DefaultComboBoxModel(EEstadoEmpleado
+				.values());
+		THorarios = new JTable(TM);
+		CBCategoria = new JComboBox(CMCat);
+		CBEstado = new JComboBox(CMEst);
+	}
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -442,34 +472,4 @@ public class VentanaEmpleado {
 		// JFormDesigner - End of component initialization
 		// //GEN-END:initComponents
 	}
-
-	// JFormDesigner - Variables declaration - DO NOT MODIFY
-	// //GEN-BEGIN:variables
-	private JFrame FActEmpleado;
-	private JScrollPane SPAtributosEmpleado;
-	private JPanel PAtributosEmpleado;
-	private JLabel LNombre;
-	private JTextField TFNombre;
-	private JLabel LDireccion;
-	private JTextField TFDireccion;
-	private JLabel LDNI;
-	private JFormattedTextField FTDNI;
-	private JLabel LLegajo;
-	private JFormattedTextField FTLegajo;
-	private JLabel LTelefono;
-	private JFormattedTextField FTTelefeno;
-	private JLabel LCategoria;
-	private JComboBox CBCategoria;
-	private JLabel LEstado;
-	private JComboBox CBEstado;
-	private JPanel PHorarios;
-	private JScrollPane SPHorarios;
-	private JTable THorarios;
-	private JPanel PBHorarios;
-	private JButton BAgregarH;
-	private JButton BQuitarH;
-	private JPanel PBotonesEmpleado;
-	private JButton BActEmpleadoOK;
-	private JButton BActEmpleadoCancel;
-	// JFormDesigner - End of variables declaration //GEN-END:variables
 }
