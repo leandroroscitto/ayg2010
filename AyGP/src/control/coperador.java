@@ -29,7 +29,6 @@ public class coperador {
 	private VentanaGasto vgasto;
 	@SuppressWarnings("unused")
 	private VentanaCliente vcliente;
-	@SuppressWarnings("unused")
 	private VentanaPedido vpedido;
 	@SuppressWarnings("unused")
 	private VentanaLEmpleados vlempleados;
@@ -39,14 +38,13 @@ public class coperador {
 	private int indicemodf = -1;
 
 	private TGestorDeDatos GDatos;
-	@SuppressWarnings("unused")
 	private MPedidos ManejadorP;
 
-	public coperador(TGestorDeDatos GD) {
+	public coperador(String NomUsa,TGestorDeDatos GD) {
 		GDatos = GD;
 		ManejadorP = new MPedidos(GDatos.getDatos());
 
-		ventana = new VentanaPOperador(this);
+		ventana = new VentanaPOperador(NomUsa,this);
 		actualizartablas();
 	}
 
@@ -193,8 +191,12 @@ public class coperador {
 			
 			if (pedidoscliente.size()>0){
 				Cliente.setEstado(EEstadoCliente.INACTIVO);
+				for(TPedido P:pedidoscliente){
+					P.setEstado(EEstadoPedido.CANCELADO);
+				}
 				GDatos.guardar_estado();
 				actualizartclientes();
+				actualizartpedidos();
 			}else{
 				//Si no tiene pedidos asignados lo elimina
 				GDatos.quitar_elemento(Cliente);

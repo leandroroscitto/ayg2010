@@ -66,12 +66,14 @@ public class VentanaPOperador {
 	private JButton BModificarG;
 	private JButton BBajaG;
 
-	public VentanaPOperador(coperador P) {
+	public VentanaPOperador(String NA,coperador P) {
 		initComponents();
 
 		BModificarG.setEnabled(false);
 		BBajaG.setEnabled(false);
 
+		JVentanaPOperador.setTitle("Usuario:"+NA+" - Operador");
+		
 		controlador = P;
 		JVentanaPOperador.setVisible(true);
 	}

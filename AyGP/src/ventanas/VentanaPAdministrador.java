@@ -76,12 +76,14 @@ public class VentanaPAdministrador {
 	private JButton BModificarEv;
 	private JButton BBajaEv;
 
-	public VentanaPAdministrador(cadministrador P) {
+	public VentanaPAdministrador(String NA,cadministrador P) {
 		initComponents();
 
 		// No es posible eliminar eventos
 		BBajaEv.setEnabled(false);
 
+		JVentanaPAdministrador.setTitle("Usuario:"+NA+" - Administrador");
+		
 		controlador = P;
 		JVentanaPAdministrador.setVisible(true);
 	}
