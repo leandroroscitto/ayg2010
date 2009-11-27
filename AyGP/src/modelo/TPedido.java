@@ -8,6 +8,17 @@ import enumerados.ECategoriaPedido;
 import enumerados.EEstadoPedido;
 import enumerados.ETipoElemento;
 
+/**
+ * Representa los registros de los servicios brindados por la empresa de
+ * cadetería a los clientes de ésta. Los pedidos cuentan con un id único,
+ * lugares de origen y destino, fechas y horas de inicio y fin, costo del
+ * servicio prestado, categoría de servicio prestado y el estado actual del
+ * pedido. Además se indican el cliente que realizó el pedido, y las listas de
+ * empleados y vehículos asignados.
+ * 
+ * Los pedidos no se eliminan del sistema, simplemente se les modifica el estado
+ * a completado o cancelado.
+ */
 public class TPedido extends TElemento {
 
 	private static final long serialVersionUID = 1L;
@@ -25,24 +36,65 @@ public class TPedido extends TElemento {
 	private TCliente cliente;
 	private ArrayList<TVehiculo> vehiculos;
 
-	public TPedido(int id, String O, String D, EEstadoPedido E,ECategoriaPedido cat, Date I,
-			Date F, TCliente C, float cos) {
+	public TPedido(int id, String O, String D, EEstadoPedido E,
+			ECategoriaPedido cat, Date I, Date F, TCliente C, float cos) {
 		super(ETipoElemento.PEDIDO);
-		
+
 		assert (I.before(F) || I.equals(F));
-		
-		id_pedido=id;
-		origen=O;
-		destino=D;
-		estado=E;
-		categoria=cat;
-		ini=I;
-		fin=F;
-		cliente=C;
-		costo= cos;
-		
-		empleados=new ArrayList<TEmpleado>();
-		vehiculos=new ArrayList<TVehiculo>();
+
+		id_pedido = id;
+		origen = O;
+		destino = D;
+		estado = E;
+		categoria = cat;
+		ini = I;
+		fin = F;
+		cliente = C;
+		costo = cos;
+
+		empleados = new ArrayList<TEmpleado>();
+		vehiculos = new ArrayList<TVehiculo>();
+	}
+
+	public Date get_fin() {
+		return fin;
+	}
+
+	public Date get_ini() {
+		return ini;
+	}
+
+	public ECategoriaPedido getCategoria() {
+		return categoria;
+	}
+
+	public TCliente getCliente() {
+		return cliente;
+	}
+
+	public float getCosto() {
+		return costo;
+	}
+
+	public String getDestino() {
+		return destino;
+	}
+
+	@Override
+	public Object getEID() {
+		return id_pedido;
+	}
+
+	public ArrayList<TEmpleado> getEmpleados() {
+		return empleados;
+	}
+
+	public EEstadoPedido getEstado() {
+		return estado;
+	}
+
+	public int getId_pedido() {
+		return id_pedido;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -54,6 +106,48 @@ public class TPedido extends TElemento {
 			return getVehiculos();
 		}
 		return null;
+	}
+
+	public String getOrigen() {
+		return origen;
+	}
+
+	public ArrayList<TVehiculo> getVehiculos() {
+		return vehiculos;
+	}
+
+	public void set_fin(Date Fin) {
+		assert (ini.before(Fin) || ini.equals(Fin));
+		this.fin = Fin;
+	}
+
+	public void set_ini(Date Ini) {
+		assert (Ini.before(fin) || Ini.equals(fin));
+		this.ini = Ini;
+	}
+
+	public void setCategoria(ECategoriaPedido categoria) {
+		this.categoria = categoria;
+	}
+
+	public void setCosto(float costo) {
+		this.costo = costo;
+	}
+
+	public void setDestino(String destino) {
+		this.destino = destino;
+	}
+
+	public void setEstado(EEstadoPedido estado) {
+		this.estado = estado;
+	}
+
+	public void setId_pedido(int i) {
+		id_pedido = i;
+	}
+
+	public void setOrigen(String origen) {
+		this.origen = origen;
 	}
 
 	public boolean superpone_IF(Date Ini, Date Fin) {
@@ -69,88 +163,5 @@ public class TPedido extends TElemento {
 		}
 
 		return true;
-	}
-
-	public String getOrigen() {
-		return origen;
-	}
-
-	public void setOrigen(String origen) {
-		this.origen = origen;
-	}
-
-	public String getDestino() {
-		return destino;
-	}
-
-	public void setDestino(String destino) {
-		this.destino = destino;
-	}
-
-	public EEstadoPedido getEstado() {
-		return estado;
-	}
-
-	public void setEstado(EEstadoPedido estado) {
-		this.estado = estado;
-	}
-
-	public Date get_ini() {
-		return ini;
-	}
-
-	public void set_ini(Date Ini) {
-		assert (Ini.before(fin) || Ini.equals(fin));
-		this.ini = Ini;
-	}
-
-	public Date get_fin() {
-		return fin;
-	}
-
-	public void set_fin(Date Fin) {
-		assert (ini.before(Fin) || ini.equals(Fin));
-		this.fin = Fin;
-	}
-	
-	public int getId_pedido() {
-		return id_pedido;
-	}
-	
-	public void setId_pedido(int i){
-		id_pedido=i;
-	}
-
-	public ArrayList<TEmpleado> getEmpleados() {
-		return empleados;
-	}
-
-	public TCliente getCliente() {
-		return cliente;
-	}
-
-	public ArrayList<TVehiculo> getVehiculos() {
-		return vehiculos;
-	}
-	
-	@Override
-	public Object getEID(){
-		return id_pedido;
-	}
-
-	public ECategoriaPedido getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(ECategoriaPedido categoria) {
-		this.categoria = categoria;
-	}
-
-	public float getCosto() {
-		return costo;
-	}
-
-	public void setCosto(float costo) {
-		this.costo = costo;
 	}
 }

@@ -27,6 +27,18 @@ public class VentanaLEmpleados  {
 	private coperador controlador;
 	private ArrayList<TEmpleado> empleados;
 	
+	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+	private JFrame JFListaEmpleados;
+	
+	private JScrollPane SPListaEmpleados;
+
+	private JList LEmpleados;
+
+	private JButton BAgregarEmp;
+
+	private JButton BCerrarEmp;
+	// JFormDesigner - End of variables declaration  //GEN-END:variables
+
 	public VentanaLEmpleados(coperador P,ArrayList<TEmpleado> listEmp){
 		empleados=listEmp;
 		controlador=P;
@@ -34,18 +46,6 @@ public class VentanaLEmpleados  {
 		mostrarLista();
 		
 		JFListaEmpleados.setVisible(true);
-	}
-	
-	public void mostrarLista(){
-		DefaultListModel LM = new DefaultListModel();
-		LM.clear();
-		
-		for (TEmpleado emp:empleados){
-			if ((emp.getEstado()==EEstadoEmpleado.DISPONIBLE) || (emp.getEstado()==EEstadoEmpleado.TRABAJANDO)) {
-				LM.addElement(emp.getNombre()+" - "+emp.getLegajo());
-			}
-		}
-		LEmpleados.setModel(LM);
 	}
 
 	private void BAgregarEmpActionPerformed(ActionEvent e) {
@@ -60,17 +60,10 @@ public class VentanaLEmpleados  {
 			JOptionPane.showMessageDialog(JFListaEmpleados, "Seleccione un empleado a añadir");
 		}
 	}
-
 	private void BCerrarEmpActionPerformed(ActionEvent e) {
 		controlador.cerroVLEmpleados();
 		JFListaEmpleados.dispose();
 	}
-
-	private void JFListaEmpleadosWindowClosing(WindowEvent e) {
-		controlador.cerroVLEmpleados();
-		JFListaEmpleados.dispose();
-	}
-
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		JFListaEmpleados = new JFrame();
@@ -135,12 +128,19 @@ public class VentanaLEmpleados  {
 		}
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
-
-	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-	private JFrame JFListaEmpleados;
-	private JScrollPane SPListaEmpleados;
-	private JList LEmpleados;
-	private JButton BAgregarEmp;
-	private JButton BCerrarEmp;
-	// JFormDesigner - End of variables declaration  //GEN-END:variables
+	private void JFListaEmpleadosWindowClosing(WindowEvent e) {
+		controlador.cerroVLEmpleados();
+		JFListaEmpleados.dispose();
+	}
+	public void mostrarLista(){
+		DefaultListModel LM = new DefaultListModel();
+		LM.clear();
+		
+		for (TEmpleado emp:empleados){
+			if ((emp.getEstado()==EEstadoEmpleado.DISPONIBLE) || (emp.getEstado()==EEstadoEmpleado.TRABAJANDO)) {
+				LM.addElement(emp.getNombre()+" - "+emp.getLegajo());
+			}
+		}
+		LEmpleados.setModel(LM);
+	}
 }

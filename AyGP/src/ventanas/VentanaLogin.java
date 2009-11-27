@@ -31,6 +31,34 @@ import control.clogin;
 public class VentanaLogin {
 	clogin controlador;
 
+	// JFormDesigner - Variables declaration - DO NOT MODIFY
+	// //GEN-BEGIN:variables
+	private JFrame JFrame_Login;
+
+	private JPanel JPanel_Login;
+
+	private JPanel JPanel_UP;
+	
+
+	private JPanel JPanel_Labels;
+
+	private JLabel JLabel_Usuario;
+	
+	private JLabel JLabel_Password;
+
+	private JPanel JPanel_Fields;
+
+	private JTextField JTextF_Usuario;
+
+	private JPasswordField JPassword_Password;
+	private JPanel JPanel_Botones;
+	private JButton JButton_Entrar;
+	private JButton JButton_Salir;
+	// JFormDesigner - End of variables declaration //GEN-END:variables
+	public VentanaLogin() {
+		initComponents();
+		JFrame_Login.setVisible(true);
+	}
 	public VentanaLogin(clogin P) {
 		controlador = P;
 
@@ -38,43 +66,15 @@ public class VentanaLogin {
 
 		JFrame_Login.setVisible(true);
 	}
-
-	@SuppressWarnings("deprecation")
-	private void JButton_EntrarActionPerformed(ActionEvent e) {
-		String usuario = JTextF_Usuario.getText();
-		String pass = JPassword_Password.getText();
-
-		if (!usuario.equals("") && !pass.equals("")) {
-			controlador.intentaringreso(usuario, pass);
-		} else {
-			JOptionPane.showMessageDialog(JFrame_Login,
-					"Ingrese un usuario y contraseña");
-		}
-	}
-
-	private void JButton_SalirMouseClicked(MouseEvent e) {
-		JFrame_Login.dispose();
-		controlador.cerroVentanaLogin();
-	}
-	
-
 	public void descartar() {
 		JFrame_Login.dispose();
 	}
-
-	public VentanaLogin() {
-		initComponents();
-		JFrame_Login.setVisible(true);
-	}
-	
-	public Component getFramePrincipal() {
-		return JFrame_Login;
-	}
-
 	private void FActEventoWindowClosing(WindowEvent e) {
 		controlador.cerroVentanaLogin();
 	}
-
+	public Component getFramePrincipal() {
+		return JFrame_Login;
+	}
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -194,20 +194,20 @@ public class VentanaLogin {
 		// JFormDesigner - End of component initialization
 		// //GEN-END:initComponents
 	}
+	@SuppressWarnings("deprecation")
+	private void JButton_EntrarActionPerformed(ActionEvent e) {
+		String usuario = JTextF_Usuario.getText();
+		String pass = JPassword_Password.getText();
 
-	// JFormDesigner - Variables declaration - DO NOT MODIFY
-	// //GEN-BEGIN:variables
-	private JFrame JFrame_Login;
-	private JPanel JPanel_Login;
-	private JPanel JPanel_UP;
-	private JPanel JPanel_Labels;
-	private JLabel JLabel_Usuario;
-	private JLabel JLabel_Password;
-	private JPanel JPanel_Fields;
-	private JTextField JTextF_Usuario;
-	private JPasswordField JPassword_Password;
-	private JPanel JPanel_Botones;
-	private JButton JButton_Entrar;
-	private JButton JButton_Salir;
-	// JFormDesigner - End of variables declaration //GEN-END:variables
+		if (!usuario.equals("") && !pass.equals("")) {
+			controlador.intentaringreso(usuario, pass);
+		} else {
+			JOptionPane.showMessageDialog(JFrame_Login,
+					"Ingrese un usuario y contraseña");
+		}
+	}
+	private void JButton_SalirMouseClicked(MouseEvent e) {
+		JFrame_Login.dispose();
+		controlador.cerroVentanaLogin();
+	}
 }

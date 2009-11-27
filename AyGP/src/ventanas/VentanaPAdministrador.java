@@ -28,34 +28,62 @@ import control.cadministrador;
 public class VentanaPAdministrador {
 	private cadministrador controlador;
 
+	// JFormDesigner - Variables declaration - DO NOT MODIFY
+	// //GEN-BEGIN:variables
+	private JFrame JVentanaPAdministrador;
+
+	private JTabbedPane TPAdministrador;
+
+	private JPanel PEmpleados;
+
+	private JPanel PLEmpleados;
+
+	private JScrollPane SPTablaE;
+
+	private JTable TEmpleados;
+
+	private JButton BRegistrarE;
+
+	private JButton BModificarE;
+
+	private JButton BBajaE;
+
+	private JPanel PVehiculos;
+
+	private JPanel PLVehiculos;
+
+	private JScrollPane SPTablaV;
+
+	private JTable TVehiculos;
+
+	private JButton BRegistrarV;
+
+	private JButton BModificarV;
+
+	private JButton BBajaV;
+	private JPanel PEquipos;
+	private JPanel PLEquipos;
+	private JScrollPane SPTablaEq;
+	private JTable TEquipos;
+	private JButton BRegistrarEq;
+	private JButton BModificarEq;
+	private JButton BBajaEq;
+	private JPanel PEventos;
+	private JPanel PLEventos;
+	private JScrollPane SPEventos;
+	private JTable TEventos;
+	private JButton BRegistrarEv;
+	private JButton BModificarEv;
+	private JButton BBajaEv;
+
 	public VentanaPAdministrador(cadministrador P) {
 		initComponents();
 
-		//No es posible modificar eventos
-		BModificarEv.setEnabled(false);
-		
+		// No es posible eliminar eventos
+		BBajaEv.setEnabled(false);
+
 		controlador = P;
 		JVentanaPAdministrador.setVisible(true);
-	}
-
-	public JFrame getFramePrincipal() {
-		return JVentanaPAdministrador;
-	}
-
-	private void BRegistrarEActionPerformed(ActionEvent e) {
-		controlador.crearEmpleado();
-	}
-
-	private void BModificarEActionPerformed(ActionEvent e) {
-		int indicevista = TEmpleados.getSelectedRow();
-		if (indicevista < 0) {
-			JOptionPane.showMessageDialog(JVentanaPAdministrador,
-					"Seleccione un empleado primero.");
-		} else {
-			int indice = TEmpleados.getRowSorter().convertRowIndexToModel(
-					indicevista);
-			controlador.modificarEmpleado(indice);
-		}
 	}
 
 	private void BBajaEActionPerformed(ActionEvent e) {
@@ -67,50 +95,6 @@ public class VentanaPAdministrador {
 			int indice = TEmpleados.getRowSorter().convertRowIndexToModel(
 					indicevista);
 			controlador.quitoEmpleado(indice);
-		}
-	}
-
-	private void BRegistrarVActionPerformed(ActionEvent e) {
-		controlador.crearVehiculo();
-	}
-
-	private void BModificarVActionPerformed(ActionEvent e) {
-		int indicevista = TVehiculos.getSelectedRow();
-		if (indicevista < 0) {
-			JOptionPane.showMessageDialog(JVentanaPAdministrador,
-					"Seleccione un vehículo primero.");
-		} else {
-			int indice = TVehiculos.getRowSorter().convertRowIndexToModel(
-					indicevista);
-			controlador.modificarVehiculo(indice);
-		}
-	}
-
-	private void BBajaVActionPerformed(ActionEvent e) {
-		int indicevista = TVehiculos.getSelectedRow();
-		if (indicevista < 0) {
-			JOptionPane.showMessageDialog(JVentanaPAdministrador,
-					"Seleccione un vehículo primero.");
-		} else {
-			int indice = TVehiculos.getRowSorter().convertRowIndexToModel(
-					indicevista);
-			controlador.quitoVehiculo(indice);
-		}
-	}
-
-	private void BRegistrarEqActionPerformed(ActionEvent e) {
-		controlador.crearEquipo();
-	}
-
-	private void BModificarEqActionPerformed(ActionEvent e) {
-		int indicevista = TEquipos.getSelectedRow();
-		if (indicevista < 0) {
-			JOptionPane.showMessageDialog(JVentanaPAdministrador,
-					"Seleccione un equipo primero.");
-		} else {
-			int indice = TEquipos.getRowSorter().convertRowIndexToModel(
-					indicevista);
-			controlador.modificarEquipo(indice);
 		}
 	}
 
@@ -126,8 +110,52 @@ public class VentanaPAdministrador {
 		}
 	}
 
-	private void BRegistrarEvActionPerformed(ActionEvent e) {
-		controlador.crearEvento();
+	private void BBajaEvActionPerformed(ActionEvent e) {
+		int indicevista = TEventos.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPAdministrador,
+					"Seleccione un equipo primero.");
+		} else {
+			int indice = TEventos.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.quitoEvento(indice);
+		}
+	}
+
+	private void BBajaVActionPerformed(ActionEvent e) {
+		int indicevista = TVehiculos.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPAdministrador,
+					"Seleccione un vehículo primero.");
+		} else {
+			int indice = TVehiculos.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.quitoVehiculo(indice);
+		}
+	}
+
+	private void BModificarEActionPerformed(ActionEvent e) {
+		int indicevista = TEmpleados.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPAdministrador,
+					"Seleccione un empleado primero.");
+		} else {
+			int indice = TEmpleados.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.modificarEmpleado(indice);
+		}
+	}
+
+	private void BModificarEqActionPerformed(ActionEvent e) {
+		int indicevista = TEquipos.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPAdministrador,
+					"Seleccione un equipo primero.");
+		} else {
+			int indice = TEquipos.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.modificarEquipo(indice);
+		}
 	}
 
 	private void BModificarEvActionPerformed(ActionEvent e) {
@@ -142,16 +170,56 @@ public class VentanaPAdministrador {
 		}
 	}
 
-	private void BBajaEvActionPerformed(ActionEvent e) {
-		int indicevista = TEventos.getSelectedRow();
+	private void BModificarVActionPerformed(ActionEvent e) {
+		int indicevista = TVehiculos.getSelectedRow();
 		if (indicevista < 0) {
 			JOptionPane.showMessageDialog(JVentanaPAdministrador,
-					"Seleccione un equipo primero.");
+					"Seleccione un vehículo primero.");
 		} else {
-			int indice = TEventos.getRowSorter().convertRowIndexToModel(
+			int indice = TVehiculos.getRowSorter().convertRowIndexToModel(
 					indicevista);
-			controlador.quitoEvento(indice);
+			controlador.modificarVehiculo(indice);
 		}
+	}
+
+	private void BRegistrarEActionPerformed(ActionEvent e) {
+		controlador.crearEmpleado();
+	}
+
+	private void BRegistrarEqActionPerformed(ActionEvent e) {
+		controlador.crearEquipo();
+	}
+
+	private void BRegistrarEvActionPerformed(ActionEvent e) {
+		controlador.crearEvento();
+	}
+
+	private void BRegistrarVActionPerformed(ActionEvent e) {
+		controlador.crearVehiculo();
+	}
+
+	public JFrame getFramePrincipal() {
+		return JVentanaPAdministrador;
+	}
+
+	public JTable getTEmpleados() {
+		return TEmpleados;
+	}
+
+	public JTable getTEquipos() {
+		return TEquipos;
+	}
+
+	public JTable getTEventos() {
+		return TEventos;
+	}
+
+	public JTabbedPane getTPAdministrador() {
+		return TPAdministrador;
+	}
+
+	public JTable getTVehiculos() {
+		return TVehiculos;
 	}
 
 	@SuppressWarnings("serial")
@@ -597,59 +665,5 @@ public class VentanaPAdministrador {
 		}
 		// JFormDesigner - End of component initialization
 		// //GEN-END:initComponents
-	}
-
-	// JFormDesigner - Variables declaration - DO NOT MODIFY
-	// //GEN-BEGIN:variables
-	private JFrame JVentanaPAdministrador;
-	private JTabbedPane TPAdministrador;
-	private JPanel PEmpleados;
-	private JPanel PLEmpleados;
-	private JScrollPane SPTablaE;
-	private JTable TEmpleados;
-	private JButton BRegistrarE;
-	private JButton BModificarE;
-	private JButton BBajaE;
-	private JPanel PVehiculos;
-	private JPanel PLVehiculos;
-	private JScrollPane SPTablaV;
-	private JTable TVehiculos;
-	private JButton BRegistrarV;
-	private JButton BModificarV;
-	private JButton BBajaV;
-	private JPanel PEquipos;
-	private JPanel PLEquipos;
-	private JScrollPane SPTablaEq;
-	private JTable TEquipos;
-	private JButton BRegistrarEq;
-	private JButton BModificarEq;
-	private JButton BBajaEq;
-	private JPanel PEventos;
-	private JPanel PLEventos;
-	private JScrollPane SPEventos;
-	private JTable TEventos;
-	private JButton BRegistrarEv;
-	private JButton BModificarEv;
-	private JButton BBajaEv;
-
-	// JFormDesigner - End of variables declaration //GEN-END:variables
-	public JTabbedPane getTPAdministrador() {
-		return TPAdministrador;
-	}
-
-	public JTable getTEmpleados() {
-		return TEmpleados;
-	}
-
-	public JTable getTVehiculos() {
-		return TVehiculos;
-	}
-
-	public JTable getTEquipos() {
-		return TEquipos;
-	}
-
-	public JTable getTEventos() {
-		return TEventos;
 	}
 }

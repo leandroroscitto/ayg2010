@@ -28,6 +28,18 @@ public class VentanaLVehiculos  {
 	private coperador controlador;
 	private ArrayList<TVehiculo> vehiculos;
 	
+	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+	private JFrame JFListaVehiculos;
+	
+	private JScrollPane SPListaVehiculos;
+
+	private JList LVehiculos;
+
+	private JButton BAgregarVe;
+
+	private JButton BCerrarVe;
+	// JFormDesigner - End of variables declaration  //GEN-END:variables
+
 	public VentanaLVehiculos(coperador P,ArrayList<TVehiculo> listVehi){
 		vehiculos=listVehi;
 		controlador=P;
@@ -35,18 +47,6 @@ public class VentanaLVehiculos  {
 		mostrarLista();
 		
 		JFListaVehiculos.setVisible(true);
-	}
-	
-	public void mostrarLista(){
-		DefaultListModel LM = new DefaultListModel();
-		LM.clear();
-		
-		for (TVehiculo veh:vehiculos){
-			if ((veh.getEstado()==EEstadoVehiculo.DISPONIBLE) || (veh.getEstado()==EEstadoVehiculo.DISPONIBLE)) {
-				LM.addElement(veh.getPatente()+" - "+veh.getTipoVehiculo());
-			}
-		}
-		LVehiculos.setModel(LM);
 	}
 
 	private void BAgregarVeActionPerformed(ActionEvent e) {
@@ -61,17 +61,10 @@ public class VentanaLVehiculos  {
 			JOptionPane.showMessageDialog(JFListaVehiculos, "Seleccione un vehículo a añadir");
 		}
 	}
-
 	private void BCerrarVeActionPerformed(ActionEvent e) {
 		controlador.cerroVLEmpleados();
 		JFListaVehiculos.dispose();
 	}
-
-	private void JFListaVehiculosWindowClosing(WindowEvent e) {
-		controlador.cerroVLEmpleados();
-		JFListaVehiculos.dispose();
-	}
-
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		JFListaVehiculos = new JFrame();
@@ -136,12 +129,19 @@ public class VentanaLVehiculos  {
 		}
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
-
-	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-	private JFrame JFListaVehiculos;
-	private JScrollPane SPListaVehiculos;
-	private JList LVehiculos;
-	private JButton BAgregarVe;
-	private JButton BCerrarVe;
-	// JFormDesigner - End of variables declaration  //GEN-END:variables
+	private void JFListaVehiculosWindowClosing(WindowEvent e) {
+		controlador.cerroVLEmpleados();
+		JFListaVehiculos.dispose();
+	}
+	public void mostrarLista(){
+		DefaultListModel LM = new DefaultListModel();
+		LM.clear();
+		
+		for (TVehiculo veh:vehiculos){
+			if ((veh.getEstado()==EEstadoVehiculo.DISPONIBLE) || (veh.getEstado()==EEstadoVehiculo.DISPONIBLE)) {
+				LM.addElement(veh.getPatente()+" - "+veh.getTipoVehiculo());
+			}
+		}
+		LVehiculos.setModel(LM);
+	}
 }

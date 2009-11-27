@@ -37,19 +37,38 @@ import enumerados.ECategoriaPedido;
 public class VentanaGasto {
 	private coperador controlador;
 
-	private void inicializarModelo(String titulo, String boton, coperador P) {
-		controlador = P;
-		
-		CBServicio = new JComboBox(ECategoriaPedido.values());
+	// JFormDesigner - Variables declaration - DO NOT MODIFY
+	// //GEN-BEGIN:variables
+	private JFrame FActGasto;
 
-		FActGasto = new JFrame(titulo);
-		BActGastoOK = new JButton(boton);
-	}
+	private JScrollPane SPAtributosGasto;
 
-	public JFrame getFramePrincipal() {
-		return FActGasto;
-	}
+	private JPanel PAtributosGasto;
 
+	private JPanel PNombre;
+	
+	private JLabel LNombre;
+
+	private JTextField TFNombre;
+
+	private JPanel PServicio;
+
+	private JLabel LServicio;
+
+	private JComboBox CBServicio;
+	private JPanel PFecha;
+	private JLabel LFecha;
+	private JDateChooser DCFecha;
+	private JLabel LDescripcion;
+	private JScrollPane SPDescripcion;
+	private JTextPane TPDescripcion;
+	private JPanel PMonto;
+	private JLabel LMonto;
+	private JFormattedTextField FTMonto;
+	private JPanel PBotonesGasto;
+	private JButton BActGastoOK;
+	private JButton BActGastoCancel;
+	// JFormDesigner - End of variables declaration //GEN-END:variables
 	public VentanaGasto(String titulo, String boton, coperador P) {
 		inicializarModelo(titulo, boton, P);
 
@@ -57,7 +76,6 @@ public class VentanaGasto {
 
 		FActGasto.setVisible(true);
 	}
-
 	public VentanaGasto(String titulo, String boton, coperador P, TGasto Gasto) {
 		inicializarModelo(titulo, boton, P);
 
@@ -73,11 +91,10 @@ public class VentanaGasto {
 		FActGasto.pack();
 		FActGasto.setVisible(true);
 	}
-	
-	private void FActGastoWindowClosing(WindowEvent e) {
+	private void BActGastoCancelActionPerformed(ActionEvent e) {
 		controlador.cerroventanaGasto(false);
+		FActGasto.dispose();
 	}
-
 	private void BActGastoOKActionPerformed(ActionEvent e) {
 		String nom = TFNombre.getText();
 		String des = TPDescripcion.getText();
@@ -97,12 +114,20 @@ public class VentanaGasto {
 					"Ingrese todos los campos obligatorios.");
 		}
 	}
-
-	private void BActGastoCancelActionPerformed(ActionEvent e) {
+	private void FActGastoWindowClosing(WindowEvent e) {
 		controlador.cerroventanaGasto(false);
-		FActGasto.dispose();
 	}
+	public JFrame getFramePrincipal() {
+		return FActGasto;
+	}
+	private void inicializarModelo(String titulo, String boton, coperador P) {
+		controlador = P;
+		
+		CBServicio = new JComboBox(ECategoriaPedido.values());
 
+		FActGasto = new JFrame(titulo);
+		BActGastoOK = new JButton(boton);
+	}
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -281,29 +306,4 @@ public class VentanaGasto {
 		// JFormDesigner - End of component initialization
 		// //GEN-END:initComponents
 	}
-
-	// JFormDesigner - Variables declaration - DO NOT MODIFY
-	// //GEN-BEGIN:variables
-	private JFrame FActGasto;
-	private JScrollPane SPAtributosGasto;
-	private JPanel PAtributosGasto;
-	private JPanel PNombre;
-	private JLabel LNombre;
-	private JTextField TFNombre;
-	private JPanel PServicio;
-	private JLabel LServicio;
-	private JComboBox CBServicio;
-	private JPanel PFecha;
-	private JLabel LFecha;
-	private JDateChooser DCFecha;
-	private JLabel LDescripcion;
-	private JScrollPane SPDescripcion;
-	private JTextPane TPDescripcion;
-	private JPanel PMonto;
-	private JLabel LMonto;
-	private JFormattedTextField FTMonto;
-	private JPanel PBotonesGasto;
-	private JButton BActGastoOK;
-	private JButton BActGastoCancel;
-	// JFormDesigner - End of variables declaration //GEN-END:variables
 }

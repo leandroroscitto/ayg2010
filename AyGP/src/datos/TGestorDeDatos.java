@@ -20,6 +20,11 @@ import modelo.TPedido;
 import modelo.TVehiculo;
 import enumerados.ETipoElemento;
 
+/**
+ * Manejador de los datos percistentes de la aplicación, permite agregar,
+ * modificar, quitar y buscar elementos almacenados, asi como crear, cargar y
+ * guardar su estado en el disco.
+ */
 public class TGestorDeDatos {
 
 	private TDatos dat;
@@ -28,66 +33,97 @@ public class TGestorDeDatos {
 
 	}
 
-	public boolean guardar_estado() {
-		ObjectOutputStream obj;
-		try {
-			obj = new ObjectOutputStream(new FileOutputStream("Datos.dat"));
-			obj.writeObject(dat);
-			obj.close();
-			return true;
-		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(null, "No se encontró el archivo");
-			return false;
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null,
-					"Guardado: No se pudo acceder a el archivo");
-			return false;
-		}
-	}
+	// Agrega el elemento con un id particular, utilizado por la modificación,
+	// donde los id del objeto original debe coincidir con el del nuevo
+	public void agregar_elemento(int indice, TElemento e, int id)
+			throws Exception {
+		// Si ya existe un elemento con ese id,
+		// no se puede agregar el nuevo elemento
+		// No puede haber elementos con id repetido
+		// El id depende del tipo de elemento,
+		// por ejemplo el id del empleado es el legajo
+		TElemento E = buscar_elemento(e.getEID(), e.getTipo());
+		if (E != null) {
+			throw (new Exception("Ya existe un elemento ingresado del tipo "
+					+ e.getTipo().toString() + " con la misma clave."));
+		} else {
 
-	public boolean cargar_estado() {
-		File file;
-		ObjectInputStream obj;
-
-		try {
-			file = new File("Datos.dat");
-			obj = new ObjectInputStream(new FileInputStream(file));
-			dat = (TDatos) obj.readObject();
-			obj.close();
-		} catch (FileNotFoundException e) {
-			return crear_estado();
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null,
-					"Cargado: No se pudo accceder al archivo");
-			return false;
-		} catch (ClassNotFoundException e) {
-			JOptionPane.showMessageDialog(null,
-					"Error interno (Clase no encontrada)");
-			return false;
-		}
-		return true;
-	}
-
-	private boolean crear_estado() {
-		File file;
-
-		file = new File("Datos.dat");
-		if (!file.exists()) {
-			try {
-				file.createNewFile();
-				InicializarDatos();
-				guardar_estado();
-			} catch (IOException e) {
-				JOptionPane.showMessageDialog(null,
-						"No se pudo crear el archivo");
-				return false;
+			switch (e.getTipo()) {
+			case EMPLEADO:
+				((TEmpleado) e).setId_empleado(id);
+				dat.getLista_empleados().add(indice, (TEmpleado) e);
+				break;
+			case PEDIDO:
+				((TPedido) e).setId_pedido(id);
+				dat.getLista_pedidos().add(indice, (TPedido) e);
+				break;
+			case EVENTO:
+				((TEvento) e).setId_evento(id);
+				dat.getLista_eventos().add(indice, (TEvento) e);
+				break;
+			case GASTO:
+				((TGasto) e).setId_gasto(id);
+				dat.getLista_gastos().add(indice, (TGasto) e);
+				break;
+			case CLIENTE:
+				((TCliente) e).setId_cliente(id);
+				dat.getLista_clientes().add(indice, (TCliente) e);
+				break;
+			case VEHICULO:
+				((TVehiculo) e).setId_vehiculo(id);
+				dat.getLista_vehiculos().add(indice, (TVehiculo) e);
+				break;
+			case EQUIPO:
+				((TEquipo) e).setId_equipo(id);
+				dat.getLista_equipos().add(indice, (TEquipo) e);
+				break;
 			}
 		}
-		return true;
 	}
 
-	private void InicializarDatos() {
-		dat = new TDatos();
+	public void agregar_elemento(TElemento e) throws Exception {
+		// Si ya existe un elemento con ese id,
+		// no se puede agregar el nuevo elemento
+		// No puede haber elementos con id repetido
+		// El id depende del tipo de elemento,
+		// por ejemplo el id del empleado es el legajo
+		TElemento E = buscar_elemento(e.getEID(), e.getTipo());
+		if (E != null) {
+			throw (new Exception("Ya existe un elemento ingresado del tipo "
+					+ e.getTipo().toString() + " con la misma clave."));
+		} else {
+
+			switch (e.getTipo()) {
+			case EMPLEADO:
+				((TEmpleado) e).setId_empleado(dat.resevaridEmpleados());
+				dat.getLista_empleados().add((TEmpleado) e);
+				break;
+			case PEDIDO:
+				((TPedido) e).setId_pedido(dat.resevaridPedidos());
+				dat.getLista_pedidos().add((TPedido) e);
+				break;
+			case EVENTO:
+				((TEvento) e).setId_evento(dat.resevaridEventos());
+				dat.getLista_eventos().add((TEvento) e);
+				break;
+			case GASTO:
+				((TGasto) e).setId_gasto(dat.resevaridGastos());
+				dat.getLista_gastos().add((TGasto) e);
+				break;
+			case CLIENTE:
+				((TCliente) e).setId_cliente(dat.resevaridClientes());
+				dat.getLista_clientes().add((TCliente) e);
+				break;
+			case VEHICULO:
+				((TVehiculo) e).setId_vehiculo(dat.resevaridVehiculos());
+				dat.getLista_vehiculos().add((TVehiculo) e);
+				break;
+			case EQUIPO:
+				((TEquipo) e).setId_equipo(dat.resevaridEquipos());
+				dat.getLista_equipos().add((TEquipo) e);
+				break;
+			}
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -171,97 +207,70 @@ public class TGestorDeDatos {
 		}
 	}
 
-	public void agregar_elemento(TElemento e) throws Exception {
-		// Si ya existe un elemento con ese id,
-		// no se puede agregar el nuevo elemento
-		// No puede haber elementos con id repetido
-		// El id depende del tipo de elemento,
-		// por ejemplo el id del empleado es el legajo
-		TElemento E = buscar_elemento(e.getEID(), e.getTipo());
-		if (E != null) {
-			throw (new Exception("Ya existe un elemento ingresado del tipo "
-					+ e.getTipo().toString() + " con la misma clave."));
-		} else {
+	public boolean cargar_estado() {
+		File file;
+		ObjectInputStream obj;
 
-			switch (e.getTipo()) {
-			case EMPLEADO:
-				((TEmpleado) e).setId_empleado(dat.resevaridEmpleados());
-				dat.getLista_empleados().add((TEmpleado) e);
-				break;
-			case PEDIDO:
-				((TPedido) e).setId_pedido(dat.resevaridPedidos());
-				dat.getLista_pedidos().add((TPedido) e);
-				break;
-			case EVENTO:
-				((TEvento) e).setId_evento(dat.resevaridEventos());
-				dat.getLista_eventos().add((TEvento) e);
-				break;
-			case GASTO:
-				((TGasto) e).setId_gasto(dat.resevaridGastos());
-				dat.getLista_gastos().add((TGasto) e);
-				break;
-			case CLIENTE:
-				((TCliente) e).setId_cliente(dat.resevaridClientes());
-				dat.getLista_clientes().add((TCliente) e);
-				break;
-			case VEHICULO:
-				((TVehiculo) e).setId_vehiculo(dat.resevaridVehiculos());
-				dat.getLista_vehiculos().add((TVehiculo) e);
-				break;
-			case EQUIPO:
-				((TEquipo) e).setId_equipo(dat.resevaridEquipos());
-				dat.getLista_equipos().add((TEquipo) e);
-				break;
+		try {
+			file = new File("Datos.dat");
+			obj = new ObjectInputStream(new FileInputStream(file));
+			dat = (TDatos) obj.readObject();
+			obj.close();
+		} catch (FileNotFoundException e) {
+			return crear_estado();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null,
+					"Cargado: No se pudo accceder al archivo");
+			return false;
+		} catch (ClassNotFoundException e) {
+			JOptionPane.showMessageDialog(null,
+					"Error interno (Clase no encontrada)");
+			return false;
+		}
+		return true;
+	}
+
+	private boolean crear_estado() {
+		File file;
+
+		file = new File("Datos.dat");
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+				InicializarDatos();
+				guardar_estado();
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null,
+						"No se pudo crear el archivo");
+				return false;
 			}
+		}
+		return true;
+	}
+
+	public TDatos getDatos() {
+		return dat;
+	}
+
+	public boolean guardar_estado() {
+		ObjectOutputStream obj;
+		try {
+			obj = new ObjectOutputStream(new FileOutputStream("Datos.dat"));
+			obj.writeObject(dat);
+			obj.close();
+			return true;
+		} catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "No se encontró el archivo");
+			return false;
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null,
+					"Guardado: No se pudo acceder a el archivo");
+			return false;
 		}
 	}
 
-	// Agrega el elemento con un id particular, utilizado por la modificación,
-	// donde los id del objeto original debe coincidir con el del nuevo
-	public void agregar_elemento(int indice, TElemento e, int id)
-			throws Exception {
-		// Si ya existe un elemento con ese id,
-		// no se puede agregar el nuevo elemento
-		// No puede haber elementos con id repetido
-		// El id depende del tipo de elemento,
-		// por ejemplo el id del empleado es el legajo
-		TElemento E = buscar_elemento(e.getEID(), e.getTipo());
-		if (E != null) {
-			throw (new Exception("Ya existe un elemento ingresado del tipo "
-					+ e.getTipo().toString() + " con la misma clave."));
-		} else {
-
-			switch (e.getTipo()) {
-			case EMPLEADO:
-				((TEmpleado) e).setId_empleado(id);
-				dat.getLista_empleados().add(indice, (TEmpleado) e);
-				break;
-			case PEDIDO:
-				((TPedido) e).setId_pedido(id);
-				dat.getLista_pedidos().add(indice, (TPedido) e);
-				break;
-			case EVENTO:
-				((TEvento) e).setId_evento(id);
-				dat.getLista_eventos().add(indice, (TEvento) e);
-				break;
-			case GASTO:
-				((TGasto) e).setId_gasto(id);
-				dat.getLista_gastos().add(indice, (TGasto) e);
-				break;
-			case CLIENTE:
-				((TCliente) e).setId_cliente(id);
-				dat.getLista_clientes().add(indice, (TCliente) e);
-				break;
-			case VEHICULO:
-				((TVehiculo) e).setId_vehiculo(id);
-				dat.getLista_vehiculos().add(indice, (TVehiculo) e);
-				break;
-			case EQUIPO:
-				((TEquipo) e).setId_equipo(id);
-				dat.getLista_equipos().add(indice, (TEquipo) e);
-				break;
-			}
-		}
+	private void InicializarDatos() {
+		dat = new TDatos();
 	}
 
 	public void modificar_elemento(int indice, TElemento E) throws Exception {
@@ -269,29 +278,29 @@ public class TGestorDeDatos {
 		// Asi no se encuentra a si mismo en la búsqueda que sigue
 		TElemento Eori = buscar_elemento(indice, E.getTipo());
 		quitar_elemento(Eori);
-		
-		int id=0;
+
+		int id = 0;
 		switch (Eori.getTipo()) {
 		case EMPLEADO:
-			id=((TEmpleado)Eori).getId_empleado();
+			id = ((TEmpleado) Eori).getId_empleado();
 			break;
 		case PEDIDO:
-			id=((TPedido)Eori).getId_pedido();
+			id = ((TPedido) Eori).getId_pedido();
 			break;
 		case EVENTO:
-			id=((TEvento)Eori).getId_evento();
+			id = ((TEvento) Eori).getId_evento();
 			break;
 		case GASTO:
-			id=((TGasto)Eori).getId_gasto();
+			id = ((TGasto) Eori).getId_gasto();
 			break;
 		case CLIENTE:
-			id=((TCliente)Eori).getId_cliente();
+			id = ((TCliente) Eori).getId_cliente();
 			break;
 		case VEHICULO:
-			id=((TVehiculo)Eori).getId_vehiculo();
+			id = ((TVehiculo) Eori).getId_vehiculo();
 			break;
 		case EQUIPO:
-			id=((TEquipo)Eori).getId_equipo();
+			id = ((TEquipo) Eori).getId_equipo();
 			break;
 		}
 
@@ -300,10 +309,10 @@ public class TGestorDeDatos {
 		// del elemento, no va ser posible, por lo
 		// que se restaura el elemento original
 		try {
-			agregar_elemento(indice, E,id);
+			agregar_elemento(indice, E, id);
 		} catch (Exception exep) {
 			// No deberia fallar, ya estaba en la lista
-			agregar_elemento(indice, Eori,id);
+			agregar_elemento(indice, Eori, id);
 			// Envia la excepción para que la maneje el controlador
 			throw exep;
 		}
@@ -335,10 +344,6 @@ public class TGestorDeDatos {
 			break;
 		}
 		return true;
-	}
-
-	public TDatos getDatos() {
-		return dat;
 	}
 
 } // class

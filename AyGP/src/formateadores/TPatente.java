@@ -18,10 +18,6 @@ public class TPatente {
 		}
 	}
 	
-	public boolean es_letra(char C){
-		return ((C>='A') && (C<='Z'));
-	}
-
 	public boolean es_digito(char C) {
 		switch (C) {
 		case '1':
@@ -47,6 +43,10 @@ public class TPatente {
 		default:
 			return (false);
 		}
+	}
+
+	public boolean es_letra(char C){
+		return ((C>='A') && (C<='Z'));
 	}
 
 	// Devuelve la cadena

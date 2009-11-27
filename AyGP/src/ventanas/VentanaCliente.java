@@ -35,17 +35,35 @@ public class VentanaCliente {
 	// Determina si fue creada en la ventana principal, o a través del pedido
 	private boolean principal;
 
-	private void inicializarModelo(String titulo, String boton, coperador P) {
-		controlador = P;
+	// JFormDesigner - Variables declaration - DO NOT MODIFY
+	// //GEN-BEGIN:variables
+	private JFrame FActCliente;
 
-		FActCliente = new JFrame(titulo);
-		BActClienteOK = new JButton(boton);
-	}
+	private JScrollPane SPAtributosCliente;
 
-	public JFrame getFramePrincipal() {
-		return FActCliente;
-	}
+	private JPanel PAtributosCliente;
 
+	private JLabel LNombre;
+
+	private JTextField TFNombre;
+
+	private JLabel LDireccion;
+
+	private JTextField TFDireccion;
+
+	private JLabel LTelefono;
+
+	private JFormattedTextField FTTelefeno;
+
+	private JLabel LDNI;
+	private JFormattedTextField FTDNI;
+	private JLabel LCUIT;
+	private JFormattedTextField FTCUIT;
+	private JCheckBox CBoxCUIT;
+	private JPanel PBotonesCliente;
+	private JButton BActClienteOK;
+	private JButton BActClienteCancel;
+	// JFormDesigner - End of variables declaration //GEN-END:variables
 	public VentanaCliente(boolean prin, String titulo, String boton, coperador P) {
 		principal = prin;
 		inicializarModelo(titulo, boton, P);
@@ -54,7 +72,6 @@ public class VentanaCliente {
 
 		FActCliente.setVisible(true);
 	}
-
 	public VentanaCliente(boolean prin, String titulo, String boton,
 			coperador P, TCliente Cliente) {
 		principal = prin;
@@ -76,21 +93,14 @@ public class VentanaCliente {
 		// FActCliente.pack();
 		FActCliente.setVisible(true);
 	}
-
-	private void FActClienteWindowClosing(WindowEvent e) {
-		if (principal) {
-			controlador.cerroventanaGasto(false);
-		} else {
-			// Se llamó desde la creación/modificación de pedido
+	private void BActClienteCancelActionPerformed(ActionEvent e) {
+		if (principal){
+			controlador.cerroventanaCliente(false);
+		}else{
 			controlador.cerroventanaClienteEnPedido(false);
 		}
-
+		FActCliente.dispose();
 	}
-
-	private void CBoxCUITActionPerformed(ActionEvent e) {
-		FTCUIT.setEnabled(CBoxCUIT.isSelected());
-	}
-
 	private void BActClienteOKActionPerformed(ActionEvent e) {
 		String nom = TFNombre.getText();
 		String dir = TFDireccion.getText();
@@ -120,16 +130,27 @@ public class VentanaCliente {
 					"Ingrese todos los campos obligatorios.");
 		}
 	}
-
-	private void BActClienteCancelActionPerformed(ActionEvent e) {
-		if (principal){
-			controlador.cerroventanaCliente(false);
-		}else{
+	private void CBoxCUITActionPerformed(ActionEvent e) {
+		FTCUIT.setEnabled(CBoxCUIT.isSelected());
+	}
+	private void FActClienteWindowClosing(WindowEvent e) {
+		if (principal) {
+			controlador.cerroventanaGasto(false);
+		} else {
+			// Se llamó desde la creación/modificación de pedido
 			controlador.cerroventanaClienteEnPedido(false);
 		}
-		FActCliente.dispose();
-	}
 
+	}
+	public JFrame getFramePrincipal() {
+		return FActCliente;
+	}
+	private void inicializarModelo(String titulo, String boton, coperador P) {
+		controlador = P;
+
+		FActCliente = new JFrame(titulo);
+		BActClienteOK = new JButton(boton);
+	}
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -321,25 +342,4 @@ public class VentanaCliente {
 		// JFormDesigner - End of component initialization
 		// //GEN-END:initComponents
 	}
-
-	// JFormDesigner - Variables declaration - DO NOT MODIFY
-	// //GEN-BEGIN:variables
-	private JFrame FActCliente;
-	private JScrollPane SPAtributosCliente;
-	private JPanel PAtributosCliente;
-	private JLabel LNombre;
-	private JTextField TFNombre;
-	private JLabel LDireccion;
-	private JTextField TFDireccion;
-	private JLabel LTelefono;
-	private JFormattedTextField FTTelefeno;
-	private JLabel LDNI;
-	private JFormattedTextField FTDNI;
-	private JLabel LCUIT;
-	private JFormattedTextField FTCUIT;
-	private JCheckBox CBoxCUIT;
-	private JPanel PBotonesCliente;
-	private JButton BActClienteOK;
-	private JButton BActClienteCancel;
-	// JFormDesigner - End of variables declaration //GEN-END:variables
 }

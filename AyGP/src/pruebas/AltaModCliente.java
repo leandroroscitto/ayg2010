@@ -27,11 +27,31 @@ import formateadores.FormateadorTel;
  */
 public class AltaModCliente  {
 	
+	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+	private JFrame FActCliente;
+
+	private JScrollPane SPAtributosCliente;
+
+	private JPanel PAtributosCliente;
+	private JLabel LNombre;
+	private JTextField TFNombre;
+	private JLabel LDireccion;
+	private JTextField TFDireccion;
+	private JLabel LTelefono;
+	private JFormattedTextField FTTelefeno;
+	private JLabel LDNI;
+	private JFormattedTextField FTDNI;
+	private JLabel LCUIT;
+	private JComboBox CBCUIT;
+	private JCheckBox CBoxCUIT;
+	private JPanel PBotonesCliente;
+	private JButton BActClienteOK;
+	private JButton BActClienteCancel;
+	// JFormDesigner - End of variables declaration  //GEN-END:variables
 	public AltaModCliente(){
 		this.initComponents();
 		FActCliente.setVisible(true);
 	}
-
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		FActCliente = new JFrame();
@@ -160,24 +180,4 @@ public class AltaModCliente  {
 		}
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
-
-	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-	private JFrame FActCliente;
-	private JScrollPane SPAtributosCliente;
-	private JPanel PAtributosCliente;
-	private JLabel LNombre;
-	private JTextField TFNombre;
-	private JLabel LDireccion;
-	private JTextField TFDireccion;
-	private JLabel LTelefono;
-	private JFormattedTextField FTTelefeno;
-	private JLabel LDNI;
-	private JFormattedTextField FTDNI;
-	private JLabel LCUIT;
-	private JComboBox CBCUIT;
-	private JCheckBox CBoxCUIT;
-	private JPanel PBotonesCliente;
-	private JButton BActClienteOK;
-	private JButton BActClienteCancel;
-	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }

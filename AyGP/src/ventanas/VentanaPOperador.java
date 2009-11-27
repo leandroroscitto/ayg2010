@@ -28,6 +28,44 @@ import control.coperador;
 public class VentanaPOperador {
 	private coperador controlador;
 
+	// JFormDesigner - Variables declaration - DO NOT MODIFY
+	// //GEN-BEGIN:variables
+	private JFrame JVentanaPOperador;
+
+	private JTabbedPane TPOperador;
+
+	private JPanel PPedidos;
+
+	private JPanel PLPedidos;
+
+	private JScrollPane SPTablaP;
+
+	private JTable TPedidos;
+
+	private JButton BRegistrarP;
+
+	private JButton BModificarP;
+
+	private JButton BBajaP;
+
+	private JPanel PClientes;
+
+	private JPanel PLClientes;
+
+	private JScrollPane SPTablaC;
+
+	private JTable TClientes;
+	private JButton BRegistrarC;
+	private JButton BModificarC;
+	private JButton BBajaC;
+	private JPanel PGastos;
+	private JPanel PLGastos;
+	private JScrollPane SPTablaG;
+	private JTable TGastos;
+	private JButton BRegistrarG;
+	private JButton BModificarG;
+	private JButton BBajaG;
+
 	public VentanaPOperador(coperador P) {
 		initComponents();
 
@@ -38,23 +76,27 @@ public class VentanaPOperador {
 		JVentanaPOperador.setVisible(true);
 	}
 
-	public JFrame getFramePrincipal() {
-		return JVentanaPOperador;
-	}
-
-	private void BRegistrarPActionPerformed(ActionEvent e) {
-		controlador.crearPedido();
-	}
-
-	private void BModificarPActionPerformed(ActionEvent e) {
-		int indicevista = TPedidos.getSelectedRow();
+	private void BBajaCActionPerformed(ActionEvent e) {
+		int indicevista = TClientes.getSelectedRow();
 		if (indicevista < 0) {
 			JOptionPane.showMessageDialog(JVentanaPOperador,
-					"Seleccione un pedido primero.");
+					"Seleccione un cliente primero.");
 		} else {
-			int indice = TPedidos.getRowSorter().convertRowIndexToModel(
+			int indice = TClientes.getRowSorter().convertRowIndexToModel(
 					indicevista);
-			controlador.modificarPedido(indice);
+			controlador.quitoCliente(indice);
+		}
+	}
+
+	private void BBajaGActionPerformed(ActionEvent e) {
+		int indicevista = TGastos.getSelectedRow();
+		if (indicevista < 0) {
+			JOptionPane.showMessageDialog(JVentanaPOperador,
+					"Seleccione un gasto primero.");
+		} else {
+			int indice = TGastos.getRowSorter().convertRowIndexToModel(
+					indicevista);
+			controlador.quitoGasto(indice);
 		}
 	}
 
@@ -70,10 +112,6 @@ public class VentanaPOperador {
 		}
 	}
 
-	private void BRegistrarCActionPerformed(ActionEvent e) {
-		controlador.crearCliente();
-	}
-
 	private void BModificarCActionPerformed(ActionEvent e) {
 		int indicevista = TClientes.getSelectedRow();
 		if (indicevista < 0) {
@@ -84,22 +122,6 @@ public class VentanaPOperador {
 					indicevista);
 			controlador.modificarCliente(indice);
 		}
-	}
-
-	private void BBajaCActionPerformed(ActionEvent e) {
-		int indicevista = TClientes.getSelectedRow();
-		if (indicevista < 0) {
-			JOptionPane.showMessageDialog(JVentanaPOperador,
-					"Seleccione un cliente primero.");
-		} else {
-			int indice = TClientes.getRowSorter().convertRowIndexToModel(
-					indicevista);
-			controlador.quitoCliente(indice);
-		}
-	}
-
-	private void BRegistrarGActionPerformed(ActionEvent e) {
-		controlador.crearGasto();
 	}
 
 	private void BModificarGActionPerformed(ActionEvent e) {
@@ -114,16 +136,46 @@ public class VentanaPOperador {
 		}
 	}
 
-	private void BBajaGActionPerformed(ActionEvent e) {
-		int indicevista = TGastos.getSelectedRow();
+	private void BModificarPActionPerformed(ActionEvent e) {
+		int indicevista = TPedidos.getSelectedRow();
 		if (indicevista < 0) {
 			JOptionPane.showMessageDialog(JVentanaPOperador,
-					"Seleccione un gasto primero.");
+					"Seleccione un pedido primero.");
 		} else {
-			int indice = TGastos.getRowSorter().convertRowIndexToModel(
+			int indice = TPedidos.getRowSorter().convertRowIndexToModel(
 					indicevista);
-			controlador.quitoGasto(indice);
+			controlador.modificarPedido(indice);
 		}
+	}
+
+	private void BRegistrarCActionPerformed(ActionEvent e) {
+		controlador.crearCliente();
+	}
+
+	private void BRegistrarGActionPerformed(ActionEvent e) {
+		controlador.crearGasto();
+	}
+
+	private void BRegistrarPActionPerformed(ActionEvent e) {
+		controlador.crearPedido();
+	}
+
+	public JFrame getFramePrincipal() {
+		return JVentanaPOperador;
+	}
+
+	public JTable getTClientes() {
+		return TClientes;
+	}
+
+	// JFormDesigner - End of variables declaration //GEN-END:variables
+
+	public JTable getTGastos() {
+		return TGastos;
+	}
+
+	public JTable getTPedidos() {
+		return TPedidos;
 	}
 
 	@SuppressWarnings("serial")
@@ -465,45 +517,5 @@ public class VentanaPOperador {
 		}
 		// JFormDesigner - End of component initialization
 		// //GEN-END:initComponents
-	}
-
-	// JFormDesigner - Variables declaration - DO NOT MODIFY
-	// //GEN-BEGIN:variables
-	private JFrame JVentanaPOperador;
-	private JTabbedPane TPOperador;
-	private JPanel PPedidos;
-	private JPanel PLPedidos;
-	private JScrollPane SPTablaP;
-	private JTable TPedidos;
-	private JButton BRegistrarP;
-	private JButton BModificarP;
-	private JButton BBajaP;
-	private JPanel PClientes;
-	private JPanel PLClientes;
-	private JScrollPane SPTablaC;
-	private JTable TClientes;
-	private JButton BRegistrarC;
-	private JButton BModificarC;
-	private JButton BBajaC;
-	private JPanel PGastos;
-	private JPanel PLGastos;
-	private JScrollPane SPTablaG;
-	private JTable TGastos;
-	private JButton BRegistrarG;
-	private JButton BModificarG;
-	private JButton BBajaG;
-
-	// JFormDesigner - End of variables declaration //GEN-END:variables
-
-	public JTable getTPedidos() {
-		return TPedidos;
-	}
-
-	public JTable getTClientes() {
-		return TClientes;
-	}
-
-	public JTable getTGastos() {
-		return TGastos;
 	}
 }

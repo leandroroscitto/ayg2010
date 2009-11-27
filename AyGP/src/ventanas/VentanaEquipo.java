@@ -34,25 +34,29 @@ import enumerados.EEstadoEquipo;
 public class VentanaEquipo {
 	private cadministrador controlador;
 
-	private void inicializarModelo(String titulo, String boton, cadministrador P) {
-		controlador = P;
+	// JFormDesigner - Variables declaration - DO NOT MODIFY
+	// //GEN-BEGIN:variables
+	private JFrame FActEquipo;
 
-		FActEquipo = new JFrame(titulo);
-		BActEquipoOK = new JButton(boton);
+	private JScrollPane SPAtributosEquipo;
 
-		DefaultComboBoxModel CMCat = new DefaultComboBoxModel(ECategoriaEquipo
-				.values());
-		DefaultComboBoxModel CMEst = new DefaultComboBoxModel(EEstadoEquipo
-				.values());
+	private JPanel PAtributosEquipo;
 
-		CBEstado = new JComboBox(CMEst);
-		CBCategoria = new JComboBox(CMCat);
-	}
+	private JLabel LNombre;
 
-	public JFrame getFramePrincipal() {
-		return FActEquipo;
-	}
+	private JTextField TFNombre;
 
+	private JLabel LCategoria;
+
+	private JComboBox CBCategoria;
+
+	private JLabel LEstado;
+
+	private JComboBox CBEstado;
+	private JPanel PBotonesEquipo;
+	private JButton BActEquipoOK;
+	private JButton BActEquipoCancel;
+	// JFormDesigner - End of variables declaration //GEN-END:variables
 	public VentanaEquipo(String titulo, String boton, cadministrador P) {
 		inicializarModelo(titulo, boton, P);
 
@@ -60,7 +64,6 @@ public class VentanaEquipo {
 
 		FActEquipo.setVisible(true);
 	}
-
 	public VentanaEquipo(String titulo, String boton, cadministrador P,
 			TEquipo Equipo) {
 		inicializarModelo(titulo, boton, P);
@@ -73,11 +76,10 @@ public class VentanaEquipo {
 
 		FActEquipo.setVisible(true);
 	}
-
-	private void FActEquipoWindowClosing(WindowEvent e) {
+	private void BActEquipoCancelActionPerformed(ActionEvent e) {
 		controlador.cerroventanaEquipo(false);
+		FActEquipo.dispose();
 	}
-
 	private void BActEquipoOKActionPerformed(ActionEvent e) {
 		String nom = TFNombre.getText();
 		EEstadoEquipo est = (EEstadoEquipo) CBEstado.getSelectedItem();
@@ -96,12 +98,26 @@ public class VentanaEquipo {
 					"Ingrese todos los campos obligatorios.");
 		}
 	}
-
-	private void BActEquipoCancelActionPerformed(ActionEvent e) {
+	private void FActEquipoWindowClosing(WindowEvent e) {
 		controlador.cerroventanaEquipo(false);
-		FActEquipo.dispose();
 	}
+	public JFrame getFramePrincipal() {
+		return FActEquipo;
+	}
+	private void inicializarModelo(String titulo, String boton, cadministrador P) {
+		controlador = P;
 
+		FActEquipo = new JFrame(titulo);
+		BActEquipoOK = new JButton(boton);
+
+		DefaultComboBoxModel CMCat = new DefaultComboBoxModel(ECategoriaEquipo
+				.values());
+		DefaultComboBoxModel CMEst = new DefaultComboBoxModel(EEstadoEquipo
+				.values());
+
+		CBEstado = new JComboBox(CMEst);
+		CBCategoria = new JComboBox(CMCat);
+	}
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -234,20 +250,4 @@ public class VentanaEquipo {
 		// JFormDesigner - End of component initialization
 		// //GEN-END:initComponents
 	}
-
-	// JFormDesigner - Variables declaration - DO NOT MODIFY
-	// //GEN-BEGIN:variables
-	private JFrame FActEquipo;
-	private JScrollPane SPAtributosEquipo;
-	private JPanel PAtributosEquipo;
-	private JLabel LNombre;
-	private JTextField TFNombre;
-	private JLabel LCategoria;
-	private JComboBox CBCategoria;
-	private JLabel LEstado;
-	private JComboBox CBEstado;
-	private JPanel PBotonesEquipo;
-	private JButton BActEquipoOK;
-	private JButton BActEquipoCancel;
-	// JFormDesigner - End of variables declaration //GEN-END:variables
 }

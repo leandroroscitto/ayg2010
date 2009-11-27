@@ -13,29 +13,22 @@ import javax.swing.JOptionPane;
 
 import enumerados.ETipoUsuario;
 
+/**
+ * Manejador de los usuarios de la aplicación, permite validar un usuario y
+ * password ingresado en la ventana de login; asi como crear, cargar y guardar
+ * su estado en el disco.
+ */
 public class TGestorDeUsuarios {
 
 	private ArrayList<TUsuario> usuarios;
-	
-	public TGestorDeUsuarios(){
-		usuarios=new ArrayList<TUsuario>();
+
+	public TGestorDeUsuarios() {
+		usuarios = new ArrayList<TUsuario>();
 	}
-	
-	public boolean guardar_estado() {
-		ObjectOutputStream obj;
-		try {
-			obj = new ObjectOutputStream(new FileOutputStream("Usuarios.dat"));
-			obj.writeObject(usuarios);
-			obj.close();
-			return true;
-		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(null, "No se encontró el archivo de usuarios");
-			return false;
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null,
-					"Guardado: No se pudo acceder a el archivo de ususarios");
-			return false;
-		}
+
+	public void agregarUsuario(String Nombre, String Pass, ETipoUsuario Tip) {
+		usuarios.add(new TUsuario(Nombre, Pass, Tip));
+		guardar_estado();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -80,27 +73,40 @@ public class TGestorDeUsuarios {
 		return true;
 	}
 
+	public ETipoUsuario getTipoUsuario(String usuario, String pass) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean guardar_estado() {
+		ObjectOutputStream obj;
+		try {
+			obj = new ObjectOutputStream(new FileOutputStream("Usuarios.dat"));
+			obj.writeObject(usuarios);
+			obj.close();
+			return true;
+		} catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(null,
+					"No se encontró el archivo de usuarios");
+			return false;
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null,
+					"Guardado: No se pudo acceder a el archivo de ususarios");
+			return false;
+		}
+	}
+
 	private void InicializarDatos() {
 		usuarios = new ArrayList<TUsuario>();
 	}
 
 	public TUsuario valida(String usuario, String pass) {
-		for(TUsuario U:usuarios){
-			if (U.validar(usuario,pass)){
+		for (TUsuario U : usuarios) {
+			if (U.validar(usuario, pass)) {
 				return U;
 			}
 		}
 		return null;
 	}
 
-	public ETipoUsuario getTipoUsuario(String usuario, String pass) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public void agregarUsuario(String Nombre,String Pass,ETipoUsuario Tip){
-		usuarios.add(new TUsuario(Nombre,Pass,Tip));
-		guardar_estado();
-	}
-	
 }

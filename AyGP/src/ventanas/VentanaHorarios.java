@@ -29,20 +29,43 @@ import enumerados.EDia;
 public class VentanaHorarios {
 	private cadministrador controlador;
 
-	private void inicilizarModelo(cadministrador P) {
-		controlador = P;
+	// JFormDesigner - Variables declaration - DO NOT MODIFY
+	// //GEN-BEGIN:variables
+	private JFrame FActHorarios;
 
-		DefaultComboBoxModel CM = new DefaultComboBoxModel(EDia.values());
-		CBDia = new JComboBox(CM);
-	}
+	private JScrollPane SPHorarios;
 
+	private JPanel PAHorarios;
+
+	private JLabel LDia;
+	
+	private JComboBox CBDia;
+
+	private JLabel LRInicio;
+
+	private JPanel PRInicio;
+	private JSpinner SHoraI;
+	private JLabel LDosPuntos1;
+	private JSpinner SMinutosI;
+	private JLabel LRFin;
+	private JPanel PRFin;
+	private JSpinner SHoraF;
+	private JLabel LDosPuntos2;
+	private JSpinner SMinutosF;
+	private JPanel PBotonesHorarios;
+	private JButton BActHorariosOK;
+	private JButton BActHorariosCancel;
+	// JFormDesigner - End of variables declaration //GEN-END:variables
 	public VentanaHorarios(cadministrador P) {
 		inicilizarModelo(P);
 		initComponents();
 
 		FActHorarios.setVisible(true);
 	}
-
+	private void BActHorariosCancelActionPerformed(ActionEvent e) {
+		controlador.cerroventanaHorarios();
+		FActHorarios.dispose();
+	}
 	private void BActHorariosOKActionPerformed(ActionEvent e) {
 		EDia Dia = (EDia) CBDia.getSelectedItem();
 		int HI = (Integer) (SHoraI.getValue()) * 100
@@ -58,16 +81,15 @@ public class VentanaHorarios {
 			JOptionPane.showMessageDialog(FActHorarios, "La hora de inicio debe ser anterior o igual a la de fin.");
 		}
 	}
-
-	private void BActHorariosCancelActionPerformed(ActionEvent e) {
-		controlador.cerroventanaHorarios();
-		FActHorarios.dispose();
-	}
-	
 	private void FActHorariosWindowClosing(WindowEvent e) {
 		controlador.cerroventanaHorarios();		
 	}
+	private void inicilizarModelo(cadministrador P) {
+		controlador = P;
 
+		DefaultComboBoxModel CM = new DefaultComboBoxModel(EDia.values());
+		CBDia = new JComboBox(CM);
+	}
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -246,26 +268,4 @@ public class VentanaHorarios {
 		// JFormDesigner - End of component initialization
 		// //GEN-END:initComponents
 	}
-
-	// JFormDesigner - Variables declaration - DO NOT MODIFY
-	// //GEN-BEGIN:variables
-	private JFrame FActHorarios;
-	private JScrollPane SPHorarios;
-	private JPanel PAHorarios;
-	private JLabel LDia;
-	private JComboBox CBDia;
-	private JLabel LRInicio;
-	private JPanel PRInicio;
-	private JSpinner SHoraI;
-	private JLabel LDosPuntos1;
-	private JSpinner SMinutosI;
-	private JLabel LRFin;
-	private JPanel PRFin;
-	private JSpinner SHoraF;
-	private JLabel LDosPuntos2;
-	private JSpinner SMinutosF;
-	private JPanel PBotonesHorarios;
-	private JButton BActHorariosOK;
-	private JButton BActHorariosCancel;
-	// JFormDesigner - End of variables declaration //GEN-END:variables
 }
