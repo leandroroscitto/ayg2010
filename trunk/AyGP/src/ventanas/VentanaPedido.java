@@ -9,6 +9,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -433,6 +435,16 @@ public class VentanaPedido {
 			FActPedido
 					.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			FActPedido.setResizable(false);
+			FActPedido.addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowClosing(WindowEvent e) {
+					JFListaPedidossWindowClosing(e);
+				}
+
+				private void JFListaPedidossWindowClosing(WindowEvent e) {
+					controlador.cerroventanaPedido(false);
+				}
+			});
 			Container FActPedidoContentPane = FActPedido.getContentPane();
 			FActPedidoContentPane.setLayout(new GridBagLayout());
 			((GridBagLayout) FActPedidoContentPane.getLayout()).columnWidths = new int[] {
