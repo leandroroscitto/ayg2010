@@ -198,6 +198,7 @@ public class VentanaGasto {
 					// ======== PNombre ========
 					{
 						PNombre.setLayout(new GridLayout(1, 2, 5, 0));
+						TFNombre.setToolTipText("Nombre representativo del gasto");
 
 						// ---- LNombre ----
 						LNombre.setText("Nombre:");
@@ -247,6 +248,7 @@ public class VentanaGasto {
 					// ======== SPDescripcion ========
 					{
 						SPDescripcion.setViewportView(TPDescripcion);
+						TPDescripcion.setToolTipText("Descripción del origen del gasto");
 					}
 					PAtributosGasto.add(SPDescripcion, new GridBagConstraints(
 							1, 5, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
@@ -260,6 +262,7 @@ public class VentanaGasto {
 						// ---- LMonto ----
 						LMonto.setText("Monto: $");
 						LMonto.setHorizontalAlignment(SwingConstants.RIGHT);
+						FTMonto.setToolTipText("Monto del gasto, en pesos");
 						PMonto.add(LMonto);
 						PMonto.add(FTMonto);
 					}

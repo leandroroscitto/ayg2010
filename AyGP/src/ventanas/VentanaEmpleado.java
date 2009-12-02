@@ -306,6 +306,7 @@ public class VentanaEmpleado {
 							1, 1, 0.0, 0.0, GridBagConstraints.EAST,
 							GridBagConstraints.VERTICAL,
 							new Insets(0, 0, 5, 5), 0, 0));
+					FTDNI.setToolTipText("DNI del empleado");
 					PAtributosEmpleado.add(FTDNI, new GridBagConstraints(2, 3,
 							1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
 							GridBagConstraints.BOTH, new Insets(0, 0, 5, 5), 0,
@@ -317,6 +318,7 @@ public class VentanaEmpleado {
 							4, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,
 							GridBagConstraints.VERTICAL,
 							new Insets(0, 0, 5, 5), 0, 0));
+					FTLegajo.setToolTipText("Legajo del empleado, debe ser único");
 					PAtributosEmpleado.add(FTLegajo, new GridBagConstraints(2,
 							4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
 							GridBagConstraints.BOTH, new Insets(0, 0, 5, 5), 0,
@@ -374,6 +376,7 @@ public class VentanaEmpleado {
 						{
 
 							// ---- THorarios ----
+							THorarios.setToolTipText("Lista de días y horarios de trabajo del empleado");
 							THorarios
 									.setPreferredScrollableViewportSize(new Dimension(
 											140, 50));
