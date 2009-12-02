@@ -332,15 +332,15 @@ public class VentanaPedido {
 		if (dni > 0) {
 			TCliente Cliente = controlador.getCliente(dni);
 			if (Cliente != null) {
-				if (Cliente.getEstado()==EEstadoCliente.ACTIVO){
-					//Si el cliente está activo es posible seleccionarlo
+				if (Cliente.getEstado() == EEstadoCliente.ACTIVO) {
+					// Si el cliente está activo es posible seleccionarlo
 					cliente = Cliente;
 					TFNombre.setText(Cliente.getNombre());
-				}else{
-					cliente=null;
+				} else {
+					cliente = null;
 					TFNombre.setText("EL CLIENTE SELECCIONADO NO ESTA ACTIVO");
 				}
-				
+
 			} else {
 				cliente = null;
 				TFNombre.setText("ERROR: NO EXITE EL CLIENTE DADO EL DNI");
@@ -481,6 +481,7 @@ public class VentanaPedido {
 							0.0, 0.0, GridBagConstraints.EAST,
 							GridBagConstraints.VERTICAL,
 							new Insets(0, 0, 5, 5), 0, 0));
+					TFOrigen.setToolTipText("Lugar de partida del pedido");
 					PAtributosP.add(TFOrigen, new GridBagConstraints(2, 1, 2,
 							1, 0.0, 0.0, GridBagConstraints.CENTER,
 							GridBagConstraints.BOTH, new Insets(0, 0, 5, 5), 0,
@@ -492,6 +493,7 @@ public class VentanaPedido {
 							1, 0.0, 0.0, GridBagConstraints.EAST,
 							GridBagConstraints.VERTICAL,
 							new Insets(0, 0, 5, 5), 0, 0));
+					TFDestino.setToolTipText("Lugar de destino del pedido");
 					PAtributosP.add(TFDestino, new GridBagConstraints(2, 2, 2,
 							1, 0.0, 0.0, GridBagConstraints.CENTER,
 							GridBagConstraints.BOTH, new Insets(0, 0, 5, 5), 0,
@@ -607,6 +609,8 @@ public class VentanaPedido {
 							0.0, 0.0, GridBagConstraints.EAST,
 							GridBagConstraints.VERTICAL,
 							new Insets(0, 0, 5, 5), 0, 0));
+					FTCosto
+							.setToolTipText("Costo del pedido para el cliente en pesos");
 					PAtributosP.add(FTCosto, new GridBagConstraints(2, 10, 2,
 							1, 0.0, 0.0, GridBagConstraints.CENTER,
 							GridBagConstraints.BOTH, new Insets(0, 0, 5, 5), 0,
@@ -633,6 +637,8 @@ public class VentanaPedido {
 										5, 5), 0, 0));
 
 						// ---- FTDNI ----
+						FTDNI
+								.setToolTipText("DNI del cliente a asignar al pedido");
 						FTDNI.addPropertyChangeListener("value",
 								new PropertyChangeListener() {
 									public void propertyChange(
@@ -648,6 +654,8 @@ public class VentanaPedido {
 
 						// ---- BCrearCliente ----
 						BCrearCliente.setText("Crear Nuevo Cliente");
+						BCrearCliente
+								.setToolTipText("Crea un nuevo cliente y lo asigna al pedido");
 						BCrearCliente.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 								BCrearClienteActionPerformed(e);
@@ -667,6 +675,8 @@ public class VentanaPedido {
 
 						// ---- TFNombre ----
 						TFNombre.setEditable(false);
+						TFNombre
+								.setToolTipText("Nombre del cliente seleccionado, o informe del error producido");
 						PCliente.add(TFNombre, new GridBagConstraints(1, 1, 1,
 								1, 0.0, 0.0, GridBagConstraints.CENTER,
 								GridBagConstraints.BOTH,
@@ -674,6 +684,8 @@ public class VentanaPedido {
 
 						// ---- BSeleccionarCliente ----
 						BSeleccionarCliente.setText("Seleccionar Cliente");
+						BSeleccionarCliente
+								.setToolTipText("No implementado todavía");
 						BSeleccionarCliente.setEnabled(false);
 						BSeleccionarCliente
 								.addActionListener(new ActionListener() {
@@ -713,6 +725,8 @@ public class VentanaPedido {
 							TEmpleados
 									.setPreferredScrollableViewportSize(new Dimension(
 											50, 80));
+							TEmpleados
+									.setToolTipText("Lista de empleados asignados actualmente al pedido");
 							TEmpleados
 									.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 							TEmpleados.setModel(new DefaultTableModel(
@@ -775,6 +789,8 @@ public class VentanaPedido {
 							TVehiculos
 									.setPreferredScrollableViewportSize(new Dimension(
 											50, 80));
+							TVehiculos
+									.setToolTipText("Lista de vehículos asignados al pedido");
 							TVehiculos
 									.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 							TVehiculos.setModel(new DefaultTableModel(

@@ -216,6 +216,7 @@ public class VentanaVehiculo {
 							1, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,
 							GridBagConstraints.VERTICAL,
 							new Insets(0, 0, 5, 5), 0, 0));
+					FTPatente.setToolTipText("Patente del vehículo, tres letras mayúsculas y tres dígitos: AAA-000");
 					PAtributosVehiculo.add(FTPatente, new GridBagConstraints(2,
 							1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
 							GridBagConstraints.BOTH, new Insets(0, 0, 5, 5), 0,
@@ -229,7 +230,7 @@ public class VentanaVehiculo {
 							new Insets(0, 0, 5, 5), 0, 0));
 
 					// ---- TFMarca ----
-					TFMarca.setToolTipText("Direcci\u00f3n del empleado");
+					TFMarca.setToolTipText("Marca del vehículo");
 					PAtributosVehiculo.add(TFMarca, new GridBagConstraints(2,
 							2, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
 							GridBagConstraints.BOTH, new Insets(0, 0, 5, 5), 0,
@@ -241,6 +242,7 @@ public class VentanaVehiculo {
 							3, 1, 1, 0.0, 0.0, GridBagConstraints.EAST,
 							GridBagConstraints.VERTICAL,
 							new Insets(0, 0, 5, 5), 0, 0));
+					TFModelo.setToolTipText("Modelo del vehículo");
 					PAtributosVehiculo.add(TFModelo, new GridBagConstraints(2,
 							3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
 							GridBagConstraints.BOTH, new Insets(0, 0, 5, 5), 0,
@@ -255,7 +257,7 @@ public class VentanaVehiculo {
 
 					// ---- TFColor ----
 					TFColor
-							.setToolTipText("Tel\u00e9fono del empleado - n\u00fameros y s\u00edmbolos \u00fanicamente");
+							.setToolTipText("Color del vehículo");
 					PAtributosVehiculo.add(TFColor, new GridBagConstraints(2,
 							4, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
 							GridBagConstraints.BOTH, new Insets(0, 0, 5, 5), 0,
@@ -270,6 +272,7 @@ public class VentanaVehiculo {
 											0, 5, 5), 0, 0));
 
 					// ---- SKilometraje ----
+					SKilometraje.setToolTipText("Cantidad de kilómetros recorridos");
 					/*
 					SKilometraje.setModel(new SpinnerNumberModel(0, null, null,
 							5));

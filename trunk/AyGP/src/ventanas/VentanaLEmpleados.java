@@ -96,6 +96,7 @@ public class VentanaLEmpleados  {
 
 				//---- LEmpleados ----
 				LEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				LEmpleados.setToolTipText("Lista de empleados sin asignar al pedido actual");
 				SPListaEmpleados.setViewportView(LEmpleados);
 			}
 			JFListaEmpleadosContentPane.add(SPListaEmpleados, new GridBagConstraints(1, 1, 1, 4, 0.0, 0.0,
@@ -104,6 +105,7 @@ public class VentanaLEmpleados  {
 
 			//---- BAgregarEmp ----
 			BAgregarEmp.setText("Agregar empleado");
+			BAgregarEmp.setToolTipText("Agrega el empleado seleccionado a la lista de asignados al pedido actual");
 			BAgregarEmp.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					BAgregarEmpActionPerformed(e);
@@ -115,6 +117,7 @@ public class VentanaLEmpleados  {
 
 			//---- BCerrarEmp ----
 			BCerrarEmp.setText("Cerrar");
+			BCerrarEmp.setToolTipText("Cierra la lista de empleados y retorna a la ventana anterior");
 			BCerrarEmp.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					BCerrarEmpActionPerformed(e);

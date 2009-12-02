@@ -290,7 +290,7 @@ public class VentanaCliente {
 
 					// ---- CBoxCUIT ----
 					CBoxCUIT.setSelected(true);
-					CBoxCUIT.setToolTipText("Tiene CUIT/CUIL");
+					CBoxCUIT.setToolTipText("Tiene CUIT/CUIL?");
 					CBoxCUIT.addActionListener(new ActionListener() {
 
 						@Override

@@ -177,6 +177,7 @@ public class VentanaEvento {
 					// ======== PNombre ========
 					{
 						PNombre.setLayout(new GridLayout(1, 2, 5, 0));
+						TFNombre.setToolTipText("Nombre del evento");
 
 						// ---- LNombre ----
 						LNombre.setText("Nombre:");
@@ -199,6 +200,7 @@ public class VentanaEvento {
 					{
 						SPDescripcion.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 						SPDescripcion.setViewportView(TPDescripcion);
+						TPDescripcion.setToolTipText("Descripción resumida del evento");
 					}
 					PAtributosEvento.add(SPDescripcion, new GridBagConstraints(
 							1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
@@ -216,7 +218,7 @@ public class VentanaEvento {
 
 						// ---- DCFecha ----
 						DCFecha
-								.setToolTipText("Fecha en la que ocurri\u00f3 en el evento");
+								.setToolTipText("Fecha en la que ocurri\u00f3 el evento");
 						PFecha.add(DCFecha);
 					}
 					PAtributosEvento.add(PFecha, new GridBagConstraints(1, 4,

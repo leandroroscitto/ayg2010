@@ -105,6 +105,7 @@ public class VentanaLVehiculos  {
 
 			//---- BAgregarVe ----
 			BAgregarVe.setText("Agregar veh\u00edculos");
+			BAgregarVe.setToolTipText("Agrega el vehículo seleccionado a la lista de asignados al pedido actual");
 			BAgregarVe.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					BAgregarVeActionPerformed(e);
@@ -116,6 +117,7 @@ public class VentanaLVehiculos  {
 
 			//---- BCerrarVe ----
 			BCerrarVe.setText("Cerrar");
+			BCerrarVe.setToolTipText("Cierra la lista de vehículos y retorna a la ventana anterior");
 			BCerrarVe.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					BCerrarVeActionPerformed(e);
