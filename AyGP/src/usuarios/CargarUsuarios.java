@@ -1,5 +1,7 @@
 package usuarios;
 
+import javax.swing.JOptionPane;
+
 import enumerados.ETipoUsuario;
 
 /**
@@ -12,9 +14,24 @@ public class CargarUsuarios {
 	// Carga un usuario de cada tipo para realizar pruebas
 	public static void main(String[] args) {
 		GUsuarios = new TGestorDeUsuarios();
-		GUsuarios.crear_estado();
-		GUsuarios.agregarUsuario("operador", "operador", ETipoUsuario.OPERADOR);
-		GUsuarios.agregarUsuario("administrador", "administrador",
-				ETipoUsuario.ADMINISTRADOR);
+		if (GUsuarios.crear_estado()) {
+			GUsuarios.agregarUsuario("operador", "operador",
+					ETipoUsuario.OPERADOR);
+			GUsuarios.agregarUsuario("administrador", "administrador",
+					ETipoUsuario.ADMINISTRADOR);
+			if (GUsuarios.guardar_estado()) {
+				JOptionPane
+						.showMessageDialog(null,
+								"Se crear los usuarios operador y administrador con éxito");
+			}else{
+				JOptionPane
+				.showMessageDialog(null,
+						"Error al crear los usuarios básico");
+			}
+		}else{
+			JOptionPane
+			.showMessageDialog(null,
+					"Error al crear los usuarios básico");
+		}
 	}
 }
